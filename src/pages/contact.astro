@@ -16,12 +16,124 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <a href="mailto:hello@mbaldwinsmith.com">hello@mbaldwinsmith.com</a>
     </p>
     <p>
-      <strong>LinkedIn:</strong>
-      <a href="https://www.linkedin.com" rel="noreferrer noopener">linkedin.com/in/mbaldwinsmith</a>
-    </p>
-    <p>
       <strong>Newsletter:</strong> Subscribe to receive monthly updates with new prayers, poems, and resources.
     </p>
+    <p class="social-intro">Prefer to connect on social?</p>
+    <ul class="social-links" aria-label="Social media">
+      <li>
+        <a
+          class="social-link"
+          href="https://github.com/mbaldwinsmith"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+        >
+          <span class="icon-box">
+            <svg class="social-icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <title>GitHub</title>
+              <path
+                d="M7.4 6 9.4 3.8c.3-.35.9-.12.9.32V6"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M16.6 6 14.6 3.8c-.3-.35-.9-.12-.9.32V6"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle cx="12" cy="13" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <circle cx="10" cy="12.5" r="1.1" fill="currentColor" />
+              <circle cx="14" cy="12.5" r="1.1" fill="currentColor" />
+              <path d="M9.2 16.2c1.2 1 2.4 1 3.6 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+            </svg>
+          </span>
+          <span>GitHub</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="social-link"
+          href="https://www.instagram.com/mbaldwinsmith"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+        >
+          <span class="icon-box">
+            <svg class="social-icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <title>Instagram</title>
+              <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <circle cx="17" cy="7" r="1.3" fill="currentColor" />
+            </svg>
+          </span>
+          <span>Instagram</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="social-link"
+          href="https://x.com/mbaldwinsmith"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="X"
+        >
+          <span class="icon-box">
+            <svg class="social-icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <title>X</title>
+              <path
+                d="M5 4h3.4l3.8 5.7L16 4h3l-5.2 7.2L21 20h-3.4l-4-5.9L9 20H6l5.3-7.6Z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+          <span>X</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="social-link"
+          href="https://www.linkedin.com/in/mbaldwinsmith"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+        >
+          <span class="icon-box">
+            <svg class="social-icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <title>LinkedIn</title>
+              <rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <circle cx="8.5" cy="9" r="1.3" fill="currentColor" />
+              <path d="M7.4 11.3h2.2v7H7.4z" fill="currentColor" />
+              <path d="M12.3 11.3h2.1v1c.6-.8 1.4-1.2 2.4-1.2 1.8 0 3.5 1.1 3.5 3.7V18h-2.2v-3.2c0-1.1-.5-1.8-1.5-1.8-.9 0-1.4.5-1.6 1.1V18h-2.2Z" fill="currentColor" />
+            </svg>
+          </span>
+          <span>LinkedIn</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="social-link"
+          href="https://www.threads.net/@mbaldwinsmith"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Threads"
+        >
+          <span class="icon-box">
+            <svg class="social-icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <title>Threads</title>
+              <path
+                d="M12 4.5c4.3 0 7.5 2.2 7.5 5.8 0 2.6-1.4 4.5-3.8 5.4-.3 2.2-1.9 3.8-4.7 3.8-2.6 0-4.6-1.7-4.6-4.4 0-2.6 1.8-4.1 4.4-4.1 1.4 0 2.4.4 3.1 1.1-.1-.7-.4-1.2-.9-1.6-.6-.4-1.2-.6-2.3-.7l.1-1.6c1.4.1 2.5.5 3.2 1.1.8.6 1.3 1.4 1.6 2.4.2.5.2.9.2 1.4 0 .5-.1 1-.2 1.4-.3 1.3-1.4 2.3-2.8 2.3-1.4 0-2.4-1-2.4-2.2 0-1.3.8-2.1 1.9-2.1.6 0 1 .2 1.2.4.2.2.4.5.4.9 0 .2-.1.5-.2.7 0 .2-.1.3-.1.4 0 .2.2.4.5.4.4 0 .7-.3.9-.8.2-.5.3-.9.3-1.4 0-2.1-1.8-3.4-4.3-3.4-2.7 0-4.6 1.7-4.6 4.4 0 2.9 2.1 4.6 4.9 4.6 1.8 0 3.2-.9 3.7-2.3l1.5.6C16.3 18.7 14.4 20 12 20c-3.6 0-6.5-2.5-6.5-6.2C5.5 7.8 8.6 4.5 12 4.5Z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+          <span>Threads</span>
+        </a>
+      </li>
+    </ul>
   </section>
 
   <section class="form">
@@ -64,6 +176,62 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border: 1px solid rgba(26, 31, 54, 0.08);
     box-shadow: 0 18px 28px -24px rgba(37, 56, 88, 0.6);
     margin-top: 2.5rem;
+  }
+
+  .social-intro {
+    margin-top: 2rem;
+    font-weight: 600;
+  }
+
+  .social-links {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #1a1f36;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .social-link:focus-visible {
+    outline: 2px solid rgba(128, 90, 213, 0.45);
+    outline-offset: 4px;
+  }
+
+  .icon-box {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.85rem;
+    background: #f0f4fa;
+    color: #1f2a4a;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .social-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .social-link:hover,
+  .social-link:focus-visible {
+    color: #1a365d;
+    transform: translateX(2px);
+  }
+
+  .social-link:hover .icon-box,
+  .social-link:focus-visible .icon-box {
+    background: linear-gradient(135deg, rgba(43, 108, 176, 0.12), rgba(128, 90, 213, 0.25));
+    color: #1a365d;
   }
 
   form {
