@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Poetry | M. Baldwin-Smith" description="Poems capturing the movement of faith, community, and everyday beauty.">
+  <h1>Poetry</h1>
+  <p class="lead">
+    I write poems as a practice of listening. They are fragments of prayer, memory, and imagination gathered together to
+    make meaning.
+  </p>
+
+  <section class="poems">
+    <article>
+      <h2>Threshold</h2>
+      <p>
+        You hold the doorway / between what is and what can be / reminding me that faith is / a key already in my hand.
+      </p>
+    </article>
+
+    <article>
+      <h2>Communion Cup</h2>
+      <p>
+        We pass the cup / and the stories of our people / linger like sweet wine / calling us to remember freedom.
+      </p>
+    </article>
+
+    <article>
+      <h2>Still</h2>
+      <p>
+        When the world spins, / I breathe in the quiet name of Jesus / and everything slows enough / for hope to speak.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .lead {
+    max-width: 48rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .poems {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  article {
+    background: white;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(37, 56, 88, 0.08);
+    box-shadow: 0 20px 24px -24px rgba(37, 56, 88, 0.65);
+  }
+</style>

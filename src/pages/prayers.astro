@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Prayers | M. Baldwin-Smith" description="Original prayers written for everyday moments and sacred seasons.">
+  <h1>Prayers</h1>
+  <p class="lead">
+    Prayer is where I return to breathe again. These pieces are written for real people walking through real life&mdash;
+    gratitude, grief, celebration, and quiet perseverance.
+  </p>
+
+  <section class="prayer-list">
+    <article>
+      <h2>Dawn Prayer</h2>
+      <p>
+        God of first light, teach me to rise open-handed. Let the day break gently over my responsibilities, and remind me
+        that your mercies are already waiting at the door.
+      </p>
+    </article>
+
+    <article>
+      <h2>Prayer for Community</h2>
+      <p>
+        Knit us together by the wisdom of your Spirit. Help us choose generosity when convenience feels easier, and grant
+        us courage to keep showing up for one another.
+      </p>
+    </article>
+
+    <article>
+      <h2>Evening Exhale</h2>
+      <p>
+        When the day closes, gather every anxious thought into your keeping. May rest be an act of trust, and sleep become
+        a sanctuary where grace is rehearsed.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .lead {
+    max-width: 48rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .prayer-list {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  article {
+    background: white;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 12px 22px -18px rgba(37, 56, 88, 0.6);
+  }
+</style>

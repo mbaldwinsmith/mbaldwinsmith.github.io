@@ -1,0 +1,82 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about-me', label: 'About Me' },
+  { href: '/prayers', label: 'Prayers' },
+  { href: '/poetry', label: 'Poetry' },
+  { href: '/musing', label: 'Musing' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/">M. Baldwin-Smith</a>
+    <nav aria-label="Primary navigation">
+      <ul>
+        {navLinks.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: linear-gradient(135deg, #1a1f36, #3a4a6b);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .container {
+    margin: 0 auto;
+    padding: 1.5rem clamp(1rem, 4vw, 2.5rem);
+    max-width: 72rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .brand {
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 2vw, 1.5rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  nav a:hover,
+  nav a:focus {
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 720px) {
+    .container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

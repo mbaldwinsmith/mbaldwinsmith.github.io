@@ -1,0 +1,33 @@
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; {new Date().getFullYear()} M. Baldwin-Smith. Crafted with Astro.</p>
+    <p class="small-print">
+      Built as a living archive of faith, creativity, and reflection.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #f0f4f8;
+    color: #2d3748;
+    border-top: 1px solid rgba(13, 27, 42, 0.1);
+    margin-top: 4rem;
+  }
+
+  .container {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 2rem clamp(1rem, 4vw, 2.5rem);
+    text-align: center;
+  }
+
+  p {
+    margin: 0.25rem 0;
+  }
+
+  .small-print {
+    font-size: 0.9rem;
+    color: rgba(45, 55, 72, 0.7);
+  }
+</style>

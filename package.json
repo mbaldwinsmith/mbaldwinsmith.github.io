@@ -1,0 +1,23 @@
+{
+  "name": "mbaldwinsmith.github.io",
+  "version": "1.0.0",
+  "description": "Personal site built with Astro",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "keywords": [
+    "astro",
+    "personal-site"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "^4.16.19"
+  }
+}
