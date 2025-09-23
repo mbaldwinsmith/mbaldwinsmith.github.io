@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Portfolio | M. Baldwin-Smith" description="Selected ministry, technology, and creative projects.">
+  <h1>Portfolio</h1>
+  <p class="lead">
+    A sampling of the projects that have shaped my journey. From ministry initiatives to digital products, each reflects
+    a commitment to hospitality, accessibility, and intentional storytelling.
+  </p>
+
+  <section class="projects">
+    <article>
+      <h2>Digital Discipleship Hub</h2>
+      <p>
+        Designed a resource hub that equips churches with weekly formation tools. Led the content strategy, visual design,
+        and technical implementation using Astro and Tailwind.
+      </p>
+    </article>
+
+    <article>
+      <h2>Community Care Playbook</h2>
+      <p>
+        Developed a training curriculum for pastoral teams focusing on trauma-informed care, volunteer management, and
+        sustainable rhythms of rest.
+      </p>
+    </article>
+
+    <article>
+      <h2>Poetry Chapbook</h2>
+      <p>
+        Self-published a chapbook that pairs original poems with meditative art and guided reflection prompts for small
+        groups.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .lead {
+    max-width: 52rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .projects {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  article {
+    background: white;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(26, 31, 54, 0.08);
+    box-shadow: 0 18px 28px -24px rgba(37, 56, 88, 0.6);
+  }
+</style>

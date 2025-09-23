@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Musing | M. Baldwin-Smith" description="Reflective essays and notes on ministry, culture, and technology.">
+  <h1>Musing</h1>
+  <p class="lead">
+    Essays and reflections where I process what I am reading, learning, and experiencing. Consider these thought-maps for
+    future sermons, community work, and creative exploration.
+  </p>
+
+  <section class="musings">
+    <article>
+      <h2>When Code Meets Community</h2>
+      <p>
+        How can technologists design tools that honor pastoral wisdom? I explore ways to build digital platforms that keep
+        people at the center.
+      </p>
+    </article>
+
+    <article>
+      <h2>Learning Sabbath</h2>
+      <p>
+        Rest is holy resistance. This reflection traces my journey from productivity obsession to rhythms shaped by grace.
+      </p>
+    </article>
+
+    <article>
+      <h2>Notes from the Margins</h2>
+      <p>
+        A meditation on what I am noticing in our communities&mdash;the whispers, the aches, and the persistent hope that
+        God is near.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .lead {
+    max-width: 50rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .musings {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  article {
+    background: white;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(26, 31, 54, 0.08);
+    box-shadow: 0 14px 24px -22px rgba(37, 56, 88, 0.6);
+  }
+</style>

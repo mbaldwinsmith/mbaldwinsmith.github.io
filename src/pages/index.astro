@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="M. Baldwin-Smith | Home" description="Welcome to my personal corner of the web where prayers, poetry, musings, and creative work live together.">
+  <section class="hero">
+    <p class="eyebrow">Welcome</p>
+    <h1>Faithful reflections & creative expression</h1>
+    <p>
+      This is a growing collection of the words, projects, and prayers that shape my days. Explore a blend of
+      spirituality, artistry, and thoughtful experimentation.
+    </p>
+  </section>
+
+  <section class="grid">
+    <article>
+      <h2>About Me</h2>
+      <p>
+        Discover the story behind the work&mdash;the experiences, convictions, and curiosities that keep me creating and
+        serving.
+      </p>
+      <a class="button" href="/about-me">Read my story</a>
+    </article>
+
+    <article>
+      <h2>Prayers</h2>
+      <p>
+        A curated collection of prayers for different seasons and moments, written to encourage and steady the heart.
+      </p>
+      <a class="button" href="/prayers">Explore prayers</a>
+    </article>
+
+    <article>
+      <h2>Poetry</h2>
+      <p>
+        Poems that trace the movement of faith, nature, and daily life&mdash;capturing quiet moments and bold
+        revelations.
+      </p>
+      <a class="button" href="/poetry">Read poetry</a>
+    </article>
+
+    <article>
+      <h2>Musings</h2>
+      <p>
+        Thoughtful reflections and essays on scripture, culture, technology, and what it means to live attentively.
+      </p>
+      <a class="button" href="/musing">Visit the journal</a>
+    </article>
+
+    <article>
+      <h2>Portfolio</h2>
+      <p>
+        Highlights from my professional and creative projects across ministry, design, and technology.
+      </p>
+      <a class="button" href="/portfolio">View portfolio</a>
+    </article>
+
+    <article>
+      <h2>Contact</h2>
+      <p>
+        Want to collaborate, connect, or request prayer? I would love to hear from you.
+      </p>
+      <a class="button" href="/contact">Get in touch</a>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    max-width: 48rem;
+    margin: 0 auto 4rem auto;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-weight: 600;
+    color: #5a6f9e;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  article {
+    background: white;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: 1.25rem;
+    box-shadow: 0 16px 30px -20px rgba(37, 56, 88, 0.45);
+    border: 1px solid rgba(26, 31, 54, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .button {
+    align-self: flex-start;
+    background: linear-gradient(135deg, #2b6cb0, #805ad5);
+    color: white;
+    text-decoration: none;
+    padding: 0.65rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .button:hover,
+  .button:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -12px rgba(64, 101, 158, 0.7);
+  }
+</style>
