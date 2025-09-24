@@ -11,27 +11,57 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <section class="projects">
     <article>
-      <h2>Digital Discipleship Hub</h2>
+      <h2>Church Attendance Dashboard</h2>
       <p>
-        Designed a resource hub that equips churches with weekly formation tools. Led the content strategy, visual design,
-        and technical implementation using Astro and Tailwind.
+        A data-driven dashboard that helps ministry leaders quickly understand trends in Mass attendance and sacramental
+        participation across multiple parishes. Built with a lightweight Astro front end that consumes JSON exports from
+        diocesan record systems to surface digestible visualizations.
       </p>
+      <ul>
+        <li>Interactive charts for attendance, offertory, and sacramental preparation timelines.</li>
+        <li>Mobile-responsive layout with dark mode support for evening presentations.</li>
+        <li>Downloadable CSV snapshots for parish council reporting and annual stewardship reviews.</li>
+      </ul>
+      <div class="project-links">
+        <a class="button" href="https://mbaldwinsmith.github.io/churchdatadashboard/" target="_blank" rel="noopener">View the live dashboard</a>
+        <a class="button secondary" href="https://github.com/mbaldwinsmith/churchdatadashboard" target="_blank" rel="noopener">Browse the code</a>
+      </div>
     </article>
 
     <article>
-      <h2>Community Care Playbook</h2>
+      <h2>Mark's Markdown Editor</h2>
       <p>
-        Developed a training curriculum for pastoral teams focusing on trauma-informed care, volunteer management, and
-        sustainable rhythms of rest.
+        A focused writing environment that pairs a clean distraction-free canvas with instant Markdown previewing. Ideal
+        for drafting homilies, pastoral letters, and ministry updates while keeping formatting consistent across
+        communication channels.
       </p>
+      <ul>
+        <li>Split-pane interface with live rendering of headings, scripture references, and callouts.</li>
+        <li>Keyboard-first workflow including shortcut palette, autosave, and export to HTML or PDF.</li>
+        <li>Offline-ready Progressive Web App so parish staff can draft content during retreats or site visits.</li>
+      </ul>
+      <div class="project-links">
+        <a class="button" href="https://mbaldwinsmith.github.io/mindfulprayerapp/" target="_blank" rel="noopener">Use the editor</a>
+        <a class="button secondary" href="https://github.com/mbaldwinsmith/markdownEditor" target="_blank" rel="noopener">Explore the repository</a>
+      </div>
     </article>
 
     <article>
-      <h2>Poetry Chapbook</h2>
+      <h2>Catholic Mindfulness &amp; Prayer App</h2>
       <p>
-        Self-published a chapbook that pairs original poems with meditative art and guided reflection prompts for small
-        groups.
+        A contemplative web app that guides users through Ignatian and breath-based prayer practices, pairing daily
+        scripture meditations with mindful breathing timers. Designed to help small groups stay grounded between meetings
+        or during busy ministry seasons.
       </p>
+      <ul>
+        <li>Guided prayer flows with audio narration, gentle haptics, and adjustable pacing.</li>
+        <li>Library of Catholic mindfulness exercises tagged by liturgical season and pastoral need.</li>
+        <li>Personalized practice streaks and gentle reminders to encourage sustainable spiritual rhythms.</li>
+      </ul>
+      <div class="project-links">
+        <a class="button" href="https://mbaldwinsmith.github.io/mindfulprayerapp/" target="_blank" rel="noopener">Start a session</a>
+        <a class="button secondary" href="https://github.com/mbaldwinsmith/mindfulprayerapp" target="_blank" rel="noopener">See how it’s built</a>
+      </div>
     </article>
   </section>
 </BaseLayout>
@@ -55,5 +85,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border-radius: 1.25rem;
     border: 1px solid rgba(26, 31, 54, 0.08);
     box-shadow: 0 18px 28px -24px rgba(37, 56, 88, 0.6);
+  }
+
+  ul {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    background: var(--accent-color, #1a1f36);
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 18px -12px rgba(37, 56, 88, 0.7);
+  }
+
+  .button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 22px -12px rgba(37, 56, 88, 0.8);
+  }
+
+  .button.secondary {
+    background: white;
+    color: var(--accent-color, #1a1f36);
+    border: 1px solid rgba(26, 31, 54, 0.16);
+    box-shadow: none;
+  }
+
+  .button.secondary:hover {
+    background: rgba(26, 31, 54, 0.05);
   }
 </style>
