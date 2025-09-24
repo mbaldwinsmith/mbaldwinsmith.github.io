@@ -12,7 +12,10 @@ const navLinks = [
 
 <header class="site-header">
   <div class="container">
-    <a class="brand" href="/">Mark Baldwin-Smith</a>
+    <a class="brand" href="/">
+      <img class="brand__icon" src="/favicon.jpeg" alt="Mark Baldwin-Smith icon" width="48" height="48" loading="lazy" />
+      Mark Baldwin-Smith
+    </a>
     <nav aria-label="Primary navigation">
       <ul>
         {navLinks.map((link) => (
@@ -60,13 +63,14 @@ const navLinks = [
     gap: 0.65rem;
   }
 
-  .brand::before {
-    content: '';
+  .brand__icon {
     width: 2.4rem;
     height: 2.4rem;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0));
+    object-fit: cover;
+    display: block;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
   }
 
   nav ul {
