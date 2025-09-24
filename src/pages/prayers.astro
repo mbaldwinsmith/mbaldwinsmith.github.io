@@ -3,42 +3,67 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Prayers | Mark Baldwin-Smith" description="Original prayers written for everyday moments and sacred seasons.">
-  <h1>Prayers</h1>
-  <p class="lead">
-    Prayer is where I return to breathe again. These pieces are written for real people walking through real life&mdash;
-    gratitude, grief, celebration, and quiet perseverance.
-  </p>
+  <section class="page-intro surface surface--tinted">
+    <p class="kicker">Prayerbook</p>
+    <h1>Supplications for the journey</h1>
+    <p class="lead">
+      Prayer is where I return to breathe again. These pieces are written for real people walking through real life&mdash;
+      gratitude, grief, celebration, and quiet perseverance. Use them as you will: quietly, aloud, or in the company of those
+      you shepherd.
+    </p>
+  </section>
 
   <section class="prayer-list">
-    <article>
-      <h2>A Bold Prayer</h2>
-      <p>Abba, Father, my eternal rock, thank you for always listening! Lord, I pledge myself, everything I will ever be, to you and Jesus Christ my king.</p>
-      <p>Adonai, help me to serve you in everything that I do. Show me your nature and how to love you fully and above all else. Teach me, O Lord, how to truly love my neighbours as myself.</p>
-      <p>Lead me, Lord, to a life that delights you and delights in you. Correct me, merciful Father, when I err. Purify my heart into the purest gold by the refining fire of your love, so that I can better serve you.</p>
-      <p>My heart sings at the thought of being closer to you, Spring of Living Water, bring me as close to you in this life as delights you and by whatever means you choose.</p>
-      <p>Make me a spring that pours forth your water of life, make me a lamp that never dims, if it pleases you.</p>
-      <p>I ask these things as your adoring child, by the name of your Son, my King, Jesus Christ. Amen.</p>
+    <article class="surface">
+      <header>
+        <h2>A Bold Prayer</h2>
+        <p class="subtitle">For steadfast courage and wholehearted devotion.</p>
+      </header>
+      <div class="prayer-text">
+        <p>Abba, Father, my eternal rock, thank you for always listening! Lord, I pledge myself, everything I will ever be, to you and Jesus Christ my king.</p>
+        <p>Adonai, help me to serve you in everything that I do. Show me your nature and how to love you fully and above all else. Teach me, O Lord, how to truly love my neighbours as myself.</p>
+        <p>Lead me, Lord, to a life that delights you and delights in you. Correct me, merciful Father, when I err. Purify my heart into the purest gold by the refining fire of your love, so that I can better serve you.</p>
+        <p>My heart sings at the thought of being closer to you, Spring of Living Water, bring me as close to you in this life as delights you and by whatever means you choose.</p>
+        <p>Make me a spring that pours forth your water of life, make me a lamp that never dims, if it pleases you.</p>
+        <p>I ask these things as your adoring child, by the name of your Son, my King, Jesus Christ. Amen.</p>
+      </div>
     </article>
   </section>
 </BaseLayout>
 
 <style>
+  .page-intro {
+    display: grid;
+    gap: 1.5rem;
+  }
+
   .lead {
-    max-width: 48rem;
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-size: 1.12rem;
+    line-height: 1.85;
+    color: rgba(36, 28, 21, 0.86);
   }
 
   .prayer-list {
     display: grid;
-    gap: 2rem;
-    margin-top: 3rem;
+    gap: clamp(2rem, 4vw, 3rem);
   }
 
-  article {
-    background: white;
-    padding: 2rem;
-    border-radius: 1.25rem;
-    box-shadow: 0 12px 22px -18px rgba(37, 56, 88, 0.6);
+  article header {
+    display: grid;
+    gap: 0.35rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .subtitle {
+    margin: 0;
+    font-family: 'Libre Franklin', 'Source Serif 4', serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    color: rgba(36, 28, 21, 0.55);
+  }
+
+  .prayer-text p {
+    color: rgba(36, 28, 21, 0.82);
   }
 </style>

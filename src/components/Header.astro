@@ -27,56 +27,103 @@ const navLinks = [
 
 <style>
   .site-header {
-    background: linear-gradient(135deg, #1a1f36, #3a4a6b);
-    color: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(17, 21, 32, 0.88);
+    backdrop-filter: blur(12px);
+    color: #fefbf6;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 32px -28px rgba(13, 14, 21, 0.55);
   }
 
   .container {
     margin: 0 auto;
-    padding: 1.5rem clamp(1rem, 4vw, 2.5rem);
-    max-width: 72rem;
+    padding: 1.1rem clamp(1.2rem, 5vw, 3rem);
+    max-width: 70rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   .brand {
-    font-size: clamp(1.1rem, 4vw, 1.5rem);
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-family: 'Cormorant Garamond', 'Source Serif 4', serif;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
     color: inherit;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .brand::before {
+    content: '';
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0));
   }
 
   nav ul {
     display: flex;
     flex-wrap: wrap;
-    gap: clamp(0.5rem, 2vw, 1.5rem);
+    gap: clamp(0.75rem, 3vw, 2rem);
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
   nav a {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.82);
     text-decoration: none;
+    font-family: 'Libre Franklin', 'Source Serif 4', serif;
     font-weight: 500;
-    transition: color 0.2s ease, transform 0.2s ease;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    border: none;
+    padding-bottom: 0;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.3rem;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
   }
 
   nav a:hover,
-  nav a:focus {
-    color: white;
-    transform: translateY(-2px);
+  nav a:focus-visible {
+    color: #ffffff;
+  }
+
+  nav a:hover::after,
+  nav a:focus-visible::after {
+    transform: scaleX(1);
   }
 
   @media (max-width: 720px) {
     .container {
       flex-direction: column;
       align-items: flex-start;
+      gap: 1rem;
+    }
+
+    nav ul {
+      gap: 0.9rem;
     }
   }
 </style>
