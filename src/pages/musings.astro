@@ -3,20 +3,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Musings | Mark Baldwin-Smith" description="Reflective essays and notes on ministry, culture, and technology.">
-  <section class="page-intro surface surface--tinted">
-    <p class="kicker">Essays</p>
-    <h1>Musings from the study</h1>
-    <p class="lead">
-      These essays are thought-maps for future sermons, community work, and creative exploration. They gather theology,
-      technology, and lived experience into reflective narratives meant to guide faithful practice.
-    </p>
+  <section class="page-hero musings-hero surface surface--tinted">
+    <span class="page-hero__halo" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <div class="page-hero__content musings-hero__content">
+      <p class="kicker">Essays</p>
+      <h1>Musings from the study</h1>
+      <p class="lead">
+        These essays are thought-maps for future sermons, community work, and creative exploration. They gather theology,
+        technology, and lived experience into reflective narratives meant to guide faithful practice.
+      </p>
+      <div class="page-hero__meta">
+        <span class="meta-chip"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Formation</span>
+        <span class="meta-chip"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Ideas</span>
+        <span class="meta-chip"><i class="fa-solid fa-heart" aria-hidden="true"></i> Testimony</span>
+      </div>
+    </div>
   </section>
 
-  <section class="musings">
-    <article class="surface">
-      <header>
+  <section class="musings page-section">
+    <article class="surface musings__feature">
+      <header class="musings__header">
+        <div class="accent-divider" aria-hidden="true"></div>
         <h2>Cosmos to Comforter: my Journey from Atheism to Jesus</h2>
         <p class="subtitle">A testimony of philosophical pursuit meeting the living Christ.</p>
+        <div class="musings__meta-badges">
+          <span class="floating-badge"><i class="fa-solid fa-route" aria-hidden="true"></i>Journey</span>
+          <span class="floating-badge"><i class="fa-solid fa-star" aria-hidden="true"></i>Wonder</span>
+          <span class="floating-badge"><i class="fa-solid fa-water" aria-hidden="true"></i>Baptism</span>
+        </div>
       </header>
       <div class="essay">
         <p>Throughout my teens and twenties, I was an arch-atheist, perhaps even an anti-theist. I didn’t just not believe in God, I hated the very idea of Him. I thought His followers were deluded hypocrites clinging to their Sky-Daddy as an existential comfort blanket. I knew better!</p>
@@ -33,38 +49,75 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p>The big change in my conversion was moving from grasping with my intellect, to having a heartfelt relationship with my Creator. While reason has its place, I believe that it is through His relational quality that God is best known and revealed. The subject of my worship went from being the cosmos to being the Comforter Who created and sustains the cosmos. To my surprise, my restless quest for self-knowledge was fulfilled when, in knowing Him, I came to truly know and love myself.</p>
       </div>
     </article>
+
+    <aside class="surface surface--tinted musings__notes">
+      <h2>What these musings explore</h2>
+      <ul class="glow-list">
+        <li>The meeting point of contemplation, design, and everyday discipleship.</li>
+        <li>Stories that translate philosophical insight into pastoral care.</li>
+        <li>Experiments in prayerful technology and creative ministry.</li>
+      </ul>
+      <p>
+        If you’d like to journey deeper into any of these reflections, reach out. I love pairing essays with conversation and shared
+        discernment.
+      </p>
+    </aside>
   </section>
 </BaseLayout>
 
 <style>
-  .page-intro {
+  .musings-hero {
+    overflow: hidden;
+  }
+
+  .musings-hero__content {
     display: grid;
-    gap: 1.5rem;
+    gap: clamp(1.2rem, 2.5vw, 1.9rem);
   }
 
   .lead {
     font-size: 1.12rem;
-    line-height: 1.85;
+    line-height: 1.9;
     color: rgba(36, 28, 21, 0.86);
   }
 
   .musings {
     display: grid;
-    gap: clamp(2rem, 4vw, 3rem);
+    gap: clamp(2.25rem, 4vw, 3.25rem);
   }
 
-  article header {
+  .musings__feature {
     display: grid;
-    gap: 0.35rem;
+    gap: 1.75rem;
+    position: relative;
+    overflow: hidden;
   }
 
-  .subtitle {
-    margin: 0;
-    font-family: 'Libre Franklin', 'Source Serif 4', serif;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 0.75rem;
-    color: rgba(36, 28, 21, 0.55);
+  .musings__feature::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(138, 90, 60, 0.14), transparent 65%),
+      radial-gradient(circle at 86% 78%, rgba(188, 209, 202, 0.12), transparent 60%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .musings__feature > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .musings__header {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .musings__meta-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .essay {
@@ -74,6 +127,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .essay h3 {
-    margin-bottom: -0.75rem;
+    margin-bottom: -0.5rem;
+  }
+
+  .musings__notes {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .musings__notes ul {
+    margin-top: 0.5rem;
   }
 </style>

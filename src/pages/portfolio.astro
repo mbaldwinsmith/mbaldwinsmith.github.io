@@ -3,24 +3,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Portfolio | Mark Baldwin-Smith" description="Selected ministry, technology, and creative projects.">
-  <section class="page-intro surface surface--tinted">
-    <p class="kicker">Portfolio</p>
-    <h1>Projects at the intersection of faith &amp; design</h1>
-    <p class="lead">
-      A sampling of the projects that have shaped my journey. From ministry initiatives to digital products, each reflects a
-      commitment to prayerful discernment, thoughtful design, and hospitable user experience.
-    </p>
+  <section class="page-hero portfolio-hero surface surface--tinted">
+    <span class="page-hero__halo" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <div class="page-hero__content portfolio-hero__content">
+      <p class="kicker">Portfolio</p>
+      <h1>Projects at the intersection of faith &amp; design</h1>
+      <p class="lead">
+        A sampling of the projects that have shaped my journey. From ministry initiatives to digital products, each reflects a
+        commitment to prayerful discernment, thoughtful design, and hospitable user experience.
+      </p>
+      <div class="page-hero__meta">
+        <span class="meta-chip"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Analytics</span>
+        <span class="meta-chip"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i> Design</span>
+        <span class="meta-chip"><i class="fa-solid fa-hands-holding" aria-hidden="true"></i> Ministry</span>
+      </div>
+    </div>
   </section>
 
-  <section class="projects">
-    <article class="surface">
-      <header>
+  <section class="projects page-section">
+    <article class="surface project-card">
+      <header class="project-card__header">
+        <div class="accent-divider" aria-hidden="true"></div>
         <h2>Church Attendance Dashboard</h2>
         <p class="subtitle">Interactive analytics for pastoral insight.</p>
+        <div class="project-card__meta">
+          <span class="floating-badge"><i class="fa-solid fa-database" aria-hidden="true"></i>Data craft</span>
+          <span class="floating-badge"><i class="fa-solid fa-chart-line" aria-hidden="true"></i>Trend analysis</span>
+        </div>
       </header>
       <p>Church Attendance Dashboard is a web tool that lets you upload a CSV of church attendance data—broken down by week, site, service, and kids check-in—and then interactively visualize trends over time. It generates charts and summaries such as total and average attendance, peak weeks, and distributions across services/sites. The app uses a placeholder dataset by default, but you can replace it with your own data formatted according to the specified CSV schema.</p>
       <h3>Highlights</h3>
-      <ul>
+      <ul class="project-card__list glow-list">
         <li>Filter and slice data by year, site, service, and metric to explore specific subsets.</li>
         <li>Visualisations including weekly trend lines, monthly bar charts, and pie charts of service/site distributions.</li>
         <li>Tabular “Recent Weeks” view showing raw data entries (up to 50) filtered by selected parameters.</li>
@@ -31,16 +46,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </article>
 
-    <article class="surface">
-      <header>
+    <article class="surface project-card">
+      <header class="project-card__header">
+        <div class="accent-divider" aria-hidden="true"></div>
         <h2>Mark&#39;s Markdown Editor</h2>
         <p class="subtitle">A contemplative writing environment for the web.</p>
+        <div class="project-card__meta">
+          <span class="floating-badge"><i class="fa-solid fa-keyboard" aria-hidden="true"></i>Writing flow</span>
+          <span class="floating-badge"><i class="fa-solid fa-eye" aria-hidden="true"></i>Live preview</span>
+        </div>
       </header>
       <p>
         Mark&#39;s Markdown Editor progressive web app is a web-based tool that allows users to write, edit, and preview Markdown content in real time. The interface is minimalist and user-friendly: you can type Markdown text on one side and immediately see the rendered output on the other (or toggle views). The editor supports basic formatting, links, lists, code blocks, headings, and seamless switching between edit and preview modes, making it convenient for drafting documents, notes, or writing content for web pages.
       </p>
       <h3>Highlights</h3>
-      <ul>
+      <ul class="project-card__list glow-list">
         <li>Live side-by-side preview so changes in Markdown are instantly reflected in the rendered version.</li>
         <li>Support for standard Markdown syntax elements (headings, lists, links, code blocks, images, etc.).</li>
         <li>Simple, calm UI designed for distraction-free writing and easy switching between editing and viewing modes.</li>
@@ -51,16 +71,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </article>
 
-    <article class="surface">
-      <header>
+    <article class="surface project-card">
+      <header class="project-card__header">
+        <div class="accent-divider" aria-hidden="true"></div>
         <h2>Regula</h2>
         <p class="subtitle">A mindful companion for rhythms of prayer.</p>
+        <div class="project-card__meta">
+          <span class="floating-badge"><i class="fa-solid fa-bezier-curve" aria-hidden="true"></i>Product design</span>
+          <span class="floating-badge"><i class="fa-solid fa-clock" aria-hidden="true"></i>Habit tracking</span>
+        </div>
       </header>
       <p>
         Regula is a web-based tool focused on helping users integrate mindfulness with Catholic prayer practices. It offers guided prayer experiences, tracks when and how prayers are practiced, and supports reflection on prayer habits over time. The app is structured to help users develop consistency, mindfulness, and deeper awareness in their spiritual life through tangible tracking and gentle prompts.
       </p>
       <h3>Highlights</h3>
-      <ul>
+      <ul class="project-card__list glow-list">
         <li>Guided, themed prayer sessions to cultivate an intentional prayer life.</li>
         <li>A log or tracking system that records prayer sessions so patterns and consistency can be seen at a glance.</li>
         <li>Reflective feedback and visualisations to help users understand their prayer rhythms and growth.</li>
@@ -70,50 +95,85 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <a class="button secondary" href="https://github.com/mbaldwinsmith/mindfulprayerapp" target="_blank" rel="noopener">See how it’s built</a>
       </div>
     </article>
+
+    <aside class="surface surface--tinted projects__notes">
+      <h2>How I approach collaborations</h2>
+      <ul class="glow-list">
+        <li>Begin with prayer and clarity about the people we aim to serve.</li>
+        <li>Prototype quickly, invite feedback, and iterate with pastoral sensitivity.</li>
+        <li>Deliver tools that feel beautiful, resilient, and rooted in Gospel hope.</li>
+      </ul>
+    </aside>
   </section>
 </BaseLayout>
 
 <style>
-  .page-intro {
+  .portfolio-hero {
+    overflow: hidden;
+  }
+
+  .portfolio-hero__content {
     display: grid;
-    gap: 1.5rem;
+    gap: clamp(1.2rem, 2.4vw, 1.85rem);
   }
 
   .lead {
     font-size: 1.12rem;
-    line-height: 1.85;
+    line-height: 1.9;
     color: rgba(36, 28, 21, 0.86);
   }
 
   .projects {
     display: grid;
-    gap: clamp(2rem, 4vw, 3rem);
+    gap: clamp(2.25rem, 4vw, 3.25rem);
   }
 
-  article header {
+  .project-card {
     display: grid;
-    gap: 0.35rem;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
   }
 
-  .subtitle {
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(138, 90, 60, 0.12), transparent 65%),
+      radial-gradient(circle at 78% 82%, rgba(188, 209, 202, 0.1), transparent 60%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .project-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-card__header {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .project-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .project-card__list {
     margin: 0;
-    font-family: 'Libre Franklin', 'Source Serif 4', serif;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 0.75rem;
-    color: rgba(36, 28, 21, 0.55);
-  }
-
-  ul {
-    margin: 1.5rem 0;
-    padding-left: 1.5rem;
-    display: grid;
-    gap: 0.65rem;
   }
 
   .project-links {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+  }
+
+  .projects__notes {
+    display: grid;
+    gap: 1rem;
   }
 </style>
