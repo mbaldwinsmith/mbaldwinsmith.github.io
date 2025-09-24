@@ -2,35 +2,103 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About Me | Mark Baldwin-Smith" description="Learn more about the heart and story behind these prayers, poems, and projects.">
-  <h1>About Me</h1>
-  <p>
-    I am a pilgrim of words, symbols, and faith—walking a path where poetry, prayer, and vision entwine. My life is rooted in Christ, yet open to the echoes of wisdom scattered through creation, attentive to the whispers of silence, story, and song. I write and create to trace the outlines of a “sacred history,” the living patterns of exile and return, death and renewal, that mark both my own journey and the journey of all who seek light in the dark.
-  </p>
-  <p>
-    My work is an offering of both imagination and craft. I build tools that help communities see themselves more clearly, weaving numbers into stories, data into living maps, projects into places where people belong. I shape dashboards, spaces, and digital ecosystems not only for efficiency but also for beauty—for I believe that clarity and wonder belong together, that even the most practical work can reflect a higher order.
-  </p>
-  <p>
-    Between these poles of spirit and craft, I search for integration: a life where creativity serves community, where faith sparks vision, where friendship is celebrated in poems, images, and songs. The threads of my work—whether a fractal image, a line of verse, a prayer, or a an app—are bound by a single desire: to reflect the Logos, the living Word, in patterns of wisdom, joy, and renewal.
-  </p>]
-  </section>
+<BaseLayout title="About Me | Mark Baldwin-Smith" description="Meet the writer, technologist, and minister behind these reflections.">
+  <article class="profile">
+    <header class="profile__intro surface surface--tinted">
+      <p class="kicker">About</p>
+      <h1>Called to hold faith and craft together</h1>
+      <p class="lead">
+        I am a pilgrim of words, symbols, and sacrament&mdash;walking a path where poetry, prayer, and design entwine. My life is rooted in Christ,
+        yet open to the echoes of wisdom scattered through creation. I write and build to trace the outlines of a sacred history: exile and return,
+        death and renewal, ordinary work suffused with the radiance of grace.
+      </p>
+    </header>
+
+    <section class="profile__section surface">
+      <h2>A vocation of integration</h2>
+      <p>
+        My work is an offering of imagination and craft. I build tools that help communities see themselves more clearly, weaving numbers into
+        stories, data into living maps, and projects into places of belonging. The dashboards, digital spaces, and ecosystems I shape are measured
+        not only by efficiency but also by beauty. I believe clarity and wonder belong together&mdash;that even the most practical labour can be an icon
+        of a higher order.
+      </p>
+      <p>
+        Between spirit and craft I search for integration: a life where creativity serves community, where faith sparks vision, and where friendship
+        is celebrated in poems, images, and songs. Every thread&mdash;whether a fractal image, a line of verse, a prayer, or an application&mdash;is bound by a
+        single desire: to reflect the Logos, the living Word, in patterns of wisdom, joy, and renewal.
+      </p>
+    </section>
+
+    <section class="profile__section surface">
+      <h2>Guiding convictions</h2>
+      <ul class="principles">
+        <li>
+          <h3>Contemplative presence</h3>
+          <p>I begin with prayer and silence so that every project is anchored in attentive listening.</p>
+        </li>
+        <li>
+          <h3>Craft with consequence</h3>
+          <p>I pursue design and data work that dignifies people, clarifies complex stories, and serves the flourishing of the Church.</p>
+        </li>
+        <li>
+          <h3>Hospitality of language</h3>
+          <p>Words should invite, console, and challenge. Poetry and prose become rooms where others can rest and be renewed.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="profile__section surface surface--tinted">
+      <h2>Current work</h2>
+      <p>
+        I serve communities in Cambridge and beyond through ministry, discipleship, and digital strategy. I collaborate with churches and
+        organisations to cultivate rhythms of prayer, design formative experiences, and craft tools that illuminate what God is doing among us.
+      </p>
+      <blockquote>
+        "The threads of my work&mdash;poems, prayers, technology, friendships&mdash;are all ways of saying yes to the call of Christ."
+      </blockquote>
+    </section>
+  </article>
 </BaseLayout>
 
 <style>
-  .lead {
-    font-size: 1.125rem;
-    line-height: 1.9;
-    max-width: 48rem;
-  }
-
-  .content {
+  .profile {
     display: grid;
-    gap: 2rem;
-    margin-top: 3rem;
-    max-width: 52rem;
+    gap: clamp(2rem, 4vw, 3rem);
   }
 
-  h2 {
-    font-size: 1.6rem;
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: rgba(36, 28, 21, 0.86);
+  }
+
+  .profile__section {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .principles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .principles li {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .principles h3 {
+    margin: 0;
+    font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+  }
+
+  @media (min-width: 720px) {
+    .principles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
   }
 </style>
