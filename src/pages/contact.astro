@@ -3,118 +3,200 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Contact | Mark Baldwin-Smith" description="Reach out for collaboration, prayer requests, or speaking opportunities.">
-  <section class="contact-card surface surface--tinted">
-    <h1>Connect with me</h1>
-    <ul class="social-links" aria-label="Social media">
-      <li>
-        <a
-          class="social-link"
-          href="https://github.com/mbaldwinsmith"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-        >
-          <span class="icon-box" aria-hidden="true">
-            <i class="social-icon fa-brands fa-github"></i>
-          </span>
-          <span>GitHub</span>
-        </a>
-      </li>
-      <li>
-        <a
-          class="social-link"
-          href="https://www.instagram.com/plato2paraclete/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-        >
-          <span class="icon-box" aria-hidden="true">
-            <i class="social-icon fa-brands fa-instagram"></i>
-          </span>
-          <span>Instagram</span>
-        </a>
-      </li>
-      <li>
-        <a
-          class="social-link"
-          href="https://x.com/plato2paraclete"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="X"
-        >
-          <span class="icon-box" aria-hidden="true">
-            <i class="social-icon fa-brands fa-x-twitter"></i>
-          </span>
-          <span>X</span>
-        </a>
-      </li>
-      <li>
-        <a
-          class="social-link"
-          href="https://www.linkedin.com/in/markbaldwinsmith/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-        >
-          <span class="icon-box" aria-hidden="true">
-            <i class="social-icon fa-brands fa-linkedin"></i>
-          </span>
-          <span>LinkedIn</span>
-        </a>
-      </li>
-      <li>
-        <a
-          class="social-link"
-          href="https://www.threads.com/@plato2paraclete"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Threads"
-        >
-          <span class="icon-box" aria-hidden="true">
-            <i class="social-icon fa-brands fa-threads"></i>
-          </span>
-          <span>Threads</span>
-        </a>
-      </li>
-    </ul>
+  <section class="page-hero contact-hero surface surface--tinted">
+    <span class="page-hero__halo" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <div class="page-hero__content contact-hero__content">
+      <p class="kicker">Contact</p>
+      <h1>Connect with me</h1>
+      <p class="lead">
+        I welcome conversations about collaborative ministry, data storytelling for the Church, and prayer requests from fellow
+        pilgrims. Send a note if you sense a partnership, need a listening ear, or would like me to speak with your community.
+      </p>
+      <div class="page-hero__meta">
+        <span class="meta-chip"><i class="fa-solid fa-comments" aria-hidden="true"></i> Collaboration</span>
+        <span class="meta-chip"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i> Speaking</span>
+        <span class="meta-chip"><i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i> Prayer support</span>
+      </div>
+    </div>
   </section>
 
+  <section class="contact page-section">
+    <article class="surface contact-card">
+      <div class="contact-card__intro">
+        <div class="accent-divider" aria-hidden="true"></div>
+        <h2>Ways to reach out</h2>
+        <p>
+          Choose a channel below and drop me a message with a few details about how I can serve you or your community. I read every
+          note prayerfully and reply as soon as I can.
+        </p>
+        <div class="contact-card__tags">
+          <span class="floating-badge"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i>Thoughtful dialogue</span>
+          <span class="floating-badge"><i class="fa-solid fa-people-group" aria-hidden="true"></i>Community building</span>
+        </div>
+      </div>
+
+      <ul class="social-links contact-card__links" aria-label="Contact channels">
+        <li>
+          <a
+            class="social-link"
+            href="https://github.com/mbaldwinsmith"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
+            <span class="icon-box" aria-hidden="true">
+              <i class="social-icon fa-brands fa-github"></i>
+            </span>
+            <div>
+              <span class="social-title">GitHub</span>
+              <span class="social-subtitle">Browse repositories &amp; open issues</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            class="social-link"
+            href="https://www.instagram.com/plato2paraclete/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <span class="icon-box" aria-hidden="true">
+              <i class="social-icon fa-brands fa-instagram"></i>
+            </span>
+            <div>
+              <span class="social-title">Instagram</span>
+              <span class="social-subtitle">Visual glimpses of daily prayer &amp; art</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            class="social-link"
+            href="https://x.com/plato2paraclete"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X"
+          >
+            <span class="icon-box" aria-hidden="true">
+              <i class="social-icon fa-brands fa-x-twitter"></i>
+            </span>
+            <div>
+              <span class="social-title">X</span>
+              <span class="social-subtitle">Short reflections &amp; ministry updates</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            class="social-link"
+            href="https://www.linkedin.com/in/markbaldwinsmith/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            <span class="icon-box" aria-hidden="true">
+              <i class="social-icon fa-brands fa-linkedin"></i>
+            </span>
+            <div>
+              <span class="social-title">LinkedIn</span>
+              <span class="social-subtitle">Professional collaborations &amp; speaking</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            class="social-link"
+            href="https://www.threads.com/@plato2paraclete"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Threads"
+          >
+            <span class="icon-box" aria-hidden="true">
+              <i class="social-icon fa-brands fa-threads"></i>
+            </span>
+            <div>
+              <span class="social-title">Threads</span>
+              <span class="social-subtitle">Conversational updates &amp; encouragement</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </article>
+
+    <aside class="surface surface--tinted contact-blessing">
+      <h2>Prayer before correspondence</h2>
+      <p>
+        Holy Spirit, prepare our words with kindness, sharpen our discernment, and let this exchange knit us more closely to your
+        mission. May every message sow encouragement and bear fruit for your Kingdom. Amen.
+      </p>
+    </aside>
+  </section>
 </BaseLayout>
 
 <style>
+  .contact-hero {
+    overflow: hidden;
+  }
+
+  .contact-hero__content {
+    display: grid;
+    gap: clamp(1.2rem, 2.4vw, 1.75rem);
+  }
+
   .lead {
     max-width: 48rem;
     font-size: 1.1rem;
-    line-height: 1.8;
+    line-height: 1.85;
+  }
+
+  .contact {
+    display: grid;
+    gap: clamp(2.25rem, 4vw, 3.25rem);
   }
 
   .contact-card {
-    margin-top: 2.5rem;
     display: grid;
-    gap: 1.25rem;
+    gap: clamp(1.75rem, 3vw, 2.5rem);
   }
 
-  .social-intro {
-    margin-top: 2rem;
-    font-weight: 600;
+  .contact-card__intro {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .contact-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .social-links {
-    margin: 1rem 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
     display: grid;
-    gap: 0.75rem;
+    gap: 0.9rem;
+  }
+
+  .contact-card__links {
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   }
 
   .social-link {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.85rem;
     color: rgba(36, 28, 21, 0.82);
     text-decoration: none;
     font-weight: 600;
-    transition: transform 0.2s ease, color 0.2s ease;
+    padding: 0.85rem;
+    border-radius: 1.1rem;
+    border: 1px solid rgba(92, 73, 58, 0.12);
+    background: rgba(255, 255, 255, 0.6);
+    transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .social-link:focus-visible {
@@ -125,32 +207,57 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .icon-box {
     display: grid;
     place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 0.85rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.9rem;
     background: rgba(138, 90, 60, 0.08);
     color: var(--accent-dark);
     transition: background 0.2s ease, color 0.2s ease;
   }
 
   .social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.4rem;
-    height: 1.4rem;
-    font-size: 1.4rem;
+    font-size: 1.35rem;
+  }
+
+  .social-title {
+    display: block;
+  }
+
+  .social-subtitle {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(36, 28, 21, 0.6);
   }
 
   .social-link:hover,
   .social-link:focus-visible {
     color: var(--accent-dark);
-    transform: translateX(2px);
+    transform: translateY(-2px);
+    border-color: rgba(138, 90, 60, 0.28);
+    box-shadow: 0 14px 24px -18px rgba(42, 31, 22, 0.55);
   }
 
   .social-link:hover .icon-box,
   .social-link:focus-visible .icon-box {
-    background: linear-gradient(135deg, rgba(138, 90, 60, 0.15), rgba(94, 60, 40, 0.3));
-    color: var(--accent-dark);
+    background: linear-gradient(135deg, rgba(138, 90, 60, 0.22), rgba(94, 60, 40, 0.4));
+    color: var(--surface);
+  }
+
+  .contact-blessing {
+    display: grid;
+    gap: 0.85rem;
+    text-align: left;
+  }
+
+  .contact-blessing h2 {
+    margin: 0;
+  }
+
+  @media (min-width: 960px) {
+    .contact-card {
+      grid-template-columns: 1.2fr 1fr;
+      align-items: start;
+    }
   }
 </style>
