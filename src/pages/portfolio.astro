@@ -12,15 +12,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="projects">
     <article>
       <h2>Church Attendance Dashboard</h2>
-      <p>
-        A data-driven dashboard that helps ministry leaders quickly understand trends in Mass attendance and sacramental
-        participation across multiple parishes. Built with a lightweight Astro front end that consumes JSON exports from
-        diocesan record systems to surface digestible visualizations.
-      </p>
+      <p>The Church Attendance Dashboard is a web tool that lets you upload a CSV of church attendance data—broken down by week, site, service, and kids check-in—and then interactively visualize trends over time. It generates charts and summaries such as total and average attendance, peak weeks, and distributions across services/sites. The app uses a placeholder dataset by default, but you can replace it with your own data formatted according to the specified CSV schema.</p>
+
+      <h3>Features:</h3>
       <ul>
-        <li>Interactive charts for attendance, offertory, and sacramental preparation timelines.</li>
-        <li>Mobile-responsive layout with dark mode support for evening presentations.</li>
-        <li>Downloadable CSV snapshots for parish council reporting and annual stewardship reviews.</li>
+        <li>
+          Filter and slice data by year, site, service, and metric (attendance vs kids checked-in) to explore specific subsets
+        </li>
+        <li>
+          Visualizations including weekly trend lines, monthly bar charts, and pie charts of service/site distributions
+        </li>
+        <li>
+          Tabular “Recent Weeks” view showing raw data entries (up to 50) filtered by selected parameters
+        </li>
       </ul>
       <div class="project-links">
         <a class="button" href="https://mbaldwinsmith.github.io/churchdatadashboard/" target="_blank" rel="noopener">View the live dashboard</a>
@@ -31,17 +35,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article>
       <h2>Mark's Markdown Editor</h2>
       <p>
-        A focused writing environment that pairs a clean distraction-free canvas with instant Markdown previewing. Ideal
-        for drafting homilies, pastoral letters, and ministry updates while keeping formatting consistent across
-        communication channels.
+        The Markdown Editor app by mbaldwinsmith is a browser-based tool that allows users to write, edit, and preview Markdown content in real time. The interface is minimalist and user-friendly: you can type Markdown text on one side and immediately see the rendered output on the other (or toggle views). The editor supports basic formatting, links, lists, code blocks, headings, and seamless switching between edit and preview modes, making it convenient for drafting documents, notes, or writing content for web pages.
       </p>
+
+      <h3>Features:</h3>
       <ul>
-        <li>Split-pane interface with live rendering of headings, scripture references, and callouts.</li>
-        <li>Keyboard-first workflow including shortcut palette, autosave, and export to HTML or PDF.</li>
-        <li>Offline-ready Progressive Web App so parish staff can draft content during retreats or site visits.</li>
+        <li>
+          Live side-by-side preview (or toggleable view) so changes in Markdown are instantly reflected in the rendered version
+        </li>
+        <li>
+          Support for standard Markdown syntax elements (headings, lists, links, code blocks, images, etc.)
+        </li>
+        <li>
+          Simple, clean UI designed for distraction-free writing and easy switching between editing and viewing modes
+        </li>
       </ul>
       <div class="project-links">
-        <a class="button" href="https://mbaldwinsmith.github.io/mindfulprayerapp/" target="_blank" rel="noopener">Use the editor</a>
+        <a class="button" href="https://mbaldwinsmith.github.io/markdownEditor//" target="_blank" rel="noopener">Use the editor</a>
         <a class="button secondary" href="https://github.com/mbaldwinsmith/markdownEditor" target="_blank" rel="noopener">Explore the repository</a>
       </div>
     </article>
@@ -49,14 +59,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article>
       <h2>Catholic Mindfulness &amp; Prayer App</h2>
       <p>
-        A contemplative web app that guides users through Ignatian and breath-based prayer practices, pairing daily
-        scripture meditations with mindful breathing timers. Designed to help small groups stay grounded between meetings
-        or during busy ministry seasons.
+        The Mindful Prayer App is a web-based tool focused on helping users integrate mindfulness with Catholic prayer practices. It offers guided prayer experiences, tracks when and how prayers are practiced, and supports reflection on prayer habits over time. The app is structured to help users develop consistency, mindfulness, and deeper awareness in their spiritual life through tangible tracking and gentle prompts.
       </p>
+
+      <h3>Features:</h3>
       <ul>
-        <li>Guided prayer flows with audio narration, gentle haptics, and adjustable pacing.</li>
-        <li>Library of Catholic mindfulness exercises tagged by liturgical season and pastoral need.</li>
-        <li>Personalized practice streaks and gentle reminders to encourage sustainable spiritual rhythms.</li>
+        <li>
+          Guided, themed prayer sessions (e.g. focusing on presence, gratitude, or scripture) to cultivate an intentional prayer life
+        </li>
+        <li>
+          A log or tracking system that records prayer sessions (time, duration, theme) so you can see patterns and consistency
+        </li>
+        <li>
+          Reflective feedback and visualizations (e.g. summaries, charts, or trends) to help users understand their prayer rhythms and growth
+        </li>
       </ul>
       <div class="project-links">
         <a class="button" href="https://mbaldwinsmith.github.io/mindfulprayerapp/" target="_blank" rel="noopener">Start a session</a>
