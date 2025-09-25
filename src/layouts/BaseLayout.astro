@@ -2,7 +2,13 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-const { title = 'Mark Baldwin-Smith', description = 'Personal reflections, prayers, and creative work.' } = Astro.props;
+const {
+  title = 'Mark Baldwin-Smith',
+  description = 'Personal reflections, prayers, and creative work.',
+} = Astro.props;
+const currentURL = Astro.url;
+const canonicalURL = Astro.site ? new URL(currentURL.pathname, Astro.site) : currentURL;
+const ogImageURL = Astro.site ? new URL('/favicon.jpeg', Astro.site).href : '/favicon.jpeg';
 ---
 
 <html lang="en">
@@ -11,6 +17,17 @@ const { title = 'Mark Baldwin-Smith', description = 'Personal reflections, praye
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL.href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="Mark Baldwin-Smith" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
     <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,8 +44,9 @@ const { title = 'Mark Baldwin-Smith', description = 'Personal reflections, praye
     />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <Header />
-    <main class="page">
+    <main id="main-content" class="page">
       <slot />
     </main>
     <Footer />
@@ -154,6 +172,30 @@ const { title = 'Mark Baldwin-Smith', description = 'Personal reflections, praye
   :global(a:focus-visible) {
     color: var(--accent);
     border-color: rgba(138, 90, 60, 0.5);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--surface);
+    color: var(--text);
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    clip-path: inset(0 round 999px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 999;
+  }
+
+  .skip-link:focus {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   :global(::selection) {

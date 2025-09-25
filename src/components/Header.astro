@@ -8,6 +8,16 @@ const navLinks = [
   { href: '/portfolio', label: 'Portfolio' },
   { href: '/contact', label: 'Contact' },
 ];
+
+const trimmedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isActive = (href: string) => {
+  if (href === '/') {
+    return trimmedPath === '/';
+  }
+
+  const normalized = href.replace(/\/+$/, '');
+  return trimmedPath === normalized;
+};
 ---
 
 <header class="site-header">
@@ -20,7 +30,13 @@ const navLinks = [
       <ul>
         {navLinks.map((link) => (
           <li>
-            <a href={link.href}>{link.label}</a>
+            <a
+              href={link.href}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+              class:list={{ 'nav-link': true, 'nav-link--active': isActive(link.href) }}
+            >
+              {link.label}
+            </a>
           </li>
         ))}
       </ul>
@@ -82,7 +98,7 @@ const navLinks = [
     padding: 0;
   }
 
-  nav a {
+  .nav-link {
     color: rgba(255, 255, 255, 0.82);
     text-decoration: none;
     font-family: 'Libre Franklin', 'Source Serif 4', serif;
@@ -96,7 +112,7 @@ const navLinks = [
     transition: color 0.2s ease;
   }
 
-  nav a::after {
+  .nav-link::after {
     content: '';
     position: absolute;
     left: 0;
@@ -109,14 +125,19 @@ const navLinks = [
     transition: transform 0.25s ease;
   }
 
-  nav a:hover,
-  nav a:focus-visible {
+  .nav-link:hover,
+  .nav-link:focus-visible {
     color: #ffffff;
   }
 
-  nav a:hover::after,
-  nav a:focus-visible::after {
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after,
+  .nav-link--active::after {
     transform: scaleX(1);
+  }
+
+  .nav-link--active {
+    color: #ffffff;
   }
 
   @media (max-width: 720px) {
