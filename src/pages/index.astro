@@ -3,41 +3,56 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Mark Baldwin-Smith | Home" description="Welcome to my personal corner of the web where prayers, poetry, musings, and creative work live together.">
-  <section class="hero surface surface--tinted">
-    <p class="kicker">Welcome</p>
-    <h1>Faithful reflections &amp; luminous craft</h1>
-    <p class="lead">
-      This library gathers the prayers, poems, essays, and experiments that have accompanied my pilgrimage of faith. Wander
-      through these rooms at your leisure; each one is prepared with care for thoughtful companions and fellow seekers.
-    </p>
-    <div class="hero-meta">
-      <div>
-        <h2>What you&#39;ll find</h2>
-        <p>
-          Liturgical prose and poetry, narrative theology, explorations in technology for ministry, and invitations to pray
-          with intentional rhythm.
+  <section class="page-hero home-hero surface surface--tinted">
+    <span class="page-hero__halo" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <div class="page-hero__content home-hero__content">
+      <div class="home-hero__main">
+        <p class="kicker">Welcome</p>
+        <h1>Faithful reflections &amp; luminous craft</h1>
+        <p class="lead">
+          This library gathers the prayers, poems, essays, and experiments that have accompanied my pilgrimage of faith.
+          Wander through these rooms at your leisure; each one is prepared with care for thoughtful companions and fellow
+          seekers.
         </p>
+        <div class="page-hero__meta">
+          <span class="meta-chip"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Prayerbook</span>
+          <span class="meta-chip"><i class="fa-solid fa-feather" aria-hidden="true"></i> Poetry</span>
+          <span class="meta-chip"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Reflection</span>
+        </div>
       </div>
-      <div>
-        <h2>How to begin</h2>
-        <p>
-          Choose the doorway that most interests you below, or simply start reading&mdash;the site is meant to feel like a
-          well-curated study, not a maze.
-        </p>
+      <div class="home-hero__callouts">
+        <article class="surface home-hero__card">
+          <div class="accent-divider" aria-hidden="true"></div>
+          <h2>What you&#39;ll find</h2>
+          <p>
+            Liturgical prose and poetry, narrative theology, explorations in technology for ministry, and invitations to pray
+            with intentional rhythm.
+          </p>
+        </article>
+        <article class="surface home-hero__card">
+          <div class="accent-divider" aria-hidden="true"></div>
+          <h2>How to begin</h2>
+          <p>
+            Choose the doorway that most interests you below, or simply start reading&mdash;the site is meant to feel like a
+            well-curated study, not a maze.
+          </p>
+        </article>
       </div>
     </div>
   </section>
 
-  <section class="collections">
-    <div class="collections__intro">
+  <section class="home-collections page-section">
+    <article class="surface surface--tinted home-collections__intro">
       <p class="kicker">The Library</p>
       <h2>Rooms of practice &amp; imagination</h2>
       <p>
         Each collection is a cabinet of curiosity. Step inside to explore the prayer book, poetic notebooks, theological
         reflections, professional work, and ways to stay in touch.
       </p>
-    </div>
-    <div class="grid">
+    </article>
+    <div class="page-section__grid page-section__grid--columns home-collections__grid">
       <article class="collection-card surface">
         <h3>About Me</h3>
         <p>
@@ -91,137 +106,77 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  .hero {
-    text-align: left;
-    display: grid;
-    gap: clamp(1.5rem, 3vw, 2.75rem);
-    position: relative;
+  .home-hero {
     overflow: hidden;
-    isolation: isolate;
   }
 
-  .hero::before,
-  .hero::after {
-    content: '';
-    position: absolute;
-    width: clamp(18rem, 35vw, 28rem);
-    height: clamp(18rem, 38vw, 32rem);
-    border-radius: 999px;
-    filter: blur(0.5rem);
-    opacity: 0.65;
-    z-index: 0;
-    pointer-events: none;
-    animation: drift 26s ease-in-out infinite;
+  .home-hero__content {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.25rem);
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    align-items: start;
   }
 
-  .hero::before {
-    top: clamp(-6rem, -8vw, -3rem);
-    right: clamp(-5rem, -6vw, -2rem);
-    background: radial-gradient(circle at 30% 30%, rgba(255, 202, 152, 0.6), transparent 70%);
+  .home-hero__main {
+    display: grid;
+    gap: clamp(1.25rem, 2.4vw, 1.85rem);
   }
 
-  .hero::after {
-    bottom: clamp(-7rem, -10vw, -4rem);
-    left: clamp(-4rem, -6vw, -1rem);
-    background: radial-gradient(circle at 60% 60%, rgba(157, 187, 178, 0.45), transparent 65%);
-    animation-delay: -12s;
-  }
-
-  .hero > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  .lead {
+  .home-hero__main .lead {
     font-size: 1.15rem;
-    line-height: 1.85;
+    line-height: 1.9;
     color: rgba(36, 28, 21, 0.88);
-    max-width: 64ch;
+    margin-bottom: 0.25rem;
+  }
+
+  .home-hero__main h1 {
     position: relative;
+    padding-bottom: 0.75rem;
   }
 
-  .lead::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(255, 239, 224, 0.7), rgba(255, 255, 255, 0));
-    opacity: 0.55;
-    border-radius: 1rem;
-    z-index: -1;
-    pointer-events: none;
-  }
-
-  .hero h1 {
-    position: relative;
-  }
-
-  .hero h1::after {
+  .home-hero__main h1::after {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -0.45rem;
-    width: clamp(7rem, 45%, 12rem);
+    bottom: 0;
+    width: clamp(6rem, 45%, 11rem);
     height: 3px;
     background: linear-gradient(90deg, rgba(138, 90, 60, 0.8), rgba(255, 255, 255, 0));
     border-radius: 999px;
   }
 
-  .hero-meta {
+  .home-hero__callouts {
     display: grid;
-    gap: clamp(1.75rem, 3vw, 2.5rem);
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    border-top: 1px solid rgba(92, 73, 58, 0.15);
-    padding-top: clamp(1.5rem, 3vw, 2.5rem);
-    position: relative;
+    gap: clamp(1rem, 2vw, 1.5rem);
   }
 
-  .hero-meta::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: -1px;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(138, 90, 60, 0.35), rgba(255, 255, 255, 0));
-  }
-
-  .hero-meta h2 {
-    font-size: clamp(1.45rem, 3vw, 1.8rem);
-    margin-bottom: 0.75rem;
-  }
-
-  .collections {
+  .home-hero__card {
     display: grid;
-    gap: clamp(2rem, 4vw, 3rem);
-    position: relative;
+    gap: 0.85rem;
+    min-height: 100%;
   }
 
-  .collections__intro p {
-    color: rgba(36, 28, 21, 0.75);
+  .home-hero__card p {
+    color: rgba(36, 28, 21, 0.78);
   }
 
-  .collections__intro h2 {
-    position: relative;
-    display: inline-block;
-    padding-bottom: 0.4rem;
-  }
-
-  .collections__intro h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, rgba(138, 90, 60, 0.9), rgba(255, 255, 255, 0));
-    border-radius: 999px;
-    opacity: 0.65;
-  }
-
-  .grid {
+  .home-collections {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-    gap: clamp(1.5rem, 3vw, 2.5rem);
+    gap: clamp(2.25rem, 4vw, 3.5rem);
+  }
+
+  .home-collections__intro {
+    display: grid;
+    gap: 0.85rem;
+    border: 1px solid rgba(92, 73, 58, 0.16);
+  }
+
+  .home-collections__intro p {
+    color: rgba(36, 28, 21, 0.76);
+  }
+
+  .home-collections__grid {
+    gap: clamp(1.75rem, 3vw, 2.75rem);
   }
 
   .collection-card {
@@ -267,27 +222,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     justify-self: start;
   }
 
-  @keyframes drift {
-    0% {
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-
-    50% {
-      transform: translate3d(1.5rem, -1.5rem, 0) scale(1.05);
-    }
-
-    100% {
-      transform: translate3d(-1.25rem, 1.75rem, 0) scale(0.95);
-    }
-  }
-
-  @media (max-width: 600px) {
-    .hero {
-      text-align: left;
-    }
-
-    .hero h1::after {
-      width: clamp(6rem, 80%, 10rem);
+  @media (max-width: 720px) {
+    .home-hero__content {
+      grid-template-columns: 1fr;
     }
   }
 </style>
