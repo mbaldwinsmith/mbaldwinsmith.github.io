@@ -25,59 +25,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <section class="home-latest page-section">
-    <div class="home-latest__intro surface">
-      <p class="kicker">Recently added</p>
-      <h2>Fresh words for your visit</h2>
-      <p>
-        Returners often ask what is new. These highlights gather the most recent pieces across the library so you can dive in
-        without hunting room to room.
-      </p>
-    </div>
-    <div class="home-latest__grid">
-      <article class="surface home-latest__card">
-        <h3>
-          <a href="/prayers#a-bold-prayer">A Bold Prayer</a>
-        </h3>
-        <p>
-          A wholehearted petition for courage and consecrated devotion, ready to be prayed aloud with friends who need strength
-          for the road ahead.
-        </p>
-        <footer>
-          <span class="meta-chip"><i class="fa-solid fa-flame" aria-hidden="true"></i> Consecration</span>
-          <span class="meta-chip"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Protection</span>
-        </footer>
-      </article>
-
-      <article class="surface home-latest__card">
-        <h3>
-          <a href="/musings#plato-to-paraclete">Cosmos to Comforter</a>
-        </h3>
-        <p>
-          Travel with me from philosophical abstraction to the living Christ&mdash;a testimony that threads contemplation into
-          relationship.
-        </p>
-        <footer>
-          <span class="meta-chip"><i class="fa-solid fa-route" aria-hidden="true"></i> Journey</span>
-          <span class="meta-chip"><i class="fa-solid fa-star" aria-hidden="true"></i> Wonder</span>
-        </footer>
-      </article>
-
-      <article class="surface home-latest__card">
-        <h3>
-          <a href="/poetry">Poetic notebooks</a>
-        </h3>
-        <p>
-          A growing cycle of poems tracing seasons of faith, crafted to slow the heart and widen your sense of the holy in daily
-          life.
-        </p>
-        <footer>
-          <span class="meta-chip"><i class="fa-solid fa-feather" aria-hidden="true"></i> Poetry</span>
-        </footer>
-      </article>
-    </div>
-  </section>
-
   <section class="home-collections page-section">
     <article class="surface surface--tinted home-collections__intro">
       <p class="kicker">The Library</p>
@@ -183,56 +130,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .home-collections {
     display: grid;
     gap: clamp(2.25rem, 4vw, 3.5rem);
-  }
-
-  .home-latest {
-    display: grid;
-    gap: clamp(1.75rem, 3vw, 2.75rem);
-  }
-
-  .home-latest__intro {
-    display: grid;
-    gap: 0.85rem;
-    border: 1px solid rgba(92, 73, 58, 0.16);
-  }
-
-  .home-latest__grid {
-    display: grid;
-    gap: clamp(1.5rem, 3vw, 2.25rem);
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  }
-
-  .home-latest__card {
-    display: grid;
-    gap: 0.75rem;
-    border: 1px solid rgba(92, 73, 58, 0.16);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  }
-
-  .home-latest__card:hover,
-  .home-latest__card:focus-within {
-    transform: translateY(-4px);
-    border-color: rgba(138, 90, 60, 0.3);
-    box-shadow: 0 18px 26px -22px rgba(36, 28, 21, 0.45);
-  }
-
-  .home-latest__card h3 {
-    margin: 0;
-  }
-
-  .home-latest__card p {
-    color: rgba(36, 28, 21, 0.78);
-  }
-
-  .home-latest__card footer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-  }
-
-  .home-latest__card a {
-    border: none;
   }
 
   .home-collections__intro {
