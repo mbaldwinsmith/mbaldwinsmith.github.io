@@ -23,7 +23,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <section class="poems page-section">
-    <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2095234155&color=%23e2b140&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/mark-baldwin-smith" title="Mark Baldwin-Smith" target="_blank" style="color: #cccccc; text-decoration: none;">Mark Baldwin-Smith</a> · <a href="https://soundcloud.com/mark-baldwin-smith/sets/the-golden-thread" title="The Golden Thread" target="_blank" style="color: #cccccc; text-decoration: none;">The Golden Thread</a></div>
+    <div class="surface surface--frosted poems__audio">
+      <div class="poems__audio-copy">
+        <p class="kicker">Listen while you linger</p>
+        <h2 class="poems__audio-title">The Golden Thread</h2>
+        <p>
+          Each poem has a musical companion. Let the playlist drift through the room while you read, pray, or ponder the images
+          in the verses below.
+        </p>
+        <p class="poems__audio-credit">
+          Music composed and performed by
+          <a href="https://soundcloud.com/mark-baldwin-smith" target="_blank" rel="noopener">Mark Baldwin-Smith</a>.
+        </p>
+      </div>
+      <div class="poems__audio-player">
+        <iframe
+          title="SoundCloud playlist: The Golden Thread"
+          allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2095234155&color=%23e2b140&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+        ></iframe>
+        <a class="poems__audio-link" href="https://soundcloud.com/mark-baldwin-smith/sets/the-golden-thread" target="_blank" rel="noopener">
+          Listen on SoundCloud
+          <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
@@ -216,6 +240,94 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .poems {
     display: grid;
     gap: clamp(2.25rem, 4vw, 3.5rem);
+  }
+
+  .poems__audio {
+    display: grid;
+    gap: clamp(1.8rem, 3vw, 2.4rem);
+    padding: clamp(1.8rem, 4vw, 2.8rem);
+    border-radius: 1.2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .poems__audio::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 12% 25%, rgba(226, 177, 64, 0.15), transparent 55%),
+      radial-gradient(circle at 85% 75%, rgba(28, 89, 66, 0.12), transparent 65%);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  .poems__audio > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .poems__audio-copy {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 32rem;
+  }
+
+  .poems__audio-title {
+    font-family: 'Cormorant Garamond', 'Source Serif 4', serif;
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .poems__audio-credit {
+    font-size: 0.95rem;
+    color: rgba(36, 28, 21, 0.7);
+  }
+
+  .poems__audio-credit a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 0.1rem;
+    text-decoration-color: rgba(226, 177, 64, 0.7);
+  }
+
+  .poems__audio-player {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .poems__audio-player iframe {
+    width: min(100%, 520px);
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 0.9rem;
+    box-shadow: 0 20px 45px rgba(16, 32, 23, 0.2);
+  }
+
+  .poems__audio-link {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #1c5942;
+  }
+
+  .poems__audio-link i {
+    font-size: 0.85em;
+  }
+
+  @media (min-width: 880px) {
+    .poems__audio {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: center;
+    }
+
+    .poems__audio-player {
+      justify-items: end;
+    }
   }
 
   .poem-card {
