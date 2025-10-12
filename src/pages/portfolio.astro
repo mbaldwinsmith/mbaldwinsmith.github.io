@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ChurchDashboardImage from './ChurchDashboard.png';
 ---
 
 <BaseLayout title="Portfolio | Mark Baldwin-Smith" description="Selected ministry, technology, and creative projects.">
@@ -33,6 +34,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <span class="floating-badge"><i class="fa-solid fa-chart-line" aria-hidden="true"></i>Trend analysis</span>
         </div>
       </header>
+      <figure class="project-card__media">
+        <img
+          src={ChurchDashboardImage.src}
+          width={ChurchDashboardImage.width}
+          height={ChurchDashboardImage.height}
+          alt="Screenshot preview of the Church Attendance Dashboard interface"
+          loading="lazy"
+        />
+      </figure>
       <p>Church Attendance Dashboard is a web tool that lets you upload a CSV of church attendance data—broken down by week, site, service, and kids check-in—and then interactively visualize trends over time. It generates charts and summaries such as total and average attendance, peak weeks, and distributions across services/sites. The app uses a placeholder dataset by default, but you can replace it with your own data formatted according to the specified CSV schema.</p>
       <h3>Highlights</h3>
       <ul class="project-card__list glow-list">
@@ -162,6 +172,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .project-card__list {
     margin: 0;
+  }
+
+  .project-card__media {
+    border-radius: 0.85rem;
+    border: 1px solid rgba(36, 28, 21, 0.08);
+    overflow: hidden;
+    box-shadow: 0 18px 42px -24px rgba(36, 28, 21, 0.4);
+  }
+
+  .project-card__media img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   .project-links {
