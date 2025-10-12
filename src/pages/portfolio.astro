@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ChurchDashboardImage from './ChurchDashboard.png';
+import MarkdownEditorImage from './MarkdownEditor.png';
+import RegulaImage from './Regula.png';
 ---
 
 <BaseLayout title="Portfolio | Mark Baldwin-Smith" description="Selected ministry, technology, and creative projects.">
@@ -66,7 +68,16 @@ import ChurchDashboardImage from './ChurchDashboard.png';
           <span class="floating-badge"><i class="fa-solid fa-eye" aria-hidden="true"></i>Live preview</span>
         </div>
       </header>
-        <p>Mark&#39;s Markdown Editor progressive web app is a web-based tool that allows users to write, edit, and preview Markdown content in real time. The interface is minimalist and user-friendly: a single-pane editor updates the rendered Markdown instantly as you type, so you can stay focused on the words. The editor supports basic formatting, links, lists, code blocks, headings, and seamless live previewing, making it convenient for drafting documents, notes, or writing content for web pages.</p>
+      <figure class="project-card__media">
+        <img
+          src={MarkdownEditorImage.src}
+          width={MarkdownEditorImage.width}
+          height={MarkdownEditorImage.height}
+          alt="Screenshot preview of Mark&#39;s Markdown Editor interface"
+          loading="lazy"
+        />
+      </figure>
+      <p>Mark&#39;s Markdown Editor progressive web app is a web-based tool that allows users to write, edit, and preview Markdown content in real time. The interface is minimalist and user-friendly: a single-pane editor updates the rendered Markdown instantly as you type, so you can stay focused on the words. The editor supports basic formatting, links, lists, code blocks, headings, and seamless live previewing, making it convenient for drafting documents, notes, or writing content for web pages.</p>
       <h3>Highlights</h3>
       <ul class="project-card__list glow-list">
           <li>Live inline preview so changes in Markdown are instantly reflected in the rendered version without leaving the editor.</li>
@@ -89,6 +100,15 @@ import ChurchDashboardImage from './ChurchDashboard.png';
           <span class="floating-badge"><i class="fa-solid fa-clock" aria-hidden="true"></i>Habit tracking</span>
         </div>
       </header>
+      <figure class="project-card__media">
+        <img
+          src={RegulaImage.src}
+          width={RegulaImage.width}
+          height={RegulaImage.height}
+          alt="Screenshot preview of the Regula prayer companion interface"
+          loading="lazy"
+        />
+      </figure>
       <p>
         Regula is a web-based tool focused on helping users integrate mindfulness with Catholic prayer practices. It offers guided prayer experiences, tracks when and how prayers are practiced, and supports reflection on prayer habits over time. The app is structured to help users develop consistency, mindfulness, and deeper awareness in their spiritual life through tangible tracking and gentle prompts.
       </p>
