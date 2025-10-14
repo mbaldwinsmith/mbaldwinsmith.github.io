@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ChurchDashboardImage from './ChurchDashboard.png';
 import MarkdownEditorImage from './MarkdownEditor.png';
+import RegulaImage from './Regula.png';
 ---
 
 <BaseLayout title="Portfolio | Mark Baldwin-Smith" description="Selected ministry, technology, and creative projects.">
@@ -99,6 +100,15 @@ import MarkdownEditorImage from './MarkdownEditor.png';
           <span class="floating-badge"><i class="fa-solid fa-clock" aria-hidden="true"></i>Habit tracking</span>
         </div>
       </header>
+      <figure class="project-card__media">
+        <img
+          src={RegulaImage.src}
+          width={RegulaImage.width}
+          height={RegulaImage.height}
+          alt="Screenshot preview of the Regula prayer companion interface"
+          loading="lazy"
+        />
+      </figure>
       <p>
         Regula is a web-based tool focused on helping users integrate mindfulness with Catholic prayer practices. It offers guided prayer experiences, tracks when and how prayers are practiced, and supports reflection on prayer habits over time. The app is structured to help users develop consistency, mindfulness, and deeper awareness in their spiritual life through tangible tracking and gentle prompts.
       </p>
