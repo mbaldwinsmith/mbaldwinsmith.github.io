@@ -1,0 +1,391 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const courseSections = [
+  {
+    title: 'Apologetics',
+    items: [
+      {
+        title: 'Apologetics and the New Evangelization',
+        url: 'https://www.getprinciples.com/courses/apologetics-and-the-new-evangelization',
+      },
+    ],
+  },
+  {
+    title: 'Creeds',
+    items: [
+      {
+        title: 'Catechism 101: The Profession of Faith',
+        url: 'https://instituteofcatholicculture.org/courses/catechism-101-the-profession-of-faith',
+      },
+    ],
+  },
+  {
+    title: 'Ecclesiology (The Church)',
+    items: [
+      {
+        title: 'Ecclesiology',
+        url: 'https://catholicstudiesacademy.com/courses/ecclesiology/',
+      },
+    ],
+  },
+  {
+    title: 'Patristics (Church Fathers)',
+    items: [
+      {
+        title: 'The Early Church: History, Theology, and Spirituality',
+        url: 'https://www.getprinciples.com/courses/early-church-history-theology-spirituality',
+      },
+      {
+        title: 'The Fathers of the Church',
+        url: 'https://instituteofcatholicculture.org/courses/the-fathers-of-the-church',
+      },
+    ],
+  },
+  {
+    title: 'Discipleship',
+    items: [
+      {
+        title: 'Catechism 103: Life in Christ',
+        url: 'https://instituteofcatholicculture.org/courses/catechism-103-life-in-christ',
+      },
+      {
+        title: 'Catechism 201: The Art of Catechesis',
+        url: 'https://instituteofcatholicculture.org/courses/catechism-201-the-art-of-catechesis',
+      },
+    ],
+  },
+  {
+    title: 'Doctrine',
+    items: [
+      {
+        title: 'Christology',
+        url: 'https://catholicstudiesacademy.com/courses/christology/',
+      },
+      {
+        title: 'The Holy Trinity',
+        url: 'https://catholicstudiesacademy.com/courses/the-holy-trinity/',
+      },
+      {
+        title: 'Introduction to Moral Theology',
+        url: 'https://catholicstudiesacademy.com/courses/introduction-to-moral-theology/',
+      },
+      {
+        title: 'The Ten Commandments: A Scriptural, Theological, and Moral Study',
+        url: 'https://catholicstudiesacademy.com/courses/ten-commandments/',
+      },
+      {
+        title: 'Theology 101: Fundamentals of Catholic Doctrine',
+        url: 'https://instituteofcatholicculture.org/courses/theology-101-fundamentals-of-catholic-doctrine',
+      },
+      {
+        title: 'Theology 102: The Development of Doctrine',
+        url: 'https://instituteofcatholicculture.org/courses/theology-102-the-development-of-doctrine',
+      },
+    ],
+  },
+  {
+    title: 'Intertextuality',
+    items: [
+      {
+        title: 'Reading the Old Testament in the New: The Gospel of Matthew',
+        url: 'https://stpaulcenter.com/studies-tools/journey-through-scripture/reading-the-old-testament-in-the-new-the-gospel-of-matthew/',
+      },
+    ],
+  },
+  {
+    title: 'Liturgy',
+    items: [
+      {
+        title: 'Sacred Liturgy: History & Principles of Christian Worship',
+        url: 'https://instituteofcatholicculture.org/courses/sacred-liturgy-history-principles-of-christian-worship',
+      },
+    ],
+  },
+  {
+    title: 'Mental Health',
+    items: [
+      {
+        title: 'Sanctuary Course for Catholics',
+        url: 'https://www.sanctuarymentalhealth.org/sanctuary-course-for-catholics/',
+      },
+    ],
+  },
+  {
+    title: 'New Testament',
+    items: [
+      {
+        title: 'Foundations of the New Testament',
+        url: 'https://www.getprinciples.com/courses/foundations-of-the-new-testament',
+      },
+      {
+        title: 'Scripture 102: Introduction to the New Testament',
+        url: 'https://instituteofcatholicculture.org/courses/scripture-102-introduction-to-the-new-testament',
+      },
+    ],
+  },
+  {
+    title: 'Old Testament',
+    items: [
+      {
+        title: 'Scripture 101: Introduction to the Old Testament',
+        url: 'https://instituteofcatholicculture.org/courses/scripture-101-introduction-to-the-old-testament',
+      },
+    ],
+  },
+  {
+    title: 'Philosophy',
+    items: [
+      {
+        title: 'Ancient Philosophy',
+        url: 'https://catholicstudiesacademy.com/courses/ancient-philosophy/',
+      },
+      {
+        title: 'The Crisis of Philosophy: 1900–2000',
+        url: 'https://catholicstudiesacademy.com/courses/crisis-of-philosophy-1900-2000/',
+      },
+      {
+        title: 'Epistemology',
+        url: 'https://catholicstudiesacademy.com/courses/epistemology/',
+      },
+      {
+        title: 'Medieval Philosophy',
+        url: 'https://catholicstudiesacademy.com/courses/medieval-philosophy/',
+      },
+      {
+        title: 'Metaphysics',
+        url: 'https://catholicstudiesacademy.com/courses/metaphysics/',
+      },
+      {
+        title: 'Modern Philosophy',
+        url: 'https://catholicstudiesacademy.com/courses/modern-philosophy/',
+      },
+      {
+        title: 'Philosophy 101: The Pursuit of Wisdom',
+        url: 'https://instituteofcatholicculture.org/courses/philosophy-101-the-pursuit-of-wisdom',
+      },
+      {
+        title: 'Philosophy 102: Reality and the Human Person',
+        url: 'https://instituteofcatholicculture.org/courses/philosophy-102-reality-and-the-human-person',
+      },
+      {
+        title: 'The Philosophy of Art and Beauty',
+        url: 'https://www.getprinciples.com/courses/philosophy-of-art-and-beauty',
+      },
+      {
+        title: 'Traditional Logic: A Practicum in Classical Reasoning',
+        url: 'https://instituteofcatholicculture.org/courses/traditional-logic-a-practicum-in-classical-reasoning',
+      },
+      {
+        title: 'Understanding Human Nature: Man the Jewel of Creation',
+        url: 'https://www.getprinciples.com/courses/understanding-human-nature',
+      },
+    ],
+  },
+  {
+    title: 'Politics',
+    items: [
+      {
+        title: 'Catholic Political Thought 101: Foundations and Principles',
+        url: 'https://instituteofcatholicculture.org/courses/catholic-political-thought-101',
+      },
+      {
+        title: 'Catholic Political Thought 102: Modernity & the Common Good',
+        url: 'https://instituteofcatholicculture.org/courses/catholic-political-thought-102',
+      },
+      {
+        title: 'The History of Western Political Thought',
+        url: 'https://www.getprinciples.com/courses/history-of-western-political-thought',
+      },
+    ],
+  },
+  {
+    title: 'Prayer',
+    items: [
+      {
+        title: 'Catechism 104: Christian Prayer',
+        url: 'https://instituteofcatholicculture.org/courses/catechism-104-christian-prayer',
+      },
+    ],
+  },
+  {
+    title: 'Sacraments',
+    items: [
+      {
+        title: 'Catechism 102: The Celebration of the Christian Mystery',
+        url: 'https://instituteofcatholicculture.org/courses/catechism-102-the-celebration-of-the-christian-mystery',
+      },
+      {
+        title: 'Introduction to Sacramental Theology',
+        url: 'https://thepursuitofwisdom.org/courses/introduction-to-sacramental-theology/',
+      },
+      {
+        title: 'The Lamb’s Supper: The Bible and the Mass',
+        url: 'https://stpaulcenter.com/studies-tools/journey-through-scripture/the-lambs-supper-the-bible-and-the-mass/',
+      },
+    ],
+  },
+  {
+    title: 'Soteriology (Salvation)',
+    items: [
+      {
+        title: 'Covenant Love: Introducing the Biblical Worldview',
+        url: 'https://stpaulcenter.com/studies-tools/journey-through-scripture/covenant-love-introducing-the-biblical-worldview/',
+      },
+      {
+        title: 'God’s Covenant Plan',
+        url: 'https://stpaulcenter.com/studies-tools/journey-through-scripture/gods-covenant-plan/',
+      },
+      {
+        title: '“He Must Reign”: The Kingdom of God in Scripture',
+        url: 'https://stpaulcenter.com/studies-tools/journey-through-scripture/he-must-reign-the-kingdom-of-god-in-scripture/',
+      },
+    ],
+  },
+  {
+    title: 'Virgin Mary',
+    items: [
+      {
+        title: 'Holy Queen: The Mother of God in the Word of God',
+        url: 'https://stpaulcenter.com/studies-tools/journey-through-scripture/holy-queen-the-mother-of-god-in-the-word-of-god/',
+      },
+    ],
+  },
+  {
+    title: 'Virtue',
+    items: [
+      {
+        title: 'Athletics and the Virtues',
+        url: 'https://thepursuitofwisdom.org/courses/athletics-and-the-virtues/',
+      },
+      {
+        title: 'The Cardinal Virtues: Keys to the Good Life',
+        url: 'https://instituteofcatholicculture.org/courses/the-cardinal-virtues-keys-to-the-good-life',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Courses | Mark Baldwin-Smith"
+  description="Free Catholic formation courses curated across apologetics, doctrine, Scripture, philosophy, and more."
+>
+  <section class="page-hero courses-hero surface surface--tinted">
+    <span class="page-hero__halo" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <div class="page-hero__content courses-hero__content">
+      <p class="kicker">Courses</p>
+      <h1>Free Catholic Courses</h1>
+      <p class="lead">
+        Explore a curated library of trusted, no-cost Catholic formation courses spanning theology, Scripture, philosophy,
+        and pastoral practice. Every selection invites deeper discipleship for seekers, catechists, and ministry leaders.
+      </p>
+      <div class="page-hero__meta">
+        <span class="meta-chip"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Formation</span>
+        <span class="meta-chip"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Study</span>
+        <span class="meta-chip"><i class="fa-solid fa-people-group" aria-hidden="true"></i> Community</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="courses page-section">
+    <article class="surface surface--tinted courses__intro">
+      <h2>Curated pathways for formation</h2>
+      <p>
+        These courses are freely available through trusted Catholic institutes and apostolates. Use them to spark parish
+        study groups, personal retreats, or ongoing catechetical formation.
+      </p>
+    </article>
+
+    <div class="courses__grid">
+      {courseSections.map((section) => (
+        <section class="surface course-group">
+          <header>
+            <h3>{section.title}</h3>
+          </header>
+          <ul>
+            {section.items.map((item) => (
+              <li>
+                <a href={item.url} rel="noopener" target="_blank">
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+
+    <p class="compiled-note">Compiled October 2025</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .courses-hero {
+    overflow: hidden;
+  }
+
+  .courses-hero__content {
+    display: grid;
+    gap: clamp(1.2rem, 2.5vw, 1.9rem);
+  }
+
+  .lead {
+    font-size: 1.12rem;
+    line-height: 1.9;
+    color: rgba(36, 28, 21, 0.86);
+  }
+
+  .courses {
+    display: grid;
+    gap: clamp(2.25rem, 4vw, 3.25rem);
+  }
+
+  .courses__intro {
+    display: grid;
+    gap: 0.85rem;
+    border: 1px solid rgba(92, 73, 58, 0.16);
+  }
+
+  .courses__grid {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  @media (min-width: 720px) {
+    .courses__grid {
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    }
+  }
+
+  .course-group {
+    display: grid;
+    gap: 1rem;
+    border: 1px solid rgba(92, 73, 58, 0.18);
+  }
+
+  .course-group header h3 {
+    margin: 0;
+  }
+
+  .course-group ul {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .course-group a {
+    color: var(--accent-dark);
+    border-bottom: 1px solid rgba(138, 90, 60, 0.25);
+    padding-bottom: 0.1em;
+  }
+
+  .compiled-note {
+    font-style: italic;
+    color: rgba(36, 28, 21, 0.65);
+    justify-self: end;
+  }
+</style>
