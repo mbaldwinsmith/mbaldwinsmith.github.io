@@ -9,7 +9,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <span class="page-hero__sparkle" aria-hidden="true"></span>
     <div class="page-hero__content poetry-hero__content">
       <p class="kicker">Poetry</p>
-      <h1>Verses for pilgrims and prophets</h1>
+      <h1>Verses for Pilgrims and Prophets</h1>
       <p class="lead">
         I write poems as a practice of listening. They are fragments of prayer, memory, and imagination gathered together to make
         meaning. Read them aloud, meditate on the images, and let the cadence steady your breath.
@@ -23,6 +23,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <section class="poems page-section">
+    <nav class="surface surface--frosted poems__toc" aria-label="Poem navigation">
+      <h2 class="poems__toc-title">Poems</h2>
+      <ul class="poems__toc-list">
+        <li><a class="poems__toc-link" href="#pour-out-my-soul">Pour Out My Soul</a></li>
+        <li><a class="poems__toc-link" href="#the-exile">The Exile</a></li>
+        <li><a class="poems__toc-link" href="#the-garden">The Garden</a></li>
+        <li><a class="poems__toc-link" href="#sweet-sophia-holy-hokhmah">Sweet Sophia (Holy Hokhmah)</a></li>
+        <li><a class="poems__toc-link" href="#radiant-knight">Radiant Knight</a></li>
+        <li><a class="poems__toc-link" href="#for-love-in-love-he-made-you">For Love, In Love (He Made You)</a></li>
+        <li><a class="poems__toc-link" href="#all-of-my-creatures">All of My Creatures</a></li>
+        <li><a class="poems__toc-link" href="#communion">Communion</a></li>
+        <li><a class="poems__toc-link" href="#the-rose-bower">The Rose Bower</a></li>
+        <li><a class="poems__toc-link" href="#mary-queen-of-heaven">Mary, Queen of Heaven</a></li>
+      </ul>
+    </nav>
     <div class="surface surface--frosted poems__audio">
       <div class="poems__audio-copy">
         <p class="kicker">Listen while you linger</p>
@@ -52,7 +67,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>Pour Out My Soul</h2>
+        <h2 class="poem-card__title" id="pour-out-my-soul">
+          Pour Out My Soul
+          <a class="poem-card__permalink" href="#pour-out-my-soul" aria-label="Copy link to Pour Out My Soul">
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>I pour out my soul to you, Lord,<br />who gives me life anew.<br />Loving you is its own reward,<br />it sweetens all I do.</p>
@@ -70,7 +90,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>The Exile</h2>
+        <h2 class="poem-card__title" id="the-exile">
+          The Exile
+          <a class="poem-card__permalink" href="#the-exile" aria-label="Copy link to The Exile">
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>Long, I wandered, exiled from my Lord&#39;s table.<br />Pride-stricken, heart-locked, I stood alone.<br />Thought-wise, but not, I sang false truths.<br />Eyes raised, star-drunk, I pondered the depths,<br />but found only me.</p>
@@ -87,7 +112,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>The Garden</h2>
+        <h2 class="poem-card__title" id="the-garden">
+          The Garden
+          <a class="poem-card__permalink" href="#the-garden" aria-label="Copy link to The Garden">
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>Made above, to steward all creatures,<br />sapience, wisdom, your Image our features.<br />Self-aware and open always to You,<br />no Temple curtain, divinity in view.</p>
@@ -105,7 +135,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>Sweet Sophia (Holy Hokhmah)</h2>
+        <h2 class="poem-card__title" id="sweet-sophia-holy-hokhmah">
+          Sweet Sophia (Holy Hokhmah)
+          <a
+            class="poem-card__permalink"
+            href="#sweet-sophia-holy-hokhmah"
+            aria-label="Copy link to Sweet Sophia (Holy Hokhmah)"
+          >
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>Sweet Sophia, Holy Hokhmah, Wisdom of old,<br />By Your angels and prophets foretold.</p>
@@ -123,7 +162,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>Radiant Knight</h2>
+        <h2 class="poem-card__title" id="radiant-knight">
+          Radiant Knight
+          <a class="poem-card__permalink" href="#radiant-knight" aria-label="Copy link to Radiant Knight">
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>Praise be to you, Eternal Light,<br />who reigns enthroned in heaven above.<br />Ready to humbly serve, your radiant knight,<br />you illuminate my eyes with love.</p>
@@ -139,7 +183,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>For Love, In Love (He Made You)</h2>
+        <h2 class="poem-card__title" id="for-love-in-love-he-made-you">
+          For Love, In Love (He Made You)
+          <a
+            class="poem-card__permalink"
+            href="#for-love-in-love-he-made-you"
+            aria-label="Copy link to For Love, In Love (He Made You)"
+          >
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>For love, in love, He made you.<br />Fearfully and wonderfully made you are.<br />Accept His love, there&#39;s nothing else to do.<br />From saving blood, you can never fall too far.</p>
@@ -154,7 +207,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>All of My Creatures</h2>
+        <h2 class="poem-card__title" id="all-of-my-creatures">
+          All of My Creatures
+          <a class="poem-card__permalink" href="#all-of-my-creatures" aria-label="Copy link to All of My Creatures">
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>All of My creatures have My breath,<br />for My children I conquered death.<br />I created the stars and the Sun,<br />so you&#39;d find Me in every one.</p>
@@ -170,7 +228,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>Communion</h2>
+        <h2 class="poem-card__title" id="communion">
+          Communion
+          <a class="poem-card__permalink" href="#communion" aria-label="Copy link to Communion">
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>Meet me at the table, my Lord,<br />let me feast on You, bread and wine.<br />Treasures too great, me to afford,<br />Yet in love, You call me to dine.</p>
@@ -184,7 +247,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>The Rose Bower</h2>
+        <h2 class="poem-card__title" id="the-rose-bower">
+          The Rose Bower
+          <a class="poem-card__permalink" href="#the-rose-bower" aria-label="Copy link to The Rose Bower">
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>I have a rose bower<br />where the flowers always bloom,<br />The sweet scent calls me home.</p>
@@ -198,7 +266,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="surface poem-card">
       <header class="poem-card__header">
         <div class="accent-divider" aria-hidden="true"></div>
-        <h2>Mary, Queen of Heaven</h2>
+        <h2 class="poem-card__title" id="mary-queen-of-heaven">
+          Mary, Queen of Heaven
+          <a class="poem-card__permalink" href="#mary-queen-of-heaven" aria-label="Copy link to Mary, Queen of Heaven">
+            <span aria-hidden="true">#</span>
+          </a>
+        </h2>
       </header>
       <div class="poem">
         <p>I am your <strong>Queen of Heaven</strong>,<br />let me reign over your body, soul, and spirit,<br />servant of my <strong>King of Kings</strong>.</p>
@@ -241,6 +314,62 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .poems {
     display: grid;
     gap: clamp(2.25rem, 4vw, 3.5rem);
+  }
+
+  .poems__toc {
+    position: sticky;
+    top: clamp(1rem, 4vw, 1.75rem);
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.4rem, 3vw, 1.9rem);
+    border-radius: 1.1rem;
+    align-self: start;
+    z-index: 4;
+  }
+
+  .poems__toc-title {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 1.95rem);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .poems__toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .poems__toc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+    color: #1c5942;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .poems__toc-link::before {
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: rgba(28, 89, 66, 0.35);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .poems__toc-link:hover,
+  .poems__toc-link:focus-visible {
+    color: #12452f;
+  }
+
+  .poems__toc-link:hover::before,
+  .poems__toc-link:focus-visible::before {
+    background: #1c5942;
+    transform: scale(1.15);
   }
 
   .poems__audio {
@@ -357,6 +486,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .poem-card__header {
     display: grid;
     gap: 0.6rem;
+  }
+
+  .poem-card__title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    margin: 0;
+  }
+
+  .poem-card__permalink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: rgba(28, 89, 66, 0.75);
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  }
+
+  .poem-card__title:hover .poem-card__permalink,
+  .poem-card__title:focus-within .poem-card__permalink {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .poem-card__permalink:hover,
+  .poem-card__permalink:focus-visible {
+    color: #12452f;
+  }
+
+  .poem-card__permalink:focus-visible {
+    opacity: 1;
+    transform: translateY(0);
+    outline: 2px solid #1c5942;
+    outline-offset: 2px;
   }
 
   .poem {
