@@ -22,11 +22,28 @@ const isActive = (href: string) => {
 
 <header class="site-header">
   <div class="container">
-    <a class="brand" href="/">
-      <img class="brand__icon" src="/favicon.jpeg" alt="Mark Baldwin-Smith icon" width="48" height="48" loading="lazy" />
-      Mark Baldwin-Smith
-    </a>
-    <nav aria-label="Primary navigation">
+    <div class="header-bar">
+      <a class="brand" href="/">
+        <img class="brand__icon" src="/favicon.jpeg" alt="Mark Baldwin-Smith icon" width="48" height="48" loading="lazy" />
+        Mark Baldwin-Smith
+      </a>
+      <button
+        type="button"
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+        data-nav-toggle
+        hidden
+      >
+        <span class="sr-only">Menu</span>
+        <span class="nav-toggle__icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+    <nav id="primary-navigation" class="site-nav" aria-label="Primary navigation" data-nav>
       <ul>
         {navLinks.map((link) => (
           <li>
@@ -66,6 +83,14 @@ const isActive = (href: string) => {
     gap: 2rem;
   }
 
+  .header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex: 1;
+  }
+
   .brand {
     font-family: 'Cormorant Garamond', 'Source Serif 4', serif;
     font-size: clamp(1.4rem, 3vw, 1.9rem);
@@ -89,7 +114,54 @@ const isActive = (href: string) => {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
   }
 
-  nav ul {
+  .nav-toggle {
+    appearance: none;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: inherit;
+    border-radius: 0.65rem;
+    padding: 0.55rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .nav-toggle:focus-visible,
+  .nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.32);
+  }
+
+  .nav-toggle__icon {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .nav-toggle__icon span {
+    display: block;
+    width: 1.5rem;
+    height: 0.12rem;
+    background: currentColor;
+    border-radius: 999px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle__icon span:nth-child(1) {
+    transform: translateY(0.47rem) rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle__icon span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle__icon span:nth-child(3) {
+    transform: translateY(-0.47rem) rotate(-45deg);
+  }
+
+  .site-nav ul {
     display: flex;
     flex-wrap: wrap;
     gap: clamp(0.75rem, 3vw, 2rem);
@@ -140,15 +212,205 @@ const isActive = (href: string) => {
     color: #ffffff;
   }
 
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   @media (max-width: 720px) {
     .container {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       gap: 1rem;
     }
 
-    nav ul {
+    .header-bar {
+      width: 100%;
+    }
+
+    .nav-toggle {
+      display: inline-flex;
+    }
+
+    .site-nav {
+      align-self: stretch;
+      width: 100%;
+      overflow: hidden;
+      max-height: 20rem;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: max-height 0.3s ease, opacity 0.25s ease, transform 0.3s ease;
+    }
+
+    .site-nav[data-open='false'] {
+      max-height: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-0.5rem);
+    }
+
+    .site-nav ul {
+      flex-direction: column;
+      align-items: flex-start;
       gap: 0.9rem;
     }
   }
+
+  @media (min-width: 721px) {
+    .site-nav {
+      display: block;
+    }
+  }
 </style>
+
+<script is:inline>
+  const header = document.querySelector('.site-header');
+  const toggle = header?.querySelector('[data-nav-toggle]');
+  const nav = header?.querySelector('[data-nav]');
+  const focusableSelector =
+    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  if (header && toggle instanceof HTMLElement && nav instanceof HTMLElement) {
+    let isOpen = false;
+    let previousFocus = null;
+    const mediaQuery = window.matchMedia('(max-width: 720px)');
+
+    const setAriaHidden = (hidden) => {
+      nav.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    };
+
+    const getFocusableElements = () => {
+      const elements = [toggle, ...Array.from(nav.querySelectorAll(focusableSelector))];
+      return elements.filter(
+        (element) =>
+          element instanceof HTMLElement && !element.hasAttribute('disabled') && element.tabIndex !== -1
+      );
+    };
+
+    const handleKeydown = (event) => {
+      if (!isOpen) {
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeMenu();
+        return;
+      }
+
+      if (event.key === 'Tab') {
+        const focusables = getFocusableElements();
+        if (focusables.length === 0) {
+          return;
+        }
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (event.shiftKey) {
+          if (document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          }
+        } else if (document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    const openMenu = () => {
+      isOpen = true;
+      previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      toggle.setAttribute('aria-expanded', 'true');
+      nav.setAttribute('data-open', 'true');
+      setAriaHidden(false);
+      document.addEventListener('keydown', handleKeydown, true);
+
+      const focusables = getFocusableElements();
+      const firstNavItem = focusables[1];
+      window.requestAnimationFrame(() => {
+        (firstNavItem ?? toggle).focus();
+      });
+    };
+
+    const closeMenu = (restoreFocus = true) => {
+      isOpen = false;
+      toggle.setAttribute('aria-expanded', 'false');
+      if (mediaQuery.matches) {
+        nav.setAttribute('data-open', 'false');
+        setAriaHidden(true);
+      } else {
+        nav.removeAttribute('data-open');
+        setAriaHidden(false);
+      }
+      document.removeEventListener('keydown', handleKeydown, true);
+
+      if (restoreFocus) {
+        (previousFocus ?? toggle).focus();
+      }
+    };
+
+    const toggleMenu = () => {
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    };
+
+    const syncForViewport = () => {
+      const isMobile = mediaQuery.matches;
+      toggle.hidden = !isMobile;
+
+      if (isMobile) {
+        if (!isOpen) {
+          nav.setAttribute('data-open', 'false');
+          setAriaHidden(true);
+        }
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      } else {
+        nav.removeAttribute('data-open');
+        setAriaHidden(false);
+        if (isOpen) {
+          closeMenu(false);
+        }
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    };
+
+    toggle.addEventListener('click', toggleMenu);
+
+    nav.addEventListener('click', (event) => {
+      const target = event.target;
+      if (isOpen && target instanceof HTMLElement && target.closest('a')) {
+        closeMenu(false);
+      }
+    });
+
+    const handleViewportChange = () => {
+      if (!mediaQuery.matches && isOpen) {
+        closeMenu(false);
+      }
+      syncForViewport();
+    };
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', handleViewportChange);
+    } else if (typeof mediaQuery.addListener === 'function') {
+      mediaQuery.addListener(handleViewportChange);
+    }
+
+    syncForViewport();
+  }
+</script>
