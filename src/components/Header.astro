@@ -71,6 +71,12 @@ const isActive = (href: string) => {
     color: #fefbf6;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 20px 32px -28px rgba(13, 14, 21, 0.55);
+    transform: translateY(0);
+    transition: transform 0.35s ease, background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .site-header--hidden {
+    transform: translateY(-100%);
   }
 
   .container {
@@ -225,6 +231,10 @@ const isActive = (href: string) => {
   }
 
   @media (max-width: 720px) {
+    .site-header {
+      transform: translateY(0);
+    }
+
     .container {
       flex-direction: column;
       align-items: stretch;
@@ -284,6 +294,29 @@ const isActive = (href: string) => {
     let isOpen = false;
     let previousFocus = null;
     const mediaQuery = window.matchMedia('(max-width: 720px)');
+    const scrollThreshold = 80;
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      if (!header) {
+        return;
+      }
+
+      if (mediaQuery.matches || isOpen) {
+        header.classList.remove('site-header--hidden');
+        lastScrollY = window.scrollY;
+        return;
+      }
+
+      const currentY = window.scrollY;
+      if (currentY > lastScrollY && currentY > scrollThreshold) {
+        header.classList.add('site-header--hidden');
+      } else {
+        header.classList.remove('site-header--hidden');
+      }
+
+      lastScrollY = currentY;
+    };
 
     const lockScroll = () => {
       if (document.body instanceof HTMLBodyElement) {
@@ -348,6 +381,7 @@ const isActive = (href: string) => {
       nav.setAttribute('data-open', 'true');
       setAriaHidden(false);
       document.addEventListener('keydown', handleKeydown, true);
+      header.classList.remove('site-header--hidden');
       if (mediaQuery.matches) {
         lockScroll();
       }
@@ -375,6 +409,8 @@ const isActive = (href: string) => {
       if (restoreFocus) {
         (previousFocus ?? toggle).focus();
       }
+
+      handleScroll();
     };
 
     const toggleMenu = () => {
@@ -422,6 +458,7 @@ const isActive = (href: string) => {
         closeMenu(false);
       }
       syncForViewport();
+      handleScroll();
     };
 
     if (typeof mediaQuery.addEventListener === 'function') {
@@ -431,5 +468,7 @@ const isActive = (href: string) => {
     }
 
     syncForViewport();
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
   }
 </script>
