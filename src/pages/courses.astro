@@ -384,24 +384,6 @@ const totalCourses = courseSections.reduce(
     const categorySelect = filterForm.querySelector('[data-filter-category]');
     const visibleCountEl = filterForm.querySelector('[data-course-visible-count]');
     const resultsLabel = filterForm.querySelector('[data-course-results-label]');
-    const groups = [];
-
-    document.querySelectorAll('[data-course-group]').forEach((group) => {
-      if (!(group instanceof HTMLElement)) {
-        return;
-      }
-
-      const items = Array.from(group.querySelectorAll('[data-course-item]')).filter(
-        (item) => item instanceof HTMLElement,
-      );
-
-      groups.push({
-        element: group,
-        category: getCategoryKey(group.dataset.category),
-        items,
-      });
-    });
-    const emptyMessage = document.querySelector('[data-course-empty]');
 
     const getCategoryKey = (value) => {
       if (!value) {
@@ -421,6 +403,25 @@ const totalCourses = courseSections.reduce(
 
       return normalizedValue.replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
     };
+
+    const groups = [];
+
+    document.querySelectorAll('[data-course-group]').forEach((group) => {
+      if (!(group instanceof HTMLElement)) {
+        return;
+      }
+
+      const items = Array.from(group.querySelectorAll('[data-course-item]')).filter(
+        (item) => item instanceof HTMLElement,
+      );
+
+      groups.push({
+        element: group,
+        category: getCategoryKey(group.dataset.category),
+        items,
+      });
+    });
+    const emptyMessage = document.querySelector('[data-course-empty]');
 
     const updateFilters = () => {
       const searchTerm = searchInput instanceof HTMLInputElement ? searchInput.value.trim().toLowerCase() : '';
