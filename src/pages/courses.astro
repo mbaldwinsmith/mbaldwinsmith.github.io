@@ -1,6 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+const slugifyCategory = (value: string) =>
+  value
+    .toString()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+
 const courseSections = [
   {
     title: 'Apologetics',
@@ -264,7 +274,10 @@ const courseSections = [
       },
     ],
   },
-];
+].map((section) => ({
+  ...section,
+  slug: slugifyCategory(section.title),
+}));
 
 const totalCourses = courseSections.reduce(
   (total, section) => total + section.items.length,
@@ -322,7 +335,7 @@ const totalCourses = courseSections.reduce(
         <select class="filter-input" id="course-category" name="category" data-filter-category>
           <option value="all">All categories</option>
           {courseSections.map((section) => (
-            <option value={section.title}>{section.title}</option>
+            <option value={section.slug}>{section.title}</option>
           ))}
         </select>
       </div>
@@ -339,7 +352,7 @@ const totalCourses = courseSections.reduce(
 
     <div class="courses__grid">
       {courseSections.map((section) => (
-        <section class="surface course-group" data-course-group data-category={section.title}>
+        <section class="surface course-group" data-course-group data-category={section.slug}>
           <header>
             <h3>{section.title}</h3>
           </header>
@@ -374,6 +387,25 @@ const totalCourses = courseSections.reduce(
     const groups = Array.from(document.querySelectorAll('[data-course-group]'));
     const emptyMessage = document.querySelector('[data-course-empty]');
 
+    const getCategoryKey = (value) => {
+      if (!value) {
+        return '';
+      }
+
+      const normalizedValue = value
+        .toString()
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+
+      if (normalizedValue === 'all') {
+        return 'all';
+      }
+
+      return normalizedValue.replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
+    };
+
     const getVisibleItemCount = (items, term) => {
       let visibleItems = 0;
       items.forEach((item) => {
@@ -395,7 +427,7 @@ const totalCourses = courseSections.reduce(
     const updateFilters = () => {
       const searchTerm = searchInput instanceof HTMLInputElement ? searchInput.value.trim().toLowerCase() : '';
       const selectedCategory =
-        categorySelect instanceof HTMLSelectElement ? categorySelect.value : 'all';
+        categorySelect instanceof HTMLSelectElement ? getCategoryKey(categorySelect.value) : 'all';
 
       let totalVisible = 0;
 
@@ -404,8 +436,9 @@ const totalCourses = courseSections.reduce(
           return;
         }
 
+        const groupCategory = getCategoryKey(group.dataset.category);
         const matchesCategory =
-          selectedCategory === 'all' || group.dataset.category === selectedCategory;
+          selectedCategory === 'all' || groupCategory === selectedCategory;
         const items = Array.from(group.querySelectorAll('[data-course-item]'));
         const visibleItems = matchesCategory
           ? getVisibleItemCount(items, searchTerm)
