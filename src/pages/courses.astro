@@ -384,7 +384,23 @@ const totalCourses = courseSections.reduce(
     const categorySelect = filterForm.querySelector('[data-filter-category]');
     const visibleCountEl = filterForm.querySelector('[data-course-visible-count]');
     const resultsLabel = filterForm.querySelector('[data-course-results-label]');
-    const groups = Array.from(document.querySelectorAll('[data-course-group]'));
+    const groups = [];
+
+    document.querySelectorAll('[data-course-group]').forEach((group) => {
+      if (!(group instanceof HTMLElement)) {
+        return;
+      }
+
+      const items = Array.from(group.querySelectorAll('[data-course-item]')).filter(
+        (item) => item instanceof HTMLElement,
+      );
+
+      groups.push({
+        element: group,
+        category: getCategoryKey(group.dataset.category),
+        items,
+      });
+    });
     const emptyMessage = document.querySelector('[data-course-empty]');
 
     const getCategoryKey = (value) => {
@@ -413,24 +429,25 @@ const totalCourses = courseSections.reduce(
 
       let totalVisible = 0;
 
-      groups.forEach((group) => {
-        if (!(group instanceof HTMLElement)) {
+      groups.forEach(({ element, category, items }) => {
+        const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+
+        if (!matchesCategory) {
+          items.forEach((item) => {
+            item.hidden = true;
+          });
+
+          element.setAttribute('hidden', '');
+          element.style.display = 'none';
+          element.setAttribute('aria-hidden', 'true');
           return;
         }
 
-        const groupCategory = getCategoryKey(group.dataset.category);
-        const matchesCategory =
-          selectedCategory === 'all' || groupCategory === selectedCategory;
-        const items = Array.from(group.querySelectorAll('[data-course-item]'));
         let visibleItems = 0;
 
         items.forEach((item) => {
-          if (!(item instanceof HTMLElement)) {
-            return;
-          }
-
           const matchesSearch = searchTerm === '' || item.textContent?.toLowerCase().includes(searchTerm);
-          const shouldDisplayItem = matchesCategory && matchesSearch;
+          const shouldDisplayItem = matchesSearch;
 
           item.hidden = !shouldDisplayItem;
 
@@ -440,13 +457,14 @@ const totalCourses = courseSections.reduce(
           }
         });
 
-        const shouldDisplayGroup = visibleItems > 0;
-
-        group.hidden = !shouldDisplayGroup;
-        if (shouldDisplayGroup) {
-          group.removeAttribute('aria-hidden');
+        if (visibleItems > 0) {
+          element.removeAttribute('hidden');
+          element.style.removeProperty('display');
+          element.removeAttribute('aria-hidden');
         } else {
-          group.setAttribute('aria-hidden', 'true');
+          element.setAttribute('hidden', '');
+          element.style.display = 'none';
+          element.setAttribute('aria-hidden', 'true');
         }
       });
 
