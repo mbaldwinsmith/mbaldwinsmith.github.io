@@ -249,6 +249,12 @@ const ogImageURL = Astro.site
     backdrop-filter: blur(18px);
   }
 
+  :global(.surface--frosted) {
+    background: rgba(253, 251, 247, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(22px) saturate(115%);
+  }
+
   :global(.page-hero) {
     position: relative;
     display: grid;
