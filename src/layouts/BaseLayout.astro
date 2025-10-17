@@ -1,10 +1,11 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SeoHead from '../components/SeoHead.astro';
 
 const {
-  title = 'Mark Baldwin-Smith',
-  description = 'Personal reflections, prayers, and creative work.',
+  title = 'Kerygma Academy',
+  description = 'Faith-formed poetry, prayers, and resources for discipleship.',
   ogImage = '/favicon.jpeg',
   ogImageAlt,
   ogImageWidth,
@@ -22,19 +23,16 @@ const ogImageURL = Astro.site
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
     <meta name="theme-color" content="#f6f1e6" />
-    <link rel="canonical" href={canonicalURL.href} />
+    <slot name="head">
+      <SeoHead title={title} description={description} url={canonicalURL.href} />
+    </slot>
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL.href} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
     {ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
     {ogImageWidth && <meta property="og:image:width" content={ogImageWidth} />}
     {ogImageHeight && <meta property="og:image:height" content={ogImageHeight} />}
-    <meta property="og:site_name" content="Mark Baldwin-Smith" />
+    <meta property="og:site_name" content="Kerygma Academy" />
     <meta name="twitter:card" content={twitterCard} />
     <meta name="twitter:url" content={canonicalURL.href} />
     <meta name="twitter:title" content={title} />

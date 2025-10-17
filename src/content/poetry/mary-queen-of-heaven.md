@@ -1,6 +1,7 @@
 ---
 title: "Mary, Queen of Heaven"
 order: 10
+date: 2024-03-08
 stanzas:
   -
     - "I am your Queen of Heaven,"

@@ -1,6 +1,7 @@
 ---
 title: "Communion"
 order: 8
+date: 2024-02-23
 stanzas:
   -
     - "Meet me at the table, my Lord,"

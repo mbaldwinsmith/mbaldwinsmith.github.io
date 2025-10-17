@@ -1,0 +1,10 @@
+---
+const { title, description, url } = Astro.props;
+---
+<title>{title}</title>
+<link rel="canonical" href={url} />
+<meta name="description" content={description} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+<meta name="twitter:card" content="summary_large_image" />

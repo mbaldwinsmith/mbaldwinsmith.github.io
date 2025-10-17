@@ -1,12 +1,20 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SeoHead from '../components/SeoHead.astro';
 import ChurchDashboardImage from './ChurchDashboard.png';
 import MarkdownEditorImage from './MarkdownEditor.png';
 import RegulaImage from './Regula.png';
+
+export const prerender = true;
+
+const pageTitle = 'Portfolio — Kerygma Academy';
+const pageDescription = 'Selected ministry, technology, and creative projects.';
+const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('https://kerygma.academy/portfolio/');
 ---
 
-<BaseLayout title="Portfolio | Mark Baldwin-Smith" description="Selected ministry, technology, and creative projects.">
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
   <section class="page-hero portfolio-hero surface surface--tinted">
     <span class="page-hero__halo" aria-hidden="true"></span>
     <span class="page-hero__sparkle" aria-hidden="true"></span>

@@ -1,6 +1,7 @@
 ---
 title: "Radiant Knight"
 order: 5
+date: 2024-02-02
 stanzas:
   -
     - "Praise be to you, Eternal Light,"

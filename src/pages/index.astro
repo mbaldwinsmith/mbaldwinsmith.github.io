@@ -1,8 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SeoHead from '../components/SeoHead.astro';
+
+export const prerender = true;
+
+const pageTitle = 'Home — Kerygma Academy';
+const pageDescription =
+  'Kerygma Academy gathers poetry, prayers, courses, and creative work to accompany disciples on the journey of faith.';
+const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('https://kerygma.academy/');
 ---
 
-<BaseLayout title="Mark Baldwin-Smith | Home" description="Welcome to my personal corner of the web where prayers, poetry, courses, and creative work live together.">
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
   <section class="page-hero home-hero surface surface--tinted">
     <span class="page-hero__halo" aria-hidden="true"></span>
     <span class="page-hero__sparkle" aria-hidden="true"></span>
@@ -36,12 +45,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </article>
     <div class="page-section__grid page-section__grid--columns home-collections__grid">
       <article class="collection-card surface">
-        <h3>About Me</h3>
+        <h3>About</h3>
         <p>
           Discover the story behind the work&mdash;the experiences, convictions, and curiosities that keep me creating and
           serving.
         </p>
-        <a class="button" href="/about-me">Read my story</a>
+        <a class="button" href="/about">Read my story</a>
       </article>
 
       <article class="collection-card surface">

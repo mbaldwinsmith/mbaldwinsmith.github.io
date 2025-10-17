@@ -1,5 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SeoHead from '../components/SeoHead.astro';
+
+export const prerender = true;
+
+const pageTitle = 'Courses — Kerygma Academy';
+const pageDescription =
+  'Free Catholic formation courses curated across apologetics, doctrine, Scripture, philosophy, and more.';
+const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('https://kerygma.academy/courses/');
 
 const slugifyCategory = (value: string) =>
   value
@@ -285,10 +293,8 @@ const totalCourses = courseSections.reduce(
 );
 ---
 
-<BaseLayout
-  title="Courses | Mark Baldwin-Smith"
-  description="Free Catholic formation courses curated across apologetics, doctrine, Scripture, philosophy, and more."
->
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
   <section class="page-hero courses-hero surface surface--tinted">
     <span class="page-hero__halo" aria-hidden="true"></span>
     <span class="page-hero__sparkle" aria-hidden="true"></span>

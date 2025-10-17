@@ -1,16 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SeoHead from '../components/SeoHead.astro';
 import { getCollection } from 'astro:content';
 
-const pageTitle = 'Poetry | Mark Baldwin-Smith';
+export const prerender = true;
+
+const pageTitle = 'Poetry — Kerygma Academy';
 const pageDescription = 'Poems capturing the movement of faith, community, and everyday beauty.';
+const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('https://kerygma.academy/poetry/');
 type Poem = {
   id: string;
   title: string;
   stanzas: string[][];
 };
 
-const poemEntries = await getCollection('poems');
+const poemEntries = await getCollection('poetry');
 const poems: Poem[] = poemEntries
   .sort((a, b) => a.data.order - b.data.order)
   .map(({ slug, data }) => ({
@@ -30,22 +34,22 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
+  <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
   <script type="application/ld+json" is:inline>
     {JSON.stringify(
       (() => {
-        const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.href;
         const authorName = 'Mark Baldwin-Smith';
         return {
           '@context': 'https://schema.org',
           '@type': 'ItemList',
           name: 'Poetry Collection by Mark Baldwin-Smith',
           description: pageDescription,
-          url: pageUrl,
+          url: pageUrl.href,
           numberOfItems: poems.length,
           itemListElement: poems.map((poem, index) => ({
             '@type': 'ListItem',
             position: index + 1,
-            url: `${pageUrl}#${poem.id}`,
+            url: `${pageUrl.href}#${poem.id}`,
             item: {
               '@type': 'Poem',
               name: poem.title,
@@ -57,7 +61,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
               isPartOf: {
                 '@type': 'WebPage',
                 name: pageTitle,
-                url: pageUrl,
+                url: pageUrl.href,
               },
             },
           })),
@@ -146,7 +150,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
           <div class="accent-divider" aria-hidden="true"></div>
           <h2 class="poem-card__title" id={poem.id}>
             {poem.title}
-            <a class="poem-card__permalink" href={`#${poem.id}`} aria-label={`Copy link to ${poem.title}`}>
+            <a class="poem-card__permalink" href={`/poetry/${poem.id}/`} aria-label={`Open full page for ${poem.title}`}>
               <span aria-hidden="true">#</span>
             </a>
           </h2>

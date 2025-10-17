@@ -1,6 +1,7 @@
 ---
 title: "All of My Creatures"
 order: 7
+date: 2024-02-16
 stanzas:
   -
     - "All of My creatures have My breath,"

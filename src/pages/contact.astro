@@ -1,8 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SeoHead from '../components/SeoHead.astro';
+
+export const prerender = true;
+
+const pageTitle = 'Contact — Kerygma Academy';
+const pageDescription = 'Reach out for collaboration, prayer requests, or speaking opportunities.';
+const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('https://kerygma.academy/contact/');
 ---
 
-<BaseLayout title="Contact | Mark Baldwin-Smith" description="Reach out for collaboration, prayer requests, or speaking opportunities.">
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
   <section class="page-hero contact-hero surface surface--tinted">
     <span class="page-hero__halo" aria-hidden="true"></span>
     <span class="page-hero__sparkle" aria-hidden="true"></span>
