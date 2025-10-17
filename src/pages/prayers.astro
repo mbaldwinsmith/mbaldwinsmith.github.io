@@ -1,10 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SeoHead from '../components/SeoHead.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
-const pageTitle = 'Prayers | Mark Baldwin-Smith';
+export const prerender = true;
+
+const pageTitle = 'Prayers — Kerygma Academy';
 const pageDescription = 'Original prayers written for everyday moments and sacred seasons.';
+const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('https://kerygma.academy/prayers/');
 type PrayerEntry = CollectionEntry<'prayers'>;
 type PrayerRender = Awaited<ReturnType<PrayerEntry['render']>>;
 type Prayer = {
@@ -28,6 +32,7 @@ const prayers: Prayer[] = await Promise.all(
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
+  <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
   <section class="page-hero prayers-hero surface surface--tinted">
     <span class="page-hero__halo" aria-hidden="true"></span>
     <span class="page-hero__sparkle" aria-hidden="true"></span>

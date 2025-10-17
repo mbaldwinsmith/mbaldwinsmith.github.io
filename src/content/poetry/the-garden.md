@@ -1,6 +1,7 @@
 ---
 title: "The Garden"
 order: 3
+date: 2024-01-19
 stanzas:
   -
     - "Made above, to steward all creatures,"

@@ -1,6 +1,7 @@
 ---
 title: "The Rose Bower"
 order: 9
+date: 2024-03-01
 stanzas:
   -
     - "I have a rose bower"

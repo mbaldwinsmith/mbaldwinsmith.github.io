@@ -1,11 +1,12 @@
 import { defineCollection, z } from 'astro:content';
 
-const poems = defineCollection({
+const poetry = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
     order: z.number(),
     stanzas: z.array(z.array(z.string())),
+    date: z.coerce.date(),
   }),
 });
 
@@ -26,4 +27,4 @@ const prayers = defineCollection({
   }),
 });
 
-export const collections = { poems, prayers };
+export const collections = { poetry, prayers };

@@ -1,6 +1,7 @@
 ---
 title: "Pour Out My Soul"
 order: 1
+date: 2024-01-05
 stanzas:
   -
     - "I pour out my soul to you, Lord,"
