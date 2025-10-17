@@ -432,7 +432,7 @@ const totalCourses = courseSections.reduce(
           const matchesSearch = searchTerm === '' || item.textContent?.toLowerCase().includes(searchTerm);
           const shouldDisplayItem = matchesCategory && matchesSearch;
 
-          item.toggleAttribute('hidden', !shouldDisplayItem);
+          item.hidden = !shouldDisplayItem;
 
           if (shouldDisplayItem) {
             visibleItems += 1;
@@ -440,9 +440,14 @@ const totalCourses = courseSections.reduce(
           }
         });
 
-        const shouldDisplayGroup = matchesCategory && visibleItems > 0;
+        const shouldDisplayGroup = visibleItems > 0;
 
-        group.toggleAttribute('hidden', !shouldDisplayGroup);
+        group.hidden = !shouldDisplayGroup;
+        if (shouldDisplayGroup) {
+          group.removeAttribute('aria-hidden');
+        } else {
+          group.setAttribute('aria-hidden', 'true');
+        }
       });
 
       if (visibleCountEl instanceof HTMLElement) {
