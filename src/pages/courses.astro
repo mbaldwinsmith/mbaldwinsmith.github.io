@@ -265,6 +265,11 @@ const courseSections = [
     ],
   },
 ];
+
+const totalCourses = courseSections.reduce(
+  (total, section) => total + section.items.length,
+  0
+);
 ---
 
 <BaseLayout
@@ -299,15 +304,48 @@ const courseSections = [
       </p>
     </article>
 
+    <form class="surface surface--tinted course-filters" data-course-filters role="search">
+      <div class="filter-field">
+        <label class="filter-label" for="course-search">Search courses</label>
+        <input
+          class="filter-input"
+          id="course-search"
+          type="search"
+          name="search"
+          placeholder="Search by course title"
+          autocomplete="off"
+          data-filter-search
+        />
+      </div>
+      <div class="filter-field">
+        <label class="filter-label" for="course-category">Filter by category</label>
+        <select class="filter-input" id="course-category" name="category" data-filter-category>
+          <option value="all">All categories</option>
+          {courseSections.map((section) => (
+            <option value={section.title}>{section.title}</option>
+          ))}
+        </select>
+      </div>
+      <p class="course-results" data-course-results aria-live="polite">
+        Showing
+        <strong><span data-course-visible-count>{totalCourses}</span></strong>
+        <span data-course-results-label>{totalCourses === 1 ? 'course' : 'courses'}</span>
+      </p>
+    </form>
+
+    <p class="course-empty" data-course-empty hidden>
+      No courses match your filters. Try adjusting your search or choosing a different category.
+    </p>
+
     <div class="courses__grid">
       {courseSections.map((section) => (
-        <section class="surface course-group">
+        <section class="surface course-group" data-course-group data-category={section.title}>
           <header>
             <h3>{section.title}</h3>
           </header>
           <ul>
             {section.items.map((item) => (
-              <li>
+              <li data-course-item>
                 <a href={item.url} rel="noopener noreferrer" target="_blank">
                   {item.title}
                 </a>
@@ -321,6 +359,110 @@ const courseSections = [
     <p class="compiled-note">Compiled October 2025</p>
   </section>
 </BaseLayout>
+
+<script is:inline>
+  const initCourseFilters = () => {
+    const filterForm = document.querySelector('[data-course-filters]');
+    if (!(filterForm instanceof HTMLFormElement)) {
+      return;
+    }
+
+    const searchInput = filterForm.querySelector('[data-filter-search]');
+    const categorySelect = filterForm.querySelector('[data-filter-category]');
+    const visibleCountEl = filterForm.querySelector('[data-course-visible-count]');
+    const resultsLabel = filterForm.querySelector('[data-course-results-label]');
+    const groups = Array.from(document.querySelectorAll('[data-course-group]'));
+    const emptyMessage = document.querySelector('[data-course-empty]');
+
+    const getVisibleItemCount = (items, term) => {
+      let visibleItems = 0;
+      items.forEach((item) => {
+        if (!(item instanceof HTMLElement)) {
+          return;
+        }
+
+        const matchesSearch = term === '' || item.textContent?.toLowerCase().includes(term);
+        item.toggleAttribute('hidden', !matchesSearch);
+
+        if (matchesSearch) {
+          visibleItems += 1;
+        }
+      });
+
+      return visibleItems;
+    };
+
+    const updateFilters = () => {
+      const searchTerm = searchInput instanceof HTMLInputElement ? searchInput.value.trim().toLowerCase() : '';
+      const selectedCategory =
+        categorySelect instanceof HTMLSelectElement ? categorySelect.value : 'all';
+
+      let totalVisible = 0;
+
+      groups.forEach((group) => {
+        if (!(group instanceof HTMLElement)) {
+          return;
+        }
+
+        const matchesCategory =
+          selectedCategory === 'all' || group.dataset.category === selectedCategory;
+        const items = Array.from(group.querySelectorAll('[data-course-item]'));
+        const visibleItems = matchesCategory
+          ? getVisibleItemCount(items, searchTerm)
+          : items.length;
+
+        const shouldDisplayGroup = matchesCategory && visibleItems > 0;
+
+        group.toggleAttribute('hidden', !shouldDisplayGroup);
+
+        if (matchesCategory) {
+          if (visibleItems === 0) {
+            items.forEach((item) => {
+              if (item instanceof HTMLElement) {
+                item.toggleAttribute('hidden', true);
+              }
+            });
+          }
+          totalVisible += visibleItems;
+        }
+      });
+
+      if (visibleCountEl instanceof HTMLElement) {
+        visibleCountEl.textContent = String(totalVisible);
+      }
+
+      if (resultsLabel instanceof HTMLElement) {
+        resultsLabel.textContent = totalVisible === 1 ? 'course' : 'courses';
+      }
+
+      if (emptyMessage instanceof HTMLElement) {
+        emptyMessage.toggleAttribute('hidden', totalVisible !== 0);
+      }
+    };
+
+    filterForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+    });
+
+    filterForm.addEventListener('input', (event) => {
+      if (event.target === searchInput) {
+        updateFilters();
+      }
+    });
+
+    if (categorySelect instanceof HTMLSelectElement) {
+      categorySelect.addEventListener('change', updateFilters);
+    }
+
+    updateFilters();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCourseFilters, { once: true });
+  } else {
+    initCourseFilters();
+  }
+</script>
 
 <style>
   .courses-hero {
@@ -341,6 +483,73 @@ const courseSections = [
     display: grid;
     gap: 0.85rem;
     border: 1px solid rgba(92, 73, 58, 0.16);
+  }
+
+  .course-filters {
+    display: grid;
+    gap: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid rgba(92, 73, 58, 0.16);
+    padding: clamp(1.2rem, 3vw, 1.8rem);
+  }
+
+  .course-filters .filter-field {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .filter-label {
+    font-weight: 600;
+    color: rgba(36, 28, 21, 0.76);
+  }
+
+  .filter-input {
+    font: inherit;
+    padding: 0.65rem 0.85rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgba(92, 73, 58, 0.25);
+    background: rgba(255, 255, 255, 0.72);
+    color: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .filter-input:focus {
+    outline: none;
+    border-color: rgba(138, 90, 60, 0.55);
+    box-shadow: 0 0 0 3px rgba(138, 90, 60, 0.18);
+  }
+
+  .course-results {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(36, 28, 21, 0.62);
+  }
+
+  .course-results strong {
+    color: var(--accent-dark);
+    font-weight: 600;
+  }
+
+  .course-empty {
+    margin: 0;
+    padding: 0.85rem 1.1rem;
+    border-radius: 0.75rem;
+    border: 1px dashed rgba(138, 90, 60, 0.45);
+    background: rgba(138, 90, 60, 0.08);
+    color: rgba(36, 28, 21, 0.7);
+    font-weight: 500;
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .course-filters {
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      align-items: end;
+    }
+
+    .course-filters .course-results {
+      grid-column: 1 / -1;
+      justify-self: end;
+    }
   }
 
   .courses__grid {

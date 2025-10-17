@@ -100,6 +100,11 @@ const ogImageURL = Astro.site
     position: relative;
   }
 
+  :global(body.nav-open) {
+    overflow: hidden;
+    touch-action: none;
+  }
+
   :global(body)::before {
     content: '';
     position: fixed;

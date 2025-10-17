@@ -1,8 +1,35 @@
 <footer class="site-footer">
   <div class="container">
-    <p class="headline">Mark Baldwin-Smith</p>
-    <p class="tagline">Faithful craft, contemplative technology, and luminous words.</p>
-    <p class="small-print">&copy; {new Date().getFullYear()} All rights reserved.</p>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <p class="headline">Mark Baldwin-Smith</p>
+        <p class="tagline">Faithful craft, contemplative technology, and luminous words.</p>
+        <p class="small-print">&copy; {new Date().getFullYear()} All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h2 class="footer-heading">Quick links</h2>
+          <nav aria-label="Quick links">
+            <ul class="footer-link-list">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about-me">About Me</a></li>
+              <li><a href="/portfolio">Portfolio</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="footer-column">
+          <h2 class="footer-heading">Formation</h2>
+          <nav aria-label="Formation resources">
+            <ul class="footer-link-list">
+              <li><a href="/prayers">Prayers</a></li>
+              <li><a href="/courses">Courses</a></li>
+              <li><a href="/poetry">Poetry</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
   </div>
 </footer>
 
@@ -18,9 +45,20 @@
     max-width: 68rem;
     margin: 0 auto;
     padding: clamp(2rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 3rem) clamp(2.5rem, 7vw, 4rem);
-    text-align: center;
     display: grid;
-    gap: 0.75rem;
+    gap: clamp(1.8rem, 4vw, 2.5rem);
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: clamp(1.8rem, 4vw, 2.8rem);
+    text-align: center;
+    align-items: start;
+  }
+
+  .footer-brand {
+    display: grid;
+    gap: 0.85rem;
   }
 
   .headline {
@@ -41,5 +79,62 @@
     font-size: 0.82rem;
     color: rgba(255, 255, 255, 0.55);
     margin: 0;
+  }
+
+  .footer-links {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .footer-column {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .footer-heading {
+    margin: 0;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .footer-link-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .footer-link-list a {
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.1rem;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .footer-link-list a:hover,
+  .footer-link-list a:focus-visible {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  @media (min-width: 640px) {
+    .footer-links {
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    }
+  }
+
+  @media (min-width: 720px) {
+    .footer-grid {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      text-align: left;
+    }
+
+    .footer-brand {
+      text-align: left;
+    }
   }
 </style>
