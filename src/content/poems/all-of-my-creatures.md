@@ -1,0 +1,40 @@
+---
+title: "All of My Creatures"
+order: 7
+stanzas:
+  -
+    - "All of My creatures have My breath,"
+    - "for My children I conquered death."
+    - "I created the stars and the Sun,"
+    - "so you'd find Me in every one."
+  -
+    - "The blind shall see, the deaf shall hear,"
+    - "if you're poor in spirit, draw near."
+    - "From my Throne, upon the leaven,"
+    - "My Mercy pours down from heaven."
+  -
+    - "There's no ending My love for you,"
+    - "take My yoke, that's all you must do."
+    - "I'll show you the way of My Blood,"
+    - "a spring welling up to a flood."
+  -
+    - "Mountains and valleys sing My praise,"
+    - "join their song till the end of days."
+    - "All the saints lift up their chorus,"
+    - "and choirs of angels adore us."
+  -
+    - "Join the heavenly family,"
+    - "love forever, undyingly."
+    - "Add your petals to My garden,"
+    - "join the throngs who sought My pardon."
+  -
+    - "Upon My Mountain, royal feast,"
+    - "All invited, from most to least."
+    - "Answer My call and know My love,"
+    - "return to My Father above."
+  -
+    - "There in heavenly light We dwell,"
+    - "and serpent foe of Eve do quell."
+    - "Peace now shall reign, forever more,"
+    - "come to God's Lamb and adore."
+---

@@ -24,6 +24,7 @@ const ogImageURL = Astro.site
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#f6f1e6" />
     <link rel="canonical" href={canonicalURL.href} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL.href} />
@@ -120,6 +121,25 @@ const ogImageURL = Astro.site
     z-index: 0;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
+
+    :global(body) {
+      background-attachment: scroll;
+    }
+
+    :global(*),
+    :global(*::before),
+    :global(*::after) {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   :global(main.page) {
     max-width: 68rem;
     margin: 0 auto;
@@ -155,6 +175,13 @@ const ogImageURL = Astro.site
   :global(p) {
     margin: 0 0 1.5rem;
     max-width: 70ch;
+  }
+
+  :global(.lead) {
+    font-size: 1.12rem;
+    line-height: 1.9;
+    color: rgba(36, 28, 21, 0.86);
+    max-width: 48rem;
   }
 
   :global(blockquote) {
