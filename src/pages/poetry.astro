@@ -554,8 +554,21 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
 
   <section class="poems page-section">
     <nav class="surface surface--frosted poems__toc" aria-label="Poem navigation">
-      <h2 class="poems__toc-title">Poems</h2>
-      <ul class="poems__toc-list">
+      <div class="poems__toc-header">
+        <h2 class="poems__toc-title" id="poems-toc-heading">Poems</h2>
+        <button
+          class="poems__toc-toggle"
+          type="button"
+          aria-expanded="true"
+          aria-controls="poems-toc-list"
+          aria-labelledby="poems-toc-toggle-label poems-toc-heading"
+          hidden
+        >
+          <span id="poems-toc-toggle-label" class="poems__toc-toggle-text">Contents</span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
+      </div>
+      <ul class="poems__toc-list" id="poems-toc-list">
         {poems.map((poem) => (
           <li>
             <a class="poems__toc-link" href={`#${poem.id}`}>
@@ -621,6 +634,165 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
   </section>
 </BaseLayout>
 
+<script is:inline>
+  const initPoemsToc = () => {
+    const toc = document.querySelector('.poems__toc');
+    if (!toc || toc.dataset.enhanced === 'true') {
+      return;
+    }
+
+    const list = toc.querySelector('.poems__toc-list');
+    const toggle = toc.querySelector('.poems__toc-toggle');
+    if (!list || !toggle) {
+      return;
+    }
+
+    toc.dataset.enhanced = 'true';
+
+    const sentinel = document.createElement('span');
+    sentinel.className = 'poems__toc-sentinel';
+    sentinel.setAttribute('aria-hidden', 'true');
+    toc.parentElement?.insertBefore(sentinel, toc);
+
+    const mobileQuery = window.matchMedia('(max-width: 899px)');
+    let observer;
+    let isMobileActive = false;
+    let userExpanded = false;
+
+    const setExpanded = (expanded, { fromUser = false } = {}) => {
+      if (fromUser) {
+        userExpanded = expanded;
+      }
+
+      toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+
+      if (isMobileActive) {
+        toc.classList.toggle('poems__toc--open', expanded);
+        if (expanded) {
+          list.removeAttribute('hidden');
+        } else {
+          list.setAttribute('hidden', '');
+        }
+      } else {
+        list.removeAttribute('hidden');
+      }
+    };
+
+    const collapse = () => {
+      if (!isMobileActive) {
+        return;
+      }
+
+      toc.classList.add('poems__toc--collapsed');
+      if (!userExpanded) {
+        setExpanded(false);
+      }
+    };
+
+    const expand = () => {
+      if (!isMobileActive) {
+        return;
+      }
+
+      toc.classList.remove('poems__toc--collapsed');
+      userExpanded = false;
+      setExpanded(true);
+    };
+
+    const handleEntries = (entries) => {
+      if (!isMobileActive) {
+        return;
+      }
+
+      entries.forEach((entry) => {
+        if (entry.target !== sentinel) {
+          return;
+        }
+
+        if (entry.isIntersecting) {
+          expand();
+        } else {
+          collapse();
+        }
+      });
+    };
+
+    const enableMobile = () => {
+      isMobileActive = true;
+      toggle.hidden = false;
+      userExpanded = false;
+      toc.classList.remove('poems__toc--collapsed');
+      setExpanded(true);
+
+      if (!observer) {
+        observer = new IntersectionObserver(handleEntries, { threshold: 0 });
+      }
+
+      observer.observe(sentinel);
+
+      requestAnimationFrame(() => {
+        if (sentinel.getBoundingClientRect().top < 0) {
+          collapse();
+        }
+      });
+    };
+
+    const disableMobile = () => {
+      isMobileActive = false;
+      toggle.hidden = true;
+      userExpanded = false;
+      toc.classList.remove('poems__toc--collapsed', 'poems__toc--open');
+      setExpanded(true);
+
+      if (observer) {
+        observer.disconnect();
+        observer = undefined;
+      }
+    };
+
+    const onToggleClick = () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      setExpanded(!expanded, { fromUser: true });
+    };
+
+    toggle.addEventListener('click', onToggleClick);
+
+    const handleMediaChange = (event) => {
+      if (event.matches) {
+        enableMobile();
+      } else {
+        disableMobile();
+      }
+    };
+
+    mobileQuery.addEventListener('change', handleMediaChange);
+
+    if (mobileQuery.matches) {
+      enableMobile();
+    } else {
+      disableMobile();
+    }
+
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        toggle.removeEventListener('click', onToggleClick);
+        mobileQuery.removeEventListener('change', handleMediaChange);
+        observer?.disconnect();
+      },
+      { once: true },
+    );
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPoemsToc, { once: true });
+  } else {
+    initPoemsToc();
+  }
+
+  document.addEventListener('astro:after-swap', initPoemsToc);
+</script>
+
 <style>
   .poetry-hero {
     overflow: hidden;
@@ -653,11 +825,56 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     z-index: 4;
   }
 
+  .poems__toc-sentinel {
+    display: block;
+    height: 1px;
+    margin-bottom: -1px;
+    pointer-events: none;
+  }
+
+  .poems__toc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
   .poems__toc-title {
     margin: 0;
     font-size: clamp(1.5rem, 3vw, 1.95rem);
     font-weight: 600;
     letter-spacing: 0.01em;
+  }
+
+  .poems__toc-toggle {
+    border: 1px solid rgba(28, 89, 66, 0.25);
+    background: rgba(255, 255, 255, 0.85);
+    color: #1c5942;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .poems__toc-toggle:focus-visible {
+    outline: 3px solid rgba(18, 69, 47, 0.35);
+    outline-offset: 2px;
+  }
+
+  .poems__toc-toggle:hover {
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .poems__toc-toggle i {
+    font-size: 0.9rem;
+    transition: transform 0.2s ease;
   }
 
   .poems__toc-list {
@@ -696,6 +913,10 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
   .poems__toc-link:focus-visible::before {
     background: #1c5942;
     transform: scale(1.15);
+  }
+
+  .poems__toc:not(.poems__toc--open) .poems__toc-toggle i {
+    transform: rotate(-90deg);
   }
 
   .poems__audio {
@@ -836,6 +1057,10 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       top: clamp(1rem, 5vw, 2.8rem);
     }
 
+    .poems__toc-toggle {
+      display: none;
+    }
+
     .poems__audio {
       grid-column: 1 / -1;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -850,6 +1075,40 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
   @media (max-width: 599px) {
     .poems__audio-player iframe {
       min-height: 240px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .poems__toc {
+      gap: 0.75rem;
+    }
+
+    .poems__toc-title {
+      font-size: clamp(1.4rem, 5vw, 1.75rem);
+    }
+
+    .poems__toc-toggle {
+      display: inline-flex;
+    }
+
+    .poems__toc--collapsed:not(.poems__toc--open) {
+      padding: 0.95rem 1.2rem;
+      gap: 0.35rem;
+      box-shadow: 0 18px 30px -24px rgba(36, 28, 21, 0.4);
+    }
+
+    .poems__toc--collapsed:not(.poems__toc--open) .poems__toc-title {
+      font-size: 1.35rem;
+      margin-bottom: 0;
+    }
+
+    .poems__toc--collapsed:not(.poems__toc--open) .poems__toc-list {
+      display: none;
+    }
+
+    .poems__toc--collapsed:not(.poems__toc--open) .poems__toc-toggle {
+      padding: 0.35rem 0.7rem;
+      font-size: 0.9rem;
     }
   }
 </style>
