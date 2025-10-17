@@ -249,6 +249,12 @@ const ogImageURL = Astro.site
     backdrop-filter: blur(18px);
   }
 
+  :global(.surface--frosted) {
+    background: rgba(253, 251, 247, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(22px) saturate(115%);
+  }
+
   :global(.page-hero) {
     position: relative;
     display: grid;
@@ -298,7 +304,6 @@ const ogImageURL = Astro.site
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 68%);
     opacity: 0.6;
-    animation: float 12s ease-in-out infinite;
     top: 12%;
     left: 18%;
   }
@@ -306,13 +311,34 @@ const ogImageURL = Astro.site
   :global(.page-hero__sparkle:nth-of-type(2)) {
     top: 6%;
     right: 12%;
-    animation-delay: 1.8s;
   }
 
   :global(.page-hero__sparkle:nth-of-type(3)) {
     bottom: 4%;
     left: 8%;
-    animation-delay: 3.2s;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.page-hero__sparkle) {
+      animation: float 12s ease-in-out infinite;
+    }
+
+    :global(.page-hero__sparkle:nth-of-type(2)) {
+      animation-delay: 1.8s;
+    }
+
+    :global(.page-hero__sparkle:nth-of-type(3)) {
+      animation-delay: 3.2s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.page-hero__sparkle),
+    :global(.page-hero__sparkle:nth-of-type(2)),
+    :global(.page-hero__sparkle:nth-of-type(3)) {
+      animation: none;
+      animation-delay: 0s;
+    }
   }
 
   :global(.page-hero__content) {
@@ -403,13 +429,15 @@ const ogImageURL = Astro.site
     box-shadow: 0 0 12px rgba(138, 90, 60, 0.4);
   }
 
-  @keyframes float {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-    50% {
-      transform: translate3d(0, -8px, 0) scale(1.06);
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes float {
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      50% {
+        transform: translate3d(0, -8px, 0) scale(1.06);
+      }
     }
   }
 
