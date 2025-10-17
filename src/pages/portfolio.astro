@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ChurchDashboardImage from './ChurchDashboard.png';
 import MarkdownEditorImage from './MarkdownEditor.png';
@@ -37,11 +38,12 @@ import RegulaImage from './Regula.png';
         </div>
       </header>
       <figure class="project-card__media">
-        <img
-          src={ChurchDashboardImage.src}
+        <Image
+          src={ChurchDashboardImage}
           width={ChurchDashboardImage.width}
           height={ChurchDashboardImage.height}
           alt="Screenshot preview of the Church Attendance Dashboard interface"
+          sizes="(min-width: 64rem) 720px, 100vw"
           loading="lazy"
         />
       </figure>
@@ -69,11 +71,12 @@ import RegulaImage from './Regula.png';
         </div>
       </header>
       <figure class="project-card__media">
-        <img
-          src={MarkdownEditorImage.src}
+        <Image
+          src={MarkdownEditorImage}
           width={MarkdownEditorImage.width}
           height={MarkdownEditorImage.height}
           alt="Screenshot preview of Mark&#39;s Markdown Editor interface"
+          sizes="(min-width: 64rem) 720px, 100vw"
           loading="lazy"
         />
       </figure>
@@ -101,11 +104,12 @@ import RegulaImage from './Regula.png';
         </div>
       </header>
       <figure class="project-card__media">
-        <img
-          src={RegulaImage.src}
+        <Image
+          src={RegulaImage}
           width={RegulaImage.width}
           height={RegulaImage.height}
           alt="Screenshot preview of the Regula prayer companion interface"
+          sizes="(min-width: 64rem) 720px, 100vw"
           loading="lazy"
         />
       </figure>
