@@ -1,6 +1,7 @@
 ---
 title: "Sweet Sophia (Holy Hokhmah)"
 order: 4
+date: 2024-01-26
 stanzas:
   -
     - "Sweet Sophia, Holy Hokhmah, Wisdom of old,"

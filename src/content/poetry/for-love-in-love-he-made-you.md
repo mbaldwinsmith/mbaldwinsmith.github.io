@@ -1,6 +1,7 @@
 ---
 title: "For Love, In Love (He Made You)"
 order: 6
+date: 2024-02-09
 stanzas:
   -
     - "For love, in love, He made you."
