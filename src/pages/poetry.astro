@@ -196,7 +196,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     sentinel.setAttribute('aria-hidden', 'true');
     toc.parentElement?.insertBefore(sentinel, toc);
 
-    const mobileQuery = window.matchMedia('(max-width: 899px)');
+    const mobileQuery = window.matchMedia('(max-width: 1199px)');
     let observer;
     let isMobileActive = false;
     let userExpanded = false;
@@ -582,7 +582,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     background: radial-gradient(circle, rgba(226, 177, 64, 0.8), rgba(226, 177, 64, 0));
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 1200px) {
     .poems__grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
       align-items: start;
@@ -621,7 +621,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     }
   }
 
-  @media (max-width: 899px) {
+  @media (max-width: 1199px) {
     .poems__toc {
       gap: 0.75rem;
     }
