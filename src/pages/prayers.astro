@@ -60,9 +60,21 @@ const prayers: Prayer[] = await Promise.all(
           <div class="accent-divider" aria-hidden="true"></div>
           <h2 id={slug}>
             {data.title}
-            <a class="prayer-card__permalink" href={`#${slug}`} aria-label={`Copy link to ${data.title}`}>
+            <button
+              type="button"
+              class="prayer-card__permalink"
+              data-fragment={slug}
+              data-status-id={`copy-status-${slug}`}
+              aria-label={`Copy link to ${data.title}`}
+            >
               <span aria-hidden="true">#</span>
-            </a>
+            </button>
+            <span
+              id={`copy-status-${slug}`}
+              class="visually-hidden"
+              role="status"
+              aria-live="polite"
+            ></span>
           </h2>
           <p class="subtitle">{data.subtitle}</p>
           {data.tags.length > 0 && (
@@ -152,9 +164,11 @@ const prayers: Prayer[] = await Promise.all(
     font-size: 0.85rem;
     color: rgba(36, 28, 21, 0.5);
     text-decoration: none;
+    background: transparent;
     border: 1px solid transparent;
     transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
     opacity: 0;
+    cursor: pointer;
   }
 
   .prayer-card:hover .prayer-card__permalink,
@@ -169,6 +183,18 @@ const prayers: Prayer[] = await Promise.all(
     background-color: rgba(138, 90, 60, 0.1);
     color: var(--accent-dark);
     opacity: 1;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .prayer-card__meta {
@@ -186,3 +212,63 @@ const prayers: Prayer[] = await Promise.all(
     gap: 1rem;
   }
 </style>
+
+<script is:inline>
+  const buttons = document.querySelectorAll('.prayer-card__permalink');
+
+  const makeUrlWithFragment = (fragment) => {
+    try {
+      return new URL(`#${fragment}`, window.location.href).toString();
+    } catch {
+      return `${window.location.href.split('#')[0]}#${fragment}`;
+    }
+  };
+
+  const setStatusMessage = (statusId, message) => {
+    if (!statusId) return;
+    const statusEl = document.getElementById(statusId);
+    if (!statusEl) return;
+    statusEl.textContent = message;
+  };
+
+  const resetStatusMessage = (statusId, timeout = 4000) => {
+    if (!statusId) return;
+    setTimeout(() => {
+      const statusEl = document.getElementById(statusId);
+      if (statusEl) {
+        statusEl.textContent = '';
+      }
+    }, timeout);
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const fragment = button.dataset.fragment;
+      const statusId = button.dataset.statusId || null;
+
+      if (!fragment) {
+        setStatusMessage(statusId, 'Link unavailable.');
+        resetStatusMessage(statusId);
+        return;
+      }
+
+      const targetUrl = makeUrlWithFragment(fragment);
+      window.location.hash = fragment;
+
+      if (!navigator.clipboard) {
+        setStatusMessage(statusId, 'Clipboard unavailable. Link displayed in address bar.');
+        resetStatusMessage(statusId);
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(targetUrl);
+        setStatusMessage(statusId, 'Link copied to clipboard.');
+      } catch (error) {
+        setStatusMessage(statusId, 'Unable to copy link. Please copy from the address bar.');
+      }
+
+      resetStatusMessage(statusId);
+    });
+  });
+</script>
