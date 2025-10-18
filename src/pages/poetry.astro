@@ -193,9 +193,79 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     let userExpanded = false;
     let stickyThreshold = 0;
     let scrollFrame = null;
+    let activeFrame = null;
+    let activeLink = null;
 
     const updateStickyThreshold = () => {
       stickyThreshold = sentinel.getBoundingClientRect().top + window.scrollY;
+    };
+
+    const tocLinks = Array.from(list.querySelectorAll('.poems__toc-link'));
+    const sectionTargets = tocLinks
+      .map((link) => {
+        const href = link.getAttribute('href') || '';
+        if (!href.startsWith('#')) {
+          return null;
+        }
+
+        const targetId = decodeURIComponent(href.slice(1));
+        const heading = document.getElementById(targetId);
+        if (!heading) {
+          return null;
+        }
+
+        return { link, heading };
+      })
+      .filter(Boolean);
+
+    const setActiveLink = (nextLink) => {
+      if (activeLink === nextLink) {
+        return;
+      }
+
+      if (activeLink) {
+        activeLink.classList.remove('is-active');
+        activeLink.removeAttribute('aria-current');
+      }
+
+      activeLink = nextLink || null;
+
+      if (activeLink) {
+        activeLink.classList.add('is-active');
+        activeLink.setAttribute('aria-current', 'true');
+      }
+    };
+
+    const syncActiveLink = () => {
+      activeFrame = null;
+      if (!sectionTargets.length) {
+        return;
+      }
+
+      const targetLine = window.innerHeight * 0.25;
+      let closest = null;
+      let closestDistance = Infinity;
+
+      sectionTargets.forEach(({ link, heading }) => {
+        const rect = heading.getBoundingClientRect();
+        const distance = Math.abs(rect.top - targetLine);
+        if (distance < closestDistance) {
+          closest = link;
+          closestDistance = distance;
+        }
+      });
+
+      if (closest) {
+        setActiveLink(closest);
+      }
+    };
+
+    const scheduleActiveSync = () => {
+      if (activeFrame !== null) {
+        return;
+      }
+
+      activeFrame = window.requestAnimationFrame(syncActiveLink);
     };
 
     const syncCollapsedState = () => {
@@ -229,13 +299,17 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       scheduleSync();
     };
 
+    const handleActiveScroll = () => {
+      scheduleActiveSync();
+    };
+
     const handleResize = () => {
-      if (!isMobileActive) {
-        return;
+      if (isMobileActive) {
+        updateStickyThreshold();
+        syncCollapsedState();
       }
 
-      updateStickyThreshold();
-      syncCollapsedState();
+      scheduleActiveSync();
     };
 
     const setExpanded = (expanded, { fromUser = false } = {}) => {
@@ -287,7 +361,6 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       updateStickyThreshold();
 
       window.addEventListener('scroll', handleScroll, { passive: true });
-      window.addEventListener('resize', handleResize);
 
       requestAnimationFrame(() => {
         updateStickyThreshold();
@@ -302,7 +375,6 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       toc.classList.remove('poems__toc--collapsed', 'poems__toc--open');
       setExpanded(true);
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
       if (scrollFrame !== null) {
         window.cancelAnimationFrame(scrollFrame);
         scrollFrame = null;
@@ -326,6 +398,14 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
 
     mobileQuery.addEventListener('change', handleMediaChange);
 
+    if (sectionTargets.length) {
+      window.addEventListener('scroll', handleActiveScroll, { passive: true });
+      window.addEventListener('resize', handleResize);
+      scheduleActiveSync();
+    } else {
+      window.addEventListener('resize', handleResize);
+    }
+
     if (mobileQuery.matches) {
       enableMobile();
     } else {
@@ -337,6 +417,17 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       () => {
         toggle.removeEventListener('click', onToggleClick);
         mobileQuery.removeEventListener('change', handleMediaChange);
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('scroll', handleActiveScroll);
+        window.removeEventListener('resize', handleResize);
+        if (scrollFrame !== null) {
+          window.cancelAnimationFrame(scrollFrame);
+          scrollFrame = null;
+        }
+        if (activeFrame !== null) {
+          window.cancelAnimationFrame(activeFrame);
+          activeFrame = null;
+        }
       },
       { once: true },
     );
@@ -452,6 +543,20 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     border-radius: 999px;
     background: rgba(28, 89, 66, 0.35);
     transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .poems__toc-link.is-active,
+  .poems__toc-link[aria-current='true'] {
+    color: #12452f;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .poems__toc-link.is-active::before,
+  .poems__toc-link[aria-current='true']::before {
+    background: #e2b140;
+    transform: scale(1.15);
+    box-shadow: 0 0 0 3px rgba(226, 177, 64, 0.28);
   }
 
   .poems__toc-link:hover,
