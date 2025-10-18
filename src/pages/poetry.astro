@@ -91,77 +91,79 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
   </section>
 
   <section class="poems page-section">
-    <nav class="surface surface--frosted poems__toc" aria-label="Poem navigation">
-      <div class="poems__toc-header">
-        <h2 class="poems__toc-title" id="poems-toc-heading">Poems</h2>
-        <button
-          class="poems__toc-toggle"
-          type="button"
-          aria-expanded="true"
-          aria-controls="poems-toc-list"
-          aria-labelledby="poems-toc-toggle-label poems-toc-heading"
-          hidden
-        >
-          <span id="poems-toc-toggle-label" class="poems__toc-toggle-text">Contents</span>
-          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-        </button>
-      </div>
-      <ul class="poems__toc-list" id="poems-toc-list">
-        {poems.map((poem) => (
-          <li>
-            <a class="poems__toc-link" href={`#${poem.id}`}>
-              {poem.title}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-    <div class="surface surface--frosted poems__audio">
-      <div class="poems__audio-copy">
-        <p class="kicker">Listen while you linger</p>
-        <h2 class="poems__audio-title">The Golden Thread</h2>
-        <p>
-          Each poem has a musical companion. Let the playlist drift through the room while you read, pray, or ponder the images
-          in the verses below.
-        </p>
-        <p class="poems__audio-credit">
-          Written and composed by
-          <a href="https://soundcloud.com/mark-baldwin-smith" target="_blank" rel="noopener noreferrer">Mark Baldwin-Smith</a>,
-          performed by
-          <a href="https://suno.com/@plato2paraclete" target="_blank" rel="noopener noreferrer">Suno</a>.
-        </p>
-      </div>
-      <div class="poems__audio-player">
-        <iframe
-          loading="lazy"
-          referrerpolicy="no-referrer"
-          title="SoundCloud playlist: The Golden Thread"
-          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2095234155&color=%23e2b140&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
-        ></iframe>
-        <a class="poems__audio-link" href="https://soundcloud.com/mark-baldwin-smith/sets/the-golden-thread" target="_blank" rel="noopener noreferrer">
-          Listen on SoundCloud
-          <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-    {poems.map((poem) => (
-      <article class="surface poem-card">
-        <header class="poem-card__header">
-          <div class="accent-divider" aria-hidden="true"></div>
-          <h2 class="poem-card__title" id={poem.id}>
-            {poem.title}
-            <a class="poem-card__permalink" href={`/poetry/${poem.id}/`} aria-label={`Open full page for ${poem.title}`}>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-        </header>
-        <div class="poem">
-          {poem.stanzas.map((lines) => (
-            <p set:html={stanzaToHtml(lines)}></p>
-          ))}
+    <div class="poems__grid">
+      <nav class="surface surface--frosted poems__toc" aria-label="Poem navigation">
+        <div class="poems__toc-header">
+          <h2 class="poems__toc-title" id="poems-toc-heading">Poems</h2>
+          <button
+            class="poems__toc-toggle"
+            type="button"
+            aria-expanded="true"
+            aria-controls="poems-toc-list"
+            aria-labelledby="poems-toc-toggle-label poems-toc-heading"
+            hidden
+          >
+            <span id="poems-toc-toggle-label" class="poems__toc-toggle-text">Contents</span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
         </div>
-      </article>
-    ))}
+        <ul class="poems__toc-list" id="poems-toc-list">
+          {poems.map((poem) => (
+            <li>
+              <a class="poems__toc-link" href={`#${poem.id}`}>
+                {poem.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div class="surface surface--frosted poems__audio">
+        <div class="poems__audio-copy">
+          <p class="kicker">Listen while you linger</p>
+          <h2 class="poems__audio-title">The Golden Thread</h2>
+          <p>
+            Each poem has a musical companion. Let the playlist drift through the room while you read, pray, or ponder the images
+            in the verses below.
+          </p>
+          <p class="poems__audio-credit">
+            Written and composed by
+            <a href="https://soundcloud.com/mark-baldwin-smith" target="_blank" rel="noopener noreferrer">Mark Baldwin-Smith</a>,
+            performed by
+            <a href="https://suno.com/@plato2paraclete" target="_blank" rel="noopener noreferrer">Suno</a>.
+          </p>
+        </div>
+        <div class="poems__audio-player">
+          <iframe
+            loading="lazy"
+            referrerpolicy="no-referrer"
+            title="SoundCloud playlist: The Golden Thread"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2095234155&color=%23e2b140&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+          ></iframe>
+          <a class="poems__audio-link" href="https://soundcloud.com/mark-baldwin-smith/sets/the-golden-thread" target="_blank" rel="noopener noreferrer">
+            Listen on SoundCloud
+            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+      {poems.map((poem) => (
+        <article class="surface poem-card">
+          <header class="poem-card__header">
+            <div class="accent-divider" aria-hidden="true"></div>
+            <h2 class="poem-card__title" id={poem.id}>
+              {poem.title}
+              <a class="poem-card__permalink" href={`/poetry/${poem.id}/`} aria-label={`Open full page for ${poem.title}`}>
+                <span aria-hidden="true">#</span>
+              </a>
+            </h2>
+          </header>
+          <div class="poem">
+            {poem.stanzas.map((lines) => (
+              <p set:html={stanzaToHtml(lines)}></p>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
 
     <aside class="surface surface--tinted poems__notes">
       <h2>Reading invitations</h2>
@@ -343,7 +345,8 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     gap: clamp(1.2rem, 2.5vw, 1.9rem);
   }
 
-  .poems {
+  .poems,
+  .poems__grid {
     display: grid;
     gap: clamp(2.25rem, 4vw, 3.5rem);
   }
@@ -580,7 +583,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
   }
 
   @media (min-width: 900px) {
-    .poems {
+    .poems__grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
       align-items: start;
     }
@@ -610,9 +613,6 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       grid-column: 2 / -1;
     }
 
-    .poems__notes {
-      grid-column: 1 / -1;
-    }
   }
 
   @media (max-width: 599px) {
