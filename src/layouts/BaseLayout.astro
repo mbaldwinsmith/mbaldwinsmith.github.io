@@ -102,6 +102,12 @@ const ogImageURL = Astro.site
     position: relative;
   }
 
+  @media (max-width: 768px) {
+    :global(body) {
+      background-attachment: scroll;
+    }
+  }
+
   :global(body.nav-open) {
     overflow: hidden;
     touch-action: none;
