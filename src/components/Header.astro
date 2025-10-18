@@ -301,6 +301,11 @@ const isActive = (href: string) => {
     const mediaQuery = window.matchMedia('(max-width: 720px)');
     const scrollThreshold = 80;
     let lastScrollY = window.scrollY;
+    let listenersAttached = false;
+    let keydownListenerAttached = false;
+    let mediaQueryListenerAttached = false;
+    let scrollListenerAttached = false;
+    let hasCleanedUp = false;
 
     const handleScroll = () => {
       if (!header) {
@@ -379,13 +384,27 @@ const isActive = (href: string) => {
       }
     };
 
+    const attachKeydownListener = () => {
+      if (!keydownListenerAttached) {
+        document.addEventListener('keydown', handleKeydown, true);
+        keydownListenerAttached = true;
+      }
+    };
+
+    const detachKeydownListener = () => {
+      if (keydownListenerAttached) {
+        document.removeEventListener('keydown', handleKeydown, true);
+        keydownListenerAttached = false;
+      }
+    };
+
     const openMenu = () => {
       isOpen = true;
       previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       toggle.setAttribute('aria-expanded', 'true');
       nav.setAttribute('data-open', 'true');
       setAriaHidden(false);
-      document.addEventListener('keydown', handleKeydown, true);
+      attachKeydownListener();
       header.classList.remove('site-header--hidden');
       if (mediaQuery.matches) {
         lockScroll();
@@ -409,7 +428,7 @@ const isActive = (href: string) => {
         nav.removeAttribute('data-open');
         setAriaHidden(false);
       }
-      document.removeEventListener('keydown', handleKeydown, true);
+      detachKeydownListener();
 
       if (restoreFocus) {
         (previousFocus ?? toggle).focus();
@@ -449,14 +468,15 @@ const isActive = (href: string) => {
       }
     };
 
-    toggle.addEventListener('click', toggleMenu);
-
-    nav.addEventListener('click', (event) => {
+    const handleNavClick = (event) => {
       const target = event.target;
       if (isOpen && target instanceof HTMLElement && target.closest('a')) {
         closeMenu(false);
       }
-    });
+    };
+
+    toggle.addEventListener('click', toggleMenu);
+    nav.addEventListener('click', handleNavClick);
 
     const handleViewportChange = () => {
       if (!mediaQuery.matches && isOpen) {
@@ -468,12 +488,48 @@ const isActive = (href: string) => {
 
     if (typeof mediaQuery.addEventListener === 'function') {
       mediaQuery.addEventListener('change', handleViewportChange);
+      mediaQueryListenerAttached = true;
     } else if (typeof mediaQuery.addListener === 'function') {
       mediaQuery.addListener(handleViewportChange);
+      mediaQueryListenerAttached = true;
     }
 
     syncForViewport();
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
+    scrollListenerAttached = true;
+    listenersAttached = true;
+
+    const cleanup = () => {
+      if (!listenersAttached || hasCleanedUp) {
+        return;
+      }
+
+      hasCleanedUp = true;
+      toggle.removeEventListener('click', toggleMenu);
+      nav.removeEventListener('click', handleNavClick);
+
+      if (mediaQueryListenerAttached) {
+        if (typeof mediaQuery.removeEventListener === 'function') {
+          mediaQuery.removeEventListener('change', handleViewportChange);
+        } else if (typeof mediaQuery.removeListener === 'function') {
+          mediaQuery.removeListener(handleViewportChange);
+        }
+        mediaQueryListenerAttached = false;
+      }
+
+      if (scrollListenerAttached) {
+        window.removeEventListener('scroll', handleScroll);
+        scrollListenerAttached = false;
+      }
+
+      detachKeydownListener();
+      document.removeEventListener('astro:before-swap', cleanup);
+      document.removeEventListener('astro:before-prerender', cleanup);
+      listenersAttached = false;
+    };
+
+    document.addEventListener('astro:before-swap', cleanup, { once: true });
+    document.addEventListener('astro:before-prerender', cleanup, { once: true });
   }
 </script>
