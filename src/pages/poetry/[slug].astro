@@ -33,7 +33,7 @@ const stanzaToHtml = (lines: string[]): string =>
     .join('<br />');
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription} ogType="article">
   <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
   <article class="surface poem-detail">
     <header class="poem-detail__header">
