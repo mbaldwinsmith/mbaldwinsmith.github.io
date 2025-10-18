@@ -11,12 +11,17 @@ const navLinks = [
 
 const trimmedPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isActive = (href: string) => {
-  if (href === '/') {
+  const normalizedHref = href.replace(/\/+$/, '') || '/';
+
+  if (normalizedHref === '/') {
     return trimmedPath === '/';
   }
 
-  const normalized = href.replace(/\/+$/, '');
-  return trimmedPath === normalized;
+  if (trimmedPath === normalizedHref) {
+    return true;
+  }
+
+  return trimmedPath.startsWith(`${normalizedHref}/`);
 };
 ---
 
