@@ -35,6 +35,29 @@ const stanzaToHtml = (lines: string[]): string =>
 
 <BaseLayout title={pageTitle} description={pageDescription} ogType="article">
   <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
+  {poem && (
+    <script type="application/ld+json" is:inline>
+      {JSON.stringify(
+        (() => {
+          const authorName = 'Mark Baldwin-Smith';
+          return {
+            '@context': 'https://schema.org',
+            '@type': 'Poem',
+            name: poem.data.title,
+            text: poem.data.stanzas.map((lines) => lines.join('\n')).join('\n\n'),
+            datePublished: poem.data.date.toISOString().split('T')[0],
+            url: pageUrl.href,
+            author: {
+              '@type': 'Person',
+              name: authorName,
+            },
+          };
+        })(),
+        null,
+        2,
+      )}
+    </script>
+  )}
   <article class="surface poem-detail">
     <header class="poem-detail__header">
       <div class="accent-divider" aria-hidden="true"></div>
