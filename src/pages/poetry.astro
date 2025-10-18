@@ -196,10 +196,55 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     sentinel.setAttribute('aria-hidden', 'true');
     toc.parentElement?.insertBefore(sentinel, toc);
 
-    const mobileQuery = window.matchMedia('(max-width: 899px)');
-    let observer;
+    const mobileQuery = window.matchMedia('(max-width: 1199px)');
     let isMobileActive = false;
     let userExpanded = false;
+    let stickyThreshold = 0;
+    let scrollFrame = null;
+
+    const updateStickyThreshold = () => {
+      stickyThreshold = sentinel.getBoundingClientRect().top + window.scrollY;
+    };
+
+    const syncCollapsedState = () => {
+      if (!isMobileActive) {
+        return;
+      }
+
+      if (window.scrollY > stickyThreshold) {
+        collapse();
+      } else {
+        expand();
+      }
+    };
+
+    const scheduleSync = () => {
+      if (scrollFrame !== null) {
+        return;
+      }
+
+      scrollFrame = window.requestAnimationFrame(() => {
+        scrollFrame = null;
+        syncCollapsedState();
+      });
+    };
+
+    const handleScroll = () => {
+      if (!isMobileActive) {
+        return;
+      }
+
+      scheduleSync();
+    };
+
+    const handleResize = () => {
+      if (!isMobileActive) {
+        return;
+      }
+
+      updateStickyThreshold();
+      syncCollapsedState();
+    };
 
     const setExpanded = (expanded, { fromUser = false } = {}) => {
       if (fromUser) {
@@ -241,41 +286,20 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       setExpanded(true);
     };
 
-    const handleEntries = (entries) => {
-      if (!isMobileActive) {
-        return;
-      }
-
-      entries.forEach((entry) => {
-        if (entry.target !== sentinel) {
-          return;
-        }
-
-        if (entry.isIntersecting) {
-          expand();
-        } else {
-          collapse();
-        }
-      });
-    };
-
     const enableMobile = () => {
       isMobileActive = true;
       toggle.hidden = false;
       userExpanded = false;
       toc.classList.remove('poems__toc--collapsed');
       setExpanded(true);
+      updateStickyThreshold();
 
-      if (!observer) {
-        observer = new IntersectionObserver(handleEntries, { threshold: 0 });
-      }
-
-      observer.observe(sentinel);
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('resize', handleResize);
 
       requestAnimationFrame(() => {
-        if (sentinel.getBoundingClientRect().top < 0) {
-          collapse();
-        }
+        updateStickyThreshold();
+        syncCollapsedState();
       });
     };
 
@@ -285,10 +309,11 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       userExpanded = false;
       toc.classList.remove('poems__toc--collapsed', 'poems__toc--open');
       setExpanded(true);
-
-      if (observer) {
-        observer.disconnect();
-        observer = undefined;
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      if (scrollFrame !== null) {
+        window.cancelAnimationFrame(scrollFrame);
+        scrollFrame = null;
       }
     };
 
@@ -320,7 +345,6 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       () => {
         toggle.removeEventListener('click', onToggleClick);
         mobileQuery.removeEventListener('change', handleMediaChange);
-        observer?.disconnect();
       },
       { once: true },
     );
@@ -582,7 +606,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     background: radial-gradient(circle, rgba(226, 177, 64, 0.8), rgba(226, 177, 64, 0));
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 1200px) {
     .poems__grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
       align-items: start;
@@ -621,7 +645,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     }
   }
 
-  @media (max-width: 899px) {
+  @media (max-width: 1199px) {
     .poems__toc {
       gap: 0.75rem;
     }
