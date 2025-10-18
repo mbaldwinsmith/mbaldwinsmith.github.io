@@ -198,80 +198,107 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
       </p>
     </aside>
   </section>
-</BaseLayout>
 
-<script is:inline>
-  const initContactFormEnhancements = () => {
-    const form = document.querySelector('.contact-form');
-    if (!form || form.dataset.enhanced === 'true') {
-      return;
-    }
-
-    if (!(window.fetch && window.FormData)) {
-      return;
-    }
-
-    const statusRegion = form.querySelector('.contact-form__status');
-    const submitButton = form.querySelector('button[type="submit"]');
-    if (!statusRegion) {
-      return;
-    }
-
-    const updateStatus = (message, state, { allowHtml = false } = {}) => {
-      statusRegion.dataset.state = state;
-      if (allowHtml) {
-        statusRegion.innerHTML = message;
-      } else {
-        statusRegion.textContent = message;
+  <script is:inline>
+    const initContactFormEnhancements = () => {
+      const form = document.querySelector('.contact-form');
+      if (!form || form.dataset.enhanced === 'true') {
+        return;
       }
+
+      if (typeof window === 'undefined' || !(window.fetch && window.FormData)) {
+        return;
+      }
+
+      const statusRegion = form.querySelector('.contact-form__status');
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (!statusRegion) {
+        return;
+      }
+
+      let clearStatusTimeout;
+
+      const resetStatus = () => {
+        statusRegion.dataset.state = 'idle';
+        statusRegion.textContent = '';
+      };
+
+      const updateStatus = (message, state, { allowHtml = false, autoClear = true } = {}) => {
+        statusRegion.dataset.state = state;
+        if (allowHtml) {
+          statusRegion.innerHTML = message;
+        } else {
+          statusRegion.textContent = message;
+        }
+
+        if (clearStatusTimeout) {
+          window.clearTimeout(clearStatusTimeout);
+        }
+
+        if (autoClear && state !== 'pending') {
+          clearStatusTimeout = window.setTimeout(() => {
+            resetStatus();
+          }, 5000);
+        }
+      };
+
+      form.dataset.enhanced = 'true';
+      statusRegion.dataset.state = 'idle';
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const action = form.getAttribute('action');
+        if (!action) {
+          form.submit();
+          return;
+        }
+
+        const endpoint = action.includes('formsubmit.co')
+          ? action.replace('formsubmit.co/', 'formsubmit.co/ajax/')
+          : action;
+
+        updateStatus('Sending your message…', 'pending', { autoClear: false });
+
+        if (submitButton) {
+          submitButton.disabled = true;
+        }
+
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              Accept: 'application/json',
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error('Request failed');
+          }
+
+          updateStatus('Thanks for reaching out! I’ll respond as soon as I can.', 'success');
+          form.reset();
+        } catch (error) {
+          console.error(error);
+          updateStatus(
+            'Sorry, something went wrong. Please try again or email me directly at <a href="mailto:mb110413@gmail.com">mb110413@gmail.com</a>.',
+            'error',
+            { allowHtml: true },
+          );
+        } finally {
+          if (submitButton) {
+            submitButton.disabled = false;
+          }
+        }
+      });
     };
 
-    form.dataset.enhanced = 'true';
-    statusRegion.dataset.state = 'idle';
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const formData = new FormData(form);
-      updateStatus('Sending your message…', 'pending');
-
-      if (submitButton) {
-        submitButton.disabled = true;
-      }
-
-      try {
-        const response = await fetch('https://formsubmit.co/ajax/mb110413@gmail.com', {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Accept: 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Request failed');
-        }
-
-        updateStatus('Message sent! Thank you for reaching out—I will respond as soon as I can.', 'success');
-        form.reset();
-      } catch (error) {
-        console.error(error);
-        updateStatus(
-          'Sorry, something went wrong. Please try again or email me directly at <a href="mailto:mb110413@gmail.com">mb110413@gmail.com</a>.',
-          'error',
-          { allowHtml: true },
-        );
-      } finally {
-        if (submitButton) {
-          submitButton.disabled = false;
-        }
-      }
-    });
-  };
-
-  initContactFormEnhancements();
-  window.addEventListener('astro:after-swap', initContactFormEnhancements);
-</script>
+    initContactFormEnhancements();
+    window.addEventListener('astro:after-swap', initContactFormEnhancements);
+  </script>
+</BaseLayout>
 
 <style>
   .contact-hero {
