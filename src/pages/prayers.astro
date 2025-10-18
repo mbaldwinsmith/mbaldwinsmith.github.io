@@ -58,12 +58,14 @@ const prayers: Prayer[] = await Promise.all(
       <article class="surface prayer-card">
         <header class="prayer-card__header">
           <div class="accent-divider" aria-hidden="true"></div>
-          <h2 id={slug}>
-            {data.title}
+          <h2>
+            <a class="prayer-card__link" href={`/prayers/${slug}/`}>
+              {data.title}
+            </a>
             <button
               type="button"
               class="prayer-card__permalink"
-              data-fragment={slug}
+              data-url={`/prayers/${slug}/`}
               data-status-id={`copy-status-${slug}`}
               aria-label={`Copy link to ${data.title}`}
             >
@@ -154,6 +156,16 @@ const prayers: Prayer[] = await Promise.all(
     gap: 0.5rem;
   }
 
+  .prayer-card__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .prayer-card__link:hover,
+  .prayer-card__link:focus-visible {
+    text-decoration: underline;
+  }
+
   .prayer-card__permalink {
     display: inline-flex;
     align-items: center;
@@ -216,11 +228,17 @@ const prayers: Prayer[] = await Promise.all(
 <script is:inline>
   const buttons = document.querySelectorAll('.prayer-card__permalink');
 
-  const makeUrlWithFragment = (fragment) => {
+  const makeAbsoluteUrl = (path) => {
+    if (!path) {
+      return window.location.href;
+    }
+
     try {
-      return new URL(`#${fragment}`, window.location.href).toString();
+      return new URL(path, window.location.origin).toString();
     } catch {
-      return `${window.location.href.split('#')[0]}#${fragment}`;
+      const origin = window.location.origin.replace(/\/$/, '');
+      const normalisedPath = path.startsWith('/') ? path : `/${path}`;
+      return `${origin}${normalisedPath}`;
     }
   };
 
@@ -243,20 +261,20 @@ const prayers: Prayer[] = await Promise.all(
 
   buttons.forEach((button) => {
     button.addEventListener('click', async () => {
-      const fragment = button.dataset.fragment;
+      const targetPath = button.dataset.url;
       const statusId = button.dataset.statusId || null;
 
-      if (!fragment) {
+      if (!targetPath) {
         setStatusMessage(statusId, 'Link unavailable.');
         resetStatusMessage(statusId);
         return;
       }
 
-      const targetUrl = makeUrlWithFragment(fragment);
-      window.location.hash = fragment;
+      const targetUrl = makeAbsoluteUrl(targetPath);
 
       if (!navigator.clipboard) {
-        setStatusMessage(statusId, 'Clipboard unavailable. Link displayed in address bar.');
+        setStatusMessage(statusId, 'Clipboard unavailable. Opening prayer detail page.');
+        window.location.href = targetPath;
         resetStatusMessage(statusId);
         return;
       }
@@ -265,7 +283,8 @@ const prayers: Prayer[] = await Promise.all(
         await navigator.clipboard.writeText(targetUrl);
         setStatusMessage(statusId, 'Link copied to clipboard.');
       } catch (error) {
-        setStatusMessage(statusId, 'Unable to copy link. Please copy from the address bar.');
+        setStatusMessage(statusId, 'Unable to copy link. Opening prayer detail page for manual copy.');
+        window.location.href = targetPath;
       }
 
       resetStatusMessage(statusId);

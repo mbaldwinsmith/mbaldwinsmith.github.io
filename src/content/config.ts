@@ -15,6 +15,8 @@ const prayers = defineCollection({
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
+    summary: z.string().optional(),
+    date: z.coerce.date().optional(),
     order: z.number(),
     tags: z
       .array(
