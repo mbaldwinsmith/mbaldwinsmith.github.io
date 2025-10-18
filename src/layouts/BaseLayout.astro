@@ -18,6 +18,18 @@ const canonicalURL = Astro.site ? new URL(currentURL.pathname, Astro.site) : cur
 const ogImageURL = Astro.site
   ? new URL(ogImage, Astro.site).href
   : new URL(ogImage, currentURL).href;
+const siteUrl = Astro.site?.href ?? `${currentURL.origin}/`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  url: siteUrl,
+  name: title,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${siteUrl}contact?subject={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
 ---
 
 <html lang="en">
@@ -44,6 +56,7 @@ const ogImageURL = Astro.site
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
     {ogImageAlt && <meta name="twitter:image:alt" content={ogImageAlt} />}
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)}></script>
     <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
