@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SeoHead from '../../components/SeoHead.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const prayers = await getCollection('prayers');
+  return prayers.map((prayer) => ({
+    params: { slug: prayer.slug },
+    props: { prayer },
+  }));
+}
+
+const { prayer } = Astro.props as { prayer: CollectionEntry<'prayers'> };
+const { Content } = await prayer.render();
+const pageTitle = `${prayer.data.title} — Prayers — Kerygma Academy`;
+const pageDescription =
+  prayer.data.summary || `A prayer from Kerygma Academy: ${prayer.data.title}.`;
+const pageUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site)
+  : new URL(`https://kerygma.academy/prayers/${prayer.slug}/`);
+const formattedDate = prayer.data.date
+  ? prayer.data.date.toLocaleDateString('en-US', { dateStyle: 'long' })
+  : null;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} ogType="article">
+  <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
+  <article class="surface prayer-detail">
+    <header class="prayer-detail__header">
+      <div class="accent-divider" aria-hidden="true"></div>
+      <h1>{prayer.data.title}</h1>
+      <p class="prayer-detail__subtitle">{prayer.data.subtitle}</p>
+      {prayer.data.summary && <p class="prayer-detail__summary">{prayer.data.summary}</p>}
+      {(formattedDate || prayer.data.tags.length > 0) && (
+        <div class="prayer-detail__meta">
+          {formattedDate && <p class="prayer-detail__date">Published {formattedDate}</p>}
+          {prayer.data.tags.length > 0 && (
+            <div class="prayer-detail__tags">
+              {prayer.data.tags.map((tag) => (
+                <span class="floating-badge">
+                  <i class={tag.icon} aria-hidden="true"></i>
+                  {tag.label}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </header>
+    <div class="prayer-detail__body">
+      <Content />
+    </div>
+    <footer class="prayer-detail__footer">
+      <a class="prayer-detail__back" href="/prayers/">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+        Back to all prayers
+      </a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .prayer-detail {
+    display: grid;
+    gap: 2rem;
+    padding: clamp(2rem, 4vw, 3rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prayer-detail::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(138, 90, 60, 0.14), transparent 60%),
+      radial-gradient(circle at 82% 80%, rgba(188, 209, 202, 0.1), transparent 58%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .prayer-detail > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .prayer-detail__header {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .prayer-detail__subtitle {
+    font-size: 1.05rem;
+    color: rgba(36, 28, 21, 0.72);
+  }
+
+  .prayer-detail__summary {
+    font-size: 1rem;
+    color: rgba(36, 28, 21, 0.72);
+  }
+
+  .prayer-detail__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .prayer-detail__date {
+    margin: 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(36, 28, 21, 0.66);
+  }
+
+  .prayer-detail__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .prayer-detail__body {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .prayer-detail__body :global(p) {
+    margin: 0;
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    line-height: 1.85;
+    color: rgba(36, 28, 21, 0.82);
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  }
+
+  .prayer-detail__footer {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .prayer-detail__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Libre Franklin', 'Source Serif 4', serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: var(--accent-dark);
+    text-decoration: none;
+  }
+
+  .prayer-detail__back:hover,
+  .prayer-detail__back:focus-visible {
+    text-decoration: underline;
+  }
+</style>
