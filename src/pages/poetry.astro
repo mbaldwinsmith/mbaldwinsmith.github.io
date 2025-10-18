@@ -376,8 +376,6 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
   }
 
   .poems__toc {
-    position: sticky;
-    top: calc(var(--site-header-height, 0px) + clamp(1rem, 4vw, 1.75rem));
     display: grid;
     gap: 1rem;
     padding: clamp(1.4rem, 3vw, 1.9rem);
