@@ -287,6 +287,17 @@ const jsonLd = {
     overflow: hidden;
   }
 
+  :global(.surface::before) {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 65%);
+    opacity: 0.35;
+    z-index: 0;
+  }
+
   :global(.surface::after) {
     content: '';
     position: absolute;
@@ -295,13 +306,13 @@ const jsonLd = {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 247, 234, 0));
     opacity: 0.45;
     mix-blend-mode: soft-light;
-    z-index: 0;
+    z-index: 1;
     pointer-events: none;
   }
 
   :global(.surface > *) {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   :global(.surface--tinted) {
