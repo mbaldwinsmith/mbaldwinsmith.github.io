@@ -2,6 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
 import Icon from '../components/Icon.astro';
+import {
+  evaluateCourseGroups as evaluateCourseGroupsHelper,
+  matchesSearch as matchesSearchHelper,
+  normalizeCategory as normalizeCategoryHelper,
+  normalizeSearchTerm as normalizeSearchTermHelper,
+} from '../utils/courseFilters.js';
 
 export const prerender = true;
 
@@ -9,6 +15,158 @@ const pageTitle = 'Courses — Kerygma Academy';
 const pageDescription =
   'Free Catholic formation courses curated across apologetics, doctrine, Scripture, philosophy, and more.';
 const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('https://kerygma.academy/courses/');
+
+const normalizeCategorySource = normalizeCategoryHelper.toString();
+const normalizeSearchTermSource = normalizeSearchTermHelper.toString();
+const matchesSearchSource = matchesSearchHelper.toString();
+const evaluateCourseGroupsSource = evaluateCourseGroupsHelper.toString();
+const courseFiltersScript = String.raw`
+  const normalizeCategory = ${normalizeCategorySource};
+  const normalizeSearchTerm = ${normalizeSearchTermSource};
+  const matchesSearch = ${matchesSearchSource};
+  const evaluateCourseGroups = ${evaluateCourseGroupsSource};
+
+  /** @type {(() => void) | null} */
+  let destroyCourseFilters = null;
+
+  const initCourseFilters = () => {
+    const filterForm = document.querySelector('[data-course-filters]');
+    if (!(filterForm instanceof HTMLFormElement) || filterForm.dataset.enhanced === 'true') {
+      return;
+    }
+
+    const searchInput = filterForm.querySelector('[data-filter-search]');
+    const categorySelect = filterForm.querySelector('[data-filter-category]');
+    const visibleCountEl = filterForm.querySelector('[data-course-visible-count]');
+    const resultsLabel = filterForm.querySelector('[data-course-results-label]');
+    const emptyMessage = document.querySelector('[data-course-empty]');
+
+    /** @type {Array<{ element: HTMLElement; category: string; items: Array<{ element: HTMLElement; text: string }> }>} */
+    const filterGroups = [];
+
+    document.querySelectorAll('[data-course-group]').forEach((groupElement) => {
+      if (!(groupElement instanceof HTMLElement)) {
+        return;
+      }
+
+      const items = Array.from(groupElement.querySelectorAll('[data-course-item]'))
+        .filter((item) => item instanceof HTMLElement)
+        .map((itemElement) => ({
+          element: /** @type {HTMLElement} */ (itemElement),
+          text: itemElement.textContent ?? '',
+        }));
+
+      filterGroups.push({
+        element: groupElement,
+        category: normalizeCategory(groupElement.dataset.category),
+        items,
+      });
+    });
+
+    const dataGroups = filterGroups.map(({ category, items }) => ({
+      category,
+      items: items.map(({ text }) => ({ text })),
+    }));
+
+    const updateFilters = () => {
+      const searchTerm = searchInput instanceof HTMLInputElement ? searchInput.value : '';
+      const selectedCategory =
+        categorySelect instanceof HTMLSelectElement ? categorySelect.value : 'all';
+
+      filterGroups.forEach((group, groupIndex) => {
+        group.items.forEach((item, itemIndex) => {
+          dataGroups[groupIndex].items[itemIndex].text = item.element.textContent ?? '';
+        });
+      });
+
+      const { totalVisible, groups: results } = evaluateCourseGroups(
+        dataGroups,
+        searchTerm,
+        selectedCategory,
+      );
+
+      results.forEach((groupResult, groupIndex) => {
+        const { element, items } = filterGroups[groupIndex];
+
+        groupResult.itemVisibilities.forEach((isVisible, itemIndex) => {
+          const itemElement = items[itemIndex].element;
+          itemElement.hidden = !isVisible;
+        });
+
+        if (groupResult.matchesCategory && groupResult.visibleCount > 0) {
+          element.removeAttribute('hidden');
+          element.style.removeProperty('display');
+          element.removeAttribute('aria-hidden');
+        } else {
+          element.setAttribute('hidden', '');
+          element.style.display = 'none';
+          element.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      if (visibleCountEl instanceof HTMLElement) {
+        visibleCountEl.textContent = String(totalVisible);
+      }
+
+      if (resultsLabel instanceof HTMLElement) {
+        resultsLabel.textContent = totalVisible === 1 ? 'course' : 'courses';
+      }
+
+      if (emptyMessage instanceof HTMLElement) {
+        emptyMessage.toggleAttribute('hidden', totalVisible !== 0);
+      }
+    };
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+    };
+
+    const handleInput = (event) => {
+      if (event.target === searchInput) {
+        updateFilters();
+      }
+    };
+
+    const handleCategoryChange = () => {
+      updateFilters();
+    };
+
+    filterForm.addEventListener('submit', handleSubmit);
+    filterForm.addEventListener('input', handleInput);
+
+    if (categorySelect instanceof HTMLSelectElement) {
+      categorySelect.addEventListener('change', handleCategoryChange);
+    }
+
+    filterForm.dataset.enhanced = 'true';
+
+    destroyCourseFilters = () => {
+      filterForm.removeEventListener('submit', handleSubmit);
+      filterForm.removeEventListener('input', handleInput);
+
+      if (categorySelect instanceof HTMLSelectElement) {
+        categorySelect.removeEventListener('change', handleCategoryChange);
+      }
+
+      filterForm.removeAttribute('data-enhanced');
+      destroyCourseFilters = null;
+    };
+
+    updateFilters();
+  };
+
+  document.addEventListener('astro:before-swap', () => {
+    destroyCourseFilters?.();
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCourseFilters, { once: true });
+  } else {
+    initCourseFilters();
+  }
+
+  document.addEventListener('astro:after-swap', initCourseFilters);
+`;
 
 const slugifyCategory = (value: string) =>
   value
@@ -406,168 +564,7 @@ const coursesJsonLd = {
   </section>
 </BaseLayout>
 
-<script is:inline>
-  /** @type {(() => void) | null} */
-  let destroyCourseFilters = null;
-
-  const initCourseFilters = () => {
-    const filterForm = document.querySelector('[data-course-filters]');
-    if (!(filterForm instanceof HTMLFormElement) || filterForm.dataset.enhanced === 'true') {
-      return;
-    }
-
-    const searchInput = filterForm.querySelector('[data-filter-search]');
-    const categorySelect = filterForm.querySelector('[data-filter-category]');
-    const visibleCountEl = filterForm.querySelector('[data-course-visible-count]');
-    const resultsLabel = filterForm.querySelector('[data-course-results-label]');
-
-    const getCategoryKey = (value) => {
-      if (!value) {
-        return '';
-      }
-
-      const normalizedValue = value
-        .toString()
-        .normalize('NFKD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .trim();
-
-      if (normalizedValue === 'all') {
-        return 'all';
-      }
-
-      return normalizedValue.replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
-    };
-
-    const groups = [];
-
-    document.querySelectorAll('[data-course-group]').forEach((group) => {
-      if (!(group instanceof HTMLElement)) {
-        return;
-      }
-
-      const items = Array.from(group.querySelectorAll('[data-course-item]')).filter(
-        (item) => item instanceof HTMLElement,
-      );
-
-      groups.push({
-        element: group,
-        category: getCategoryKey(group.dataset.category),
-        items,
-      });
-    });
-    const emptyMessage = document.querySelector('[data-course-empty]');
-
-    const updateFilters = () => {
-      const searchTerm = searchInput instanceof HTMLInputElement ? searchInput.value.trim().toLowerCase() : '';
-      const selectedCategory =
-        categorySelect instanceof HTMLSelectElement ? getCategoryKey(categorySelect.value) : 'all';
-
-      let totalVisible = 0;
-
-      groups.forEach(({ element, category, items }) => {
-        const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
-
-        if (!matchesCategory) {
-          items.forEach((item) => {
-            item.hidden = true;
-          });
-
-          element.setAttribute('hidden', '');
-          element.style.display = 'none';
-          element.setAttribute('aria-hidden', 'true');
-          return;
-        }
-
-        let visibleItems = 0;
-
-        items.forEach((item) => {
-          const matchesSearch = searchTerm === '' || item.textContent?.toLowerCase().includes(searchTerm);
-          const shouldDisplayItem = matchesSearch;
-
-          item.hidden = !shouldDisplayItem;
-
-          if (shouldDisplayItem) {
-            visibleItems += 1;
-            totalVisible += 1;
-          }
-        });
-
-        if (visibleItems > 0) {
-          element.removeAttribute('hidden');
-          element.style.removeProperty('display');
-          element.removeAttribute('aria-hidden');
-        } else {
-          element.setAttribute('hidden', '');
-          element.style.display = 'none';
-          element.setAttribute('aria-hidden', 'true');
-        }
-      });
-
-      if (visibleCountEl instanceof HTMLElement) {
-        visibleCountEl.textContent = String(totalVisible);
-      }
-
-      if (resultsLabel instanceof HTMLElement) {
-        resultsLabel.textContent = totalVisible === 1 ? 'course' : 'courses';
-      }
-
-      if (emptyMessage instanceof HTMLElement) {
-        emptyMessage.toggleAttribute('hidden', totalVisible !== 0);
-      }
-    };
-
-    const handleSubmit = (event) => {
-      event.preventDefault();
-    };
-
-    const handleInput = (event) => {
-      if (event.target === searchInput) {
-        updateFilters();
-      }
-    };
-
-    const handleCategoryChange = () => {
-      updateFilters();
-    };
-
-    filterForm.addEventListener('submit', handleSubmit);
-    filterForm.addEventListener('input', handleInput);
-
-    if (categorySelect instanceof HTMLSelectElement) {
-      categorySelect.addEventListener('change', handleCategoryChange);
-    }
-
-    filterForm.dataset.enhanced = 'true';
-
-    destroyCourseFilters = () => {
-      filterForm.removeEventListener('submit', handleSubmit);
-      filterForm.removeEventListener('input', handleInput);
-
-      if (categorySelect instanceof HTMLSelectElement) {
-        categorySelect.removeEventListener('change', handleCategoryChange);
-      }
-
-      filterForm.removeAttribute('data-enhanced');
-      destroyCourseFilters = null;
-    };
-
-    updateFilters();
-  };
-
-  document.addEventListener('astro:before-swap', () => {
-    destroyCourseFilters?.();
-  });
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCourseFilters, { once: true });
-  } else {
-    initCourseFilters();
-  }
-
-  document.addEventListener('astro:after-swap', initCourseFilters);
-</script>
+<script is:inline set:html={courseFiltersScript}></script>
 
 <style>
   .courses-hero {
