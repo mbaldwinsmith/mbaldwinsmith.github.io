@@ -21,6 +21,13 @@ const normalizeSearchTermSource = normalizeSearchTermHelper.toString();
 const matchesSearchSource = matchesSearchHelper.toString();
 const evaluateCourseGroupsSource = evaluateCourseGroupsHelper.toString();
 const courseFiltersScript = String.raw`
+  const courseFiltersState =
+    window.__courseFiltersState ?? (window.__courseFiltersState = {});
+
+  if (typeof courseFiltersState.afterSwapListener === 'function') {
+    document.removeEventListener('astro:after-swap', courseFiltersState.afterSwapListener);
+  }
+
   const normalizeCategory = ${normalizeCategorySource};
   const normalizeSearchTerm = ${normalizeSearchTermSource};
   const matchesSearch = ${matchesSearchSource};
@@ -148,8 +155,11 @@ const courseFiltersScript = String.raw`
         categorySelect.removeEventListener('change', handleCategoryChange);
       }
 
+      document.removeEventListener('astro:after-swap', initCourseFilters);
+
       filterForm.removeAttribute('data-enhanced');
       destroyCourseFilters = null;
+      courseFiltersState.afterSwapListener = null;
     };
 
     updateFilters();
@@ -166,6 +176,7 @@ const courseFiltersScript = String.raw`
   }
 
   document.addEventListener('astro:after-swap', initCourseFilters);
+  courseFiltersState.afterSwapListener = initCourseFilters;
 `;
 
 const slugifyCategory = (value: string) =>
