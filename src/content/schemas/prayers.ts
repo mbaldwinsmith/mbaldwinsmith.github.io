@@ -7,7 +7,7 @@ export const createPrayerTagsSchema = (z: ZodModule) =>
     .array(
       z.object({
         icon: z.enum(iconNames),
-        label: z.string(),
+        label: z.string().trim().min(1),
       }),
     )
     .default([]);
