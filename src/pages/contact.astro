@@ -298,7 +298,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
           updateStatus(
             'Sorry, something went wrong. Please try again or email me directly at <a href="mailto:mb110413@gmail.com">mb110413@gmail.com</a>.',
             'error',
-            { allowHtml: true },
+            { allowHtml: true, autoClear: false },
           );
         } finally {
           if (submitButton) {
