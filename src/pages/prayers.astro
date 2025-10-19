@@ -339,6 +339,19 @@ const prayers: Prayer[] = await Promise.all(
     });
   };
 
+  const onDomContentLoaded = () => {
+    init();
+  };
+
+  const onAstroAfterSwap = () => {
+    init();
+  };
+
+  const removeLifecycleListeners = () => {
+    document.removeEventListener('DOMContentLoaded', onDomContentLoaded);
+    document.removeEventListener('astro:after-swap', onAstroAfterSwap);
+  };
+
   const cleanup = () => {
     document
       .querySelectorAll(`.prayer-card__permalink[${INIT_ATTR}="true"]`)
@@ -356,13 +369,15 @@ const prayers: Prayer[] = await Promise.all(
       clearStatusMessage(statusId);
     });
     statusTimeouts.clear();
+
+    removeLifecycleListeners();
   };
 
   if (document.readyState !== 'loading') {
     init();
   }
 
-  document.addEventListener('DOMContentLoaded', init);
-  document.addEventListener('astro:after-swap', init);
+  document.addEventListener('DOMContentLoaded', onDomContentLoaded);
+  document.addEventListener('astro:after-swap', onAstroAfterSwap);
   document.addEventListener('astro:before-swap', cleanup);
 </script>
