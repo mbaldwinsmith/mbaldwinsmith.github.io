@@ -1,6 +1,7 @@
 ---
 title: "Mary, Queen of Heaven"
 order: 10
+summary: A litany inviting Mary's maternal intercession and guidance toward her Son.
 date: 2024-03-08
 stanzas:
   -

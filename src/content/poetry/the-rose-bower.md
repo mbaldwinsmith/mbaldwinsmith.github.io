@@ -1,6 +1,7 @@
 ---
 title: "The Rose Bower"
 order: 9
+summary: A contemplative visit to a fragrant garden where the soul rests with Christ in quiet joy.
 date: 2024-03-01
 stanzas:
   -
