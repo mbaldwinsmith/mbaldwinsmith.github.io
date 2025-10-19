@@ -2,6 +2,7 @@
 title: A Bold Prayer
 subtitle: For steadfast courage and wholehearted devotion.
 order: 1
+summary: A prayer asking for courage, protection, and deeper love for God.
 tags:
   - icon: fa-solid fa-flame
     label: Consecration

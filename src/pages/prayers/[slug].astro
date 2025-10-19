@@ -17,8 +17,24 @@ export async function getStaticPaths() {
 const { prayer } = Astro.props as { prayer: CollectionEntry<'prayers'> };
 const { Content } = await prayer.render();
 const pageTitle = `${prayer.data.title} — Prayers — Kerygma Academy`;
+const cleanedBodyText = prayer.body
+  ? prayer.body
+      .replace(/!\[(.*?)\]\(.*?\)/g, '$1')
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+      .replace(/^\s*>+\s?/gm, '')
+      .replace(/^#+\s*/gm, '')
+      .replace(/[*_`~]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+  : '';
+const openingSentences = cleanedBodyText.match(/[^.!?]+[.!?]+/g) || [];
+const derivedDescription = openingSentences.length
+  ? openingSentences.slice(0, 2).join(' ').trim()
+  : cleanedBodyText;
 const pageDescription =
-  prayer.data.summary || `A prayer from Kerygma Academy: ${prayer.data.title}.`;
+  (prayer.data.summary && prayer.data.summary.trim()) ||
+  derivedDescription ||
+  `A prayer from Kerygma Academy: ${prayer.data.title}.`;
 const pageUrl = Astro.site
   ? new URL(Astro.url.pathname, Astro.site)
   : new URL(`https://kerygma.academy/prayers/${prayer.slug}/`);
