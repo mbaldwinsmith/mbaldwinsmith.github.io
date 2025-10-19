@@ -174,7 +174,7 @@ const prayers: Prayer[] = await Promise.all(
     height: 1.75rem;
     border-radius: 50%;
     font-size: 0.85rem;
-    color: rgba(36, 28, 21, 0.5);
+    color: rgba(36, 28, 21, 0.58);
     text-decoration: none;
     background: transparent;
     border: 1px solid transparent;
@@ -186,7 +186,9 @@ const prayers: Prayer[] = await Promise.all(
   .prayer-card:hover .prayer-card__permalink,
   .prayer-card:focus-within .prayer-card__permalink {
     opacity: 1;
-    color: rgba(36, 28, 21, 0.72);
+    color: rgba(36, 28, 21, 0.75);
+    background-color: rgba(188, 209, 202, 0.22);
+    border-color: rgba(138, 90, 60, 0.28);
   }
 
   .prayer-card__permalink:focus-visible {
@@ -195,6 +197,20 @@ const prayers: Prayer[] = await Promise.all(
     background-color: rgba(138, 90, 60, 0.1);
     color: var(--accent-dark);
     opacity: 1;
+  }
+
+  @media (hover: none) {
+    .prayer-card__permalink {
+      opacity: 1;
+      background-color: rgba(188, 209, 202, 0.24);
+      border-color: rgba(138, 90, 60, 0.22);
+    }
+
+    .prayer-card__permalink:active {
+      background-color: rgba(138, 90, 60, 0.18);
+      border-color: rgba(138, 90, 60, 0.32);
+      color: rgba(36, 28, 21, 0.85);
+    }
   }
 
   .visually-hidden {
