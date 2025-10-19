@@ -6,7 +6,7 @@ import {
   matchesSearch,
   normalizeCategory,
   normalizeSearchTerm,
-} from '../src/utils/courseFilters.js';
+} from '../src/utils/courseFilters.ts';
 
 test('normalizeCategory normalizes diacritics, punctuation, and casing', () => {
   assert.equal(normalizeCategory('  Líturgy & Music  '), 'liturgy-music');
