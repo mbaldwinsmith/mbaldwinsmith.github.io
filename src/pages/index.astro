@@ -160,6 +160,8 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
   .collection-card {
     display: grid;
     gap: 1.1rem;
+    position: relative;
+    overflow: hidden;
     transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
     border: 1px solid rgba(92, 73, 58, 0.18);
   }
@@ -176,6 +178,20 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
     z-index: 0;
   }
 
+  .collection-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent), rgba(255, 244, 231, 0));
+    opacity: 0.55;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
   .collection-card:hover,
   .collection-card:focus-within {
     transform: translateY(-6px);
@@ -185,6 +201,11 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
 
   .collection-card:hover::before,
   .collection-card:focus-within::before {
+    opacity: 1;
+  }
+
+  .collection-card:hover::after,
+  .collection-card:focus-within::after {
     opacity: 1;
   }
 
