@@ -1,3 +1,7 @@
+---
+import { formationNavigation, quickLinksNavigation } from '../data/navigation';
+---
+
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
@@ -11,10 +15,9 @@
           <h2 class="footer-heading">Quick links</h2>
           <nav aria-label="Quick links">
             <ul class="footer-link-list">
-              <li><a href="/">Home</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/portfolio">Portfolio</a></li>
-              <li><a href="/contact">Contact</a></li>
+              {quickLinksNavigation.map((link) => (
+                <li><a href={link.href}>{link.label}</a></li>
+              ))}
             </ul>
           </nav>
         </div>
@@ -22,9 +25,9 @@
           <h2 class="footer-heading">Formation</h2>
           <nav aria-label="Formation resources">
             <ul class="footer-link-list">
-              <li><a href="/prayers">Prayers</a></li>
-              <li><a href="/courses">Courses</a></li>
-              <li><a href="/poetry">Poetry</a></li>
+              {formationNavigation.map((link) => (
+                <li><a href={link.href}>{link.label}</a></li>
+              ))}
             </ul>
           </nav>
         </div>
