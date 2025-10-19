@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
 import { getCollection } from 'astro:content';
+import { cleanMarkdownToPlainText } from '../utils/cleanMarkdown.js';
 
 export const prerender = false;
 
@@ -71,18 +72,19 @@ if (hasQuery) {
   const prayerResults = prayersEntries.flatMap((entry) => {
     const { title, subtitle, summary, tags, order } = entry.data;
     const tagLabels = tags.map((tag) => tag.label);
-    const fields = [title, subtitle, summary, ...tagLabels];
+    const cleanedBody = cleanMarkdownToPlainText(entry.body);
+    const fields = [title, subtitle, summary, ...tagLabels, cleanedBody];
     if (!fields.some((field) => matchesQuery(field))) {
       return [];
     }
 
-    const excerptSource = summary ?? subtitle ?? title;
+    const excerptSource = summary ?? subtitle ?? cleanedBody;
     return [
       {
         title,
         url: `/prayers/${entry.slug}/`,
         type: 'Prayer' as const,
-        excerpt: createExcerpt(excerptSource),
+        excerpt: createExcerpt(excerptSource || title),
         order,
       },
     ];

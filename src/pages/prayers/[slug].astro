@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SeoHead from '../../components/SeoHead.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { cleanMarkdownToPlainText } from '../../utils/cleanMarkdown.js';
 
 export const prerender = true;
 
@@ -17,16 +18,7 @@ export async function getStaticPaths() {
 const { prayer } = Astro.props as { prayer: CollectionEntry<'prayers'> };
 const { Content } = await prayer.render();
 const pageTitle = `${prayer.data.title} — Prayers — Kerygma Academy`;
-const cleanedBodyText = prayer.body
-  ? prayer.body
-      .replace(/!\[(.*?)\]\(.*?\)/g, '$1')
-      .replace(/\[(.*?)\]\(.*?\)/g, '$1')
-      .replace(/^\s*>+\s?/gm, '')
-      .replace(/^#+\s*/gm, '')
-      .replace(/[*_`~]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim()
-  : '';
+const cleanedBodyText = cleanMarkdownToPlainText(prayer.body);
 const openingSentences = cleanedBodyText.match(/[^.!?]+[.!?]+/g) || [];
 const derivedDescription = openingSentences.length
   ? openingSentences.slice(0, 2).join(' ').trim()
