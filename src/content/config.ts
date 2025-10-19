@@ -1,6 +1,4 @@
 import { defineCollection, z } from 'astro:content';
-import { createPrayersSchema } from './schemas/prayers';
-
 const poetry = defineCollection({
   type: 'content',
   schema: z.object({
@@ -12,9 +10,4 @@ const poetry = defineCollection({
   }),
 });
 
-const prayers = defineCollection({
-  type: 'content',
-  schema: createPrayersSchema(z),
-});
-
-export const collections = { poetry, prayers };
+export const collections = { poetry };

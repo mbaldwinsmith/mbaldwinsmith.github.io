@@ -1,10 +1,9 @@
 import type { CollectionEntry } from 'astro:content';
 
-import { cleanMarkdownToPlainText } from './cleanMarkdown.js';
 import type { Course } from '../data/courses.ts';
 import type { Project } from '../data/projects.ts';
 
-export type SearchResultType = 'Poem' | 'Prayer' | 'Course' | 'Project';
+export type SearchResultType = 'Poem' | 'Course' | 'Project';
 
 export type SearchResult = {
   title: string;
@@ -16,7 +15,6 @@ export type SearchResult = {
 
 export type BuildSearchResultsOptions = {
   poetryEntries?: CollectionEntry<'poetry'>[];
-  prayersEntries?: CollectionEntry<'prayers'>[];
   courseEntries?: Course[];
   projectEntries?: Project[];
 };
@@ -80,20 +78,15 @@ const resolveProjectEntries = async (
   return projectEntriesCache;
 };
 
-const resolveCollectionEntries = async <TCollection extends 'poetry' | 'prayers'>(
-  collection: TCollection,
+const resolveCollectionEntries = async (
   options: BuildSearchResultsOptions,
-): Promise<CollectionEntry<TCollection>[]> => {
-  if (collection === 'poetry') {
-    if (Object.prototype.hasOwnProperty.call(options, 'poetryEntries')) {
-      return (options.poetryEntries ?? []) as CollectionEntry<TCollection>[];
-    }
-  } else if (Object.prototype.hasOwnProperty.call(options, 'prayersEntries')) {
-    return (options.prayersEntries ?? []) as CollectionEntry<TCollection>[];
+): Promise<CollectionEntry<'poetry'>[]> => {
+  if (Object.prototype.hasOwnProperty.call(options, 'poetryEntries')) {
+    return options.poetryEntries ?? [];
   }
 
   const getCollection = await loadGetCollection();
-  return getCollection(collection);
+  return getCollection('poetry');
 };
 
 export const buildSearchResults = async (
@@ -108,9 +101,8 @@ export const buildSearchResults = async (
   }
 
   const normalizedQuery = query.toLowerCase();
-  const [poetryEntries, prayersEntries, courseEntries, projectEntries] = await Promise.all([
-    resolveCollectionEntries('poetry', options),
-    resolveCollectionEntries('prayers', options),
+  const [poetryEntries, courseEntries, projectEntries] = await Promise.all([
+    resolveCollectionEntries(options),
     resolveCourseEntries(options),
     resolveProjectEntries(options),
   ]);
@@ -129,27 +121,6 @@ export const buildSearchResults = async (
         title,
         url: `/poetry/${entry.slug}/`,
         type: 'Poem',
-        excerpt: createExcerpt(excerptSource || title),
-        order,
-      },
-    ];
-  });
-
-  const prayerResults = prayersEntries.flatMap<SearchResult>((entry) => {
-    const { title, subtitle, summary, tags, order } = entry.data;
-    const tagLabels = tags.map((tag) => tag.label);
-    const cleanedBody = cleanMarkdownToPlainText(entry.body);
-    const fields = [title, subtitle, summary, ...tagLabels, cleanedBody];
-    if (!fields.some((field) => includesQuery(field, normalizedQuery))) {
-      return [];
-    }
-
-    const excerptSource = summary ?? subtitle ?? cleanedBody;
-    return [
-      {
-        title,
-        url: `/prayers/${entry.slug}/`,
-        type: 'Prayer',
         excerpt: createExcerpt(excerptSource || title),
         order,
       },
@@ -202,12 +173,11 @@ export const buildSearchResults = async (
 
   const typePriority: Record<SearchResultType, number> = {
     Poem: 0,
-    Prayer: 1,
-    Course: 2,
-    Project: 3,
+    Course: 1,
+    Project: 2,
   };
 
-  const results = [...poemResults, ...prayerResults, ...courseResults, ...projectResults].sort((a, b) => {
+  const results = [...poemResults, ...courseResults, ...projectResults].sort((a, b) => {
     if (a.type !== b.type) {
       return typePriority[a.type] - typePriority[b.type];
     }

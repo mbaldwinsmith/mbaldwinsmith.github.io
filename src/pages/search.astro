@@ -15,25 +15,20 @@ const pageTitle = hasQuery
   ? `Search results for "${query}" — Kerygma Academy`
   : 'Search — Kerygma Academy';
 const pageDescription = hasQuery
-  ? `Discover poems, prayers, courses, and projects from Kerygma Academy that mention "${query}".`
-  : 'Search through the poems, prayers, courses, and projects shared by Kerygma Academy.';
+  ? `Discover poems, courses, and projects from Kerygma Academy that mention "${query}".`
+  : 'Search through the poems, courses, and projects shared by Kerygma Academy.';
 const pageUrl = Astro.site
   ? new URL(`${Astro.url.pathname}${Astro.url.search}`, Astro.site)
   : Astro.url;
 
 const resultTypeMeta: Record<
   SearchResult['type'],
-  { label: string; cta: string; tone: 'poem' | 'prayer' | 'course' | 'project' }
+  { label: string; cta: string; tone: 'poem' | 'course' | 'project' }
 > = {
   Poem: {
     label: 'Poem',
     cta: 'Read this poem',
     tone: 'poem',
-  },
-  Prayer: {
-    label: 'Prayer',
-    cta: 'Pray with this prayer',
-    tone: 'prayer',
   },
   Course: {
     label: 'Course',
@@ -58,9 +53,7 @@ const resultTypeMeta: Record<
     <div class="page-hero__content">
       <p class="kicker">Search</p>
       <h1>Find words for the journey</h1>
-      <p class="lead">
-        Enter a phrase or theme to explore poems, prayers, courses, and projects from Kerygma Academy.
-      </p>
+      <p class="lead">Enter a phrase or theme to explore poems, courses, and projects from Kerygma Academy.</p>
     </div>
   </section>
 
@@ -123,7 +116,7 @@ const resultTypeMeta: Record<
         </section>
       ) : (
         <p class="search__empty" role="status">
-          We couldn&rsquo;t find any poems, prayers, courses, or projects that match “{query}”. Try a different keyword.
+          We couldn&rsquo;t find any poems, courses, or projects that match “{query}”. Try a different keyword.
         </p>
       )
     ) : (
@@ -243,11 +236,6 @@ const resultTypeMeta: Record<
   .search-result__type--poem {
     background: rgba(126, 104, 217, 0.16);
     color: #43307f;
-  }
-
-  .search-result__type--prayer {
-    background: rgba(74, 153, 133, 0.18);
-    color: #1f5f53;
   }
 
   .search-result__type--course {

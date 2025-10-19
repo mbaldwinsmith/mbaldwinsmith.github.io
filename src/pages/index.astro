@@ -7,7 +7,7 @@ export const prerender = true;
 
 const pageTitle = 'Home — Kerygma Academy';
 const pageDescription =
-  'Kerygma Academy gathers poetry, prayers, courses, and creative work to accompany disciples on the journey of faith.';
+  'Kerygma Academy gathers poetry, courses, and creative work to accompany disciples on the journey of faith.';
 const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('https://kerygma.academy/');
 ---
 
@@ -22,14 +22,14 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
         <p class="kicker">Welcome</p>
         <h1>Faithful reflections &amp; luminous craft</h1>
         <p class="lead">
-          This library gathers the prayers, poems, essays, and experiments that have accompanied my pilgrimage of faith.
-          Wander through these rooms at your leisure; each one is prepared with care for thoughtful companions and fellow
-          seekers. Curated by Mark Baldwin-Smith, Kerygma Academy exists to serve your discipleship with beauty and clarity.
+          This library gathers poems, essays, and experiments that have accompanied my pilgrimage of faith. Wander through
+          these rooms at your leisure; each one is prepared with care for thoughtful companions and fellow seekers. Curated by
+          Mark Baldwin-Smith, Kerygma Academy exists to serve your discipleship with beauty and clarity.
         </p>
         <div class="page-hero__meta">
-          <span class="meta-chip"><Icon name="book-open" aria-hidden="true" /> Prayerbook</span>
           <span class="meta-chip"><Icon name="feather" aria-hidden="true" /> Poetry</span>
           <span class="meta-chip"><Icon name="lightbulb" aria-hidden="true" /> Reflection</span>
+          <span class="meta-chip"><Icon name="compass-drafting" aria-hidden="true" /> Design</span>
         </div>
       </div>
     </div>
@@ -40,8 +40,8 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
       <p class="kicker">The Library</p>
       <h2>Rooms of practice &amp; imagination</h2>
       <p>
-        Each collection is a cabinet of curiosity. Step inside to explore the prayer book, poetic notebooks, theological
-        reflections, professional work, and ways to stay in touch.
+        Each collection is a cabinet of curiosity. Step inside to explore poetic notebooks, theological reflections,
+        professional work, and ways to stay in touch.
       </p>
     </article>
     <div class="page-section__grid page-section__grid--columns home-collections__grid">
@@ -52,14 +52,6 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
           serving.
         </p>
         <a class="button" href="/about">Read my story</a>
-      </article>
-
-      <article class="collection-card surface">
-        <h3>Prayers</h3>
-        <p>
-          A curated collection of prayers for sacred seasons and everyday moments, written to steady hearts and kindle hope.
-        </p>
-        <a class="button" href="/prayers">Explore prayers</a>
       </article>
 
       <article class="collection-card surface">
