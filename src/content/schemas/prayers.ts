@@ -14,10 +14,10 @@ export const createPrayerTagsSchema = (z: ZodModule) =>
 
 export const createPrayersSchema = (z: ZodModule) =>
   z.object({
-    title: z.string(),
-    subtitle: z.string(),
-    summary: z.string().optional(),
+    title: z.string().trim().min(1),
+    subtitle: z.string().trim().min(1),
+    summary: z.string().trim().min(1).optional(),
     date: z.coerce.date().optional(),
-    order: z.number(),
+    order: z.number().int().positive(),
     tags: createPrayerTagsSchema(z),
   });
