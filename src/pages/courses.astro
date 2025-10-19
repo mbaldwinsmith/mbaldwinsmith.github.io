@@ -508,7 +508,13 @@ const coursesJsonLd = {
       </p>
     </article>
 
-    <form class="surface surface--tinted course-filters" data-course-filters role="search">
+    <form
+      class="surface surface--tinted course-filters"
+      data-course-filters
+      role="search"
+      aria-labelledby="course-filters-title"
+    >
+      <h2 id="course-filters-title" class="sr-only">Search and filter courses</h2>
       <div class="filter-field">
         <label class="filter-label" for="course-search">Search courses</label>
         <input
