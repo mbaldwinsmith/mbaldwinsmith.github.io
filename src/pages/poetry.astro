@@ -35,6 +35,13 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
 
 <BaseLayout title={pageTitle} description={pageDescription}>
   <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/rss+xml"
+    href="/poetry.xml"
+    title="Poetry feed"
+  />
   <script type="application/ld+json" is:inline>
     {JSON.stringify(
       (() => {
