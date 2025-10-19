@@ -283,10 +283,44 @@ const totalCourses = courseSections.reduce(
   (total, section) => total + section.items.length,
   0
 );
+
+const courseListElements = courseSections.reduce(
+  (list, section) => {
+    section.items.forEach((course) => {
+      list.push({
+        '@type': 'ListItem',
+        position: list.length + 1,
+        item: {
+          '@type': 'Course',
+          name: course.title,
+          url: course.url,
+          isPartOf: {
+            '@type': 'CreativeWorkSeries',
+            name: section.title,
+            '@id': `${pageUrl.href}#${section.slug}`,
+          },
+        },
+      });
+    });
+
+    return list;
+  },
+  [] as Array<Record<string, unknown>>
+);
+
+const coursesJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: pageTitle,
+  url: pageUrl.href,
+  numberOfItems: totalCourses,
+  itemListElement: courseListElements,
+};
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
   <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
+  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(coursesJsonLd)}></script>
   <section class="page-hero courses-hero surface surface--tinted">
     <span class="page-hero__halo" aria-hidden="true"></span>
     <span class="page-hero__sparkle" aria-hidden="true"></span>
