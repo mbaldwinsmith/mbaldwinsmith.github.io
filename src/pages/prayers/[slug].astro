@@ -50,6 +50,8 @@ const formattedDate = prayer.data.date
       {JSON.stringify(
         (() => {
           const schemaType = prayer.data.date ? 'Article' : 'CreativeWork';
+          const authorName = 'Mark Baldwin-Smith';
+          const publisherName = 'Kerygma Academy';
           const jsonLd: Record<string, unknown> = {
             '@context': 'https://schema.org',
             '@type': schemaType,
@@ -57,6 +59,14 @@ const formattedDate = prayer.data.date
             name: prayer.data.title,
             alternativeHeadline: prayer.data.subtitle,
             url: pageUrl.href,
+          };
+          jsonLd.author = {
+            '@type': 'Person',
+            name: authorName,
+          };
+          jsonLd.publisher = {
+            '@type': 'Organization',
+            name: publisherName,
           };
           if (prayer.data.summary) {
             jsonLd.description = prayer.data.summary;
