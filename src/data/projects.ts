@@ -107,11 +107,11 @@ export const projects: Project[] = [
       sizes: '(min-width: 64rem) 720px, 100vw',
     },
     primaryLink: {
-      href: 'https://mbaldwinsmith.github.io/mindfulprayerapp/',
+      href: 'https://mbaldwinsmith.github.io/regula/',
       label: 'Start a session',
     },
     secondaryLink: {
-      href: 'https://github.com/mbaldwinsmith/mindfulprayerapp',
+      href: 'https://github.com/mbaldwinsmith/regula',
       label: 'See how it’s built',
     },
   },
