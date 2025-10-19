@@ -1,4 +1,5 @@
 ---
+import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
@@ -11,10 +12,119 @@ export const prerender = true;
 const pageTitle = 'Portfolio — Kerygma Academy';
 const pageDescription = 'Selected ministry, technology, and creative projects.';
 const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('https://kerygma.academy/portfolio/');
+
+const projects = [
+  {
+    name: 'Church Attendance Dashboard',
+    subtitle: 'Interactive analytics for pastoral insight.',
+    description:
+      'Church Attendance Dashboard is a web tool that lets you upload a CSV of church attendance data—broken down by week, site, service, and kids check-in—and then interactively visualize trends over time. It generates charts and summaries such as total and average attendance, peak weeks, and distributions across services/sites. The app uses a placeholder dataset by default, but you can replace it with your own data formatted according to the specified CSV schema.',
+    badges: [
+      { icon: 'fa-solid fa-database', label: 'Data craft' },
+      { icon: 'fa-solid fa-chart-line', label: 'Trend analysis' },
+    ],
+    highlights: [
+      'Filter and slice data by year, site, service, and metric to explore specific subsets.',
+      'Visualisations including weekly trend lines, monthly bar charts, and pie charts of service/site distributions.',
+      'Tabular “Recent Weeks” view showing raw data entries (up to 50) filtered by selected parameters.',
+    ],
+    image: {
+      asset: ChurchDashboardImage,
+      alt: 'Screenshot preview of the Church Attendance Dashboard interface',
+      sizes: '(min-width: 64rem) 720px, 100vw',
+    },
+    primaryLink: {
+      href: 'https://mbaldwinsmith.github.io/churchdatadashboard/',
+      label: 'View the live dashboard',
+    },
+    secondaryLink: {
+      href: 'https://github.com/mbaldwinsmith/churchdatadashboard',
+      label: 'Browse the code',
+    },
+  },
+  {
+    name: "Mark's Markdown Editor",
+    subtitle: 'A contemplative writing environment for the web.',
+    description:
+      "Mark's Markdown Editor progressive web app is a web-based tool that allows users to write, edit, and preview Markdown content in real time. The interface is minimalist and user-friendly: a single-pane editor updates the rendered Markdown instantly as you type, so you can stay focused on the words. The editor supports basic formatting, links, lists, code blocks, headings, and seamless live previewing, making it convenient for drafting documents, notes, or writing content for web pages.",
+    badges: [
+      { icon: 'fa-solid fa-keyboard', label: 'Writing flow' },
+      { icon: 'fa-solid fa-eye', label: 'Live preview' },
+    ],
+    highlights: [
+      'Live inline preview so changes in Markdown are instantly reflected in the rendered version without leaving the editor.',
+      'Support for standard Markdown syntax elements (headings, lists, links, code blocks, images, etc.).',
+      'Simple, calm UI designed for distraction-free writing with intuitive controls for applying Markdown formatting.',
+    ],
+    image: {
+      asset: MarkdownEditorImage,
+      alt: "Screenshot preview of Mark's Markdown Editor interface",
+      sizes: '(min-width: 64rem) 720px, 100vw',
+    },
+    primaryLink: {
+      href: 'https://mbaldwinsmith.github.io/markdownEditor/',
+      label: 'Use the editor',
+    },
+    secondaryLink: {
+      href: 'https://github.com/mbaldwinsmith/markdownEditor',
+      label: 'Explore the repository',
+    },
+  },
+  {
+    name: 'Regula',
+    subtitle: 'A mindful companion for rhythms of prayer.',
+    description:
+      'Regula is a web-based tool focused on helping users integrate mindfulness with Catholic prayer practices. It offers guided prayer experiences, tracks when and how prayers are practiced, and supports reflection on prayer habits over time. The app is structured to help users develop consistency, mindfulness, and deeper awareness in their spiritual life through tangible tracking and gentle prompts.',
+    badges: [
+      { icon: 'fa-solid fa-bezier-curve', label: 'Product design' },
+      { icon: 'fa-solid fa-clock', label: 'Habit tracking' },
+    ],
+    highlights: [
+      'Guided, themed prayer sessions to cultivate an intentional prayer life.',
+      'A log or tracking system that records prayer sessions so patterns and consistency can be seen at a glance.',
+      'Reflective feedback and visualisations to help users understand their prayer rhythms and growth.',
+    ],
+    image: {
+      asset: RegulaImage,
+      alt: 'Screenshot preview of the Regula prayer companion interface',
+      sizes: '(min-width: 64rem) 720px, 100vw',
+    },
+    primaryLink: {
+      href: 'https://mbaldwinsmith.github.io/mindfulprayerapp/',
+      label: 'Start a session',
+    },
+    secondaryLink: {
+      href: 'https://github.com/mbaldwinsmith/mindfulprayerapp',
+      label: 'See how it’s built',
+    },
+  },
+];
+
+const buildImageUrl = (asset: ImageMetadata) => (Astro.site ? new URL(asset.src, Astro.site).href : asset.src);
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: projects.map((project, index) => {
+    const outboundLinks = [project.primaryLink?.href, project.secondaryLink?.href].filter(Boolean);
+    return {
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'CreativeWork',
+        name: project.name,
+        description: project.description,
+        image: buildImageUrl(project.image.asset),
+        url: outboundLinks[0],
+        sameAs: outboundLinks,
+      },
+    };
+  }),
+};
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
   <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(itemListJsonLd)}></script>
   <section class="page-hero portfolio-hero surface surface--tinted">
     <span class="page-hero__halo" aria-hidden="true"></span>
     <span class="page-hero__sparkle" aria-hidden="true"></span>
@@ -35,107 +145,50 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
   </section>
 
   <section class="projects page-section">
-    <article class="surface project-card">
-      <header class="project-card__header">
-        <div class="accent-divider" aria-hidden="true"></div>
-        <h2>Church Attendance Dashboard</h2>
-        <p class="subtitle">Interactive analytics for pastoral insight.</p>
-        <div class="project-card__meta">
-          <span class="floating-badge"><i class="fa-solid fa-database" aria-hidden="true"></i>Data craft</span>
-          <span class="floating-badge"><i class="fa-solid fa-chart-line" aria-hidden="true"></i>Trend analysis</span>
+    {projects.map((project) => (
+      <article class="surface project-card">
+        <header class="project-card__header">
+          <div class="accent-divider" aria-hidden="true"></div>
+          <h2>{project.name}</h2>
+          <p class="subtitle">{project.subtitle}</p>
+          <div class="project-card__meta">
+            {project.badges.map((badge) => (
+              <span class="floating-badge">
+                <i class={badge.icon} aria-hidden="true"></i>
+                {badge.label}
+              </span>
+            ))}
+          </div>
+        </header>
+        <figure class="project-card__media">
+          <Image
+            src={project.image.asset}
+            width={project.image.asset.width}
+            height={project.image.asset.height}
+            alt={project.image.alt}
+            sizes={project.image.sizes}
+            loading="lazy"
+          />
+        </figure>
+        <p>{project.description}</p>
+        <h3>Highlights</h3>
+        <ul class="project-card__list glow-list">
+          {project.highlights.map((highlight) => (
+            <li>{highlight}</li>
+          ))}
+        </ul>
+        <div class="project-links">
+          <a class="button" href={project.primaryLink.href} target="_blank" rel="noopener noreferrer">
+            {project.primaryLink.label}
+          </a>
+          {project.secondaryLink && (
+            <a class="button secondary" href={project.secondaryLink.href} target="_blank" rel="noopener noreferrer">
+              {project.secondaryLink.label}
+            </a>
+          )}
         </div>
-      </header>
-      <figure class="project-card__media">
-        <Image
-          src={ChurchDashboardImage}
-          width={ChurchDashboardImage.width}
-          height={ChurchDashboardImage.height}
-          alt="Screenshot preview of the Church Attendance Dashboard interface"
-          sizes="(min-width: 64rem) 720px, 100vw"
-          loading="lazy"
-        />
-      </figure>
-      <p>Church Attendance Dashboard is a web tool that lets you upload a CSV of church attendance data—broken down by week, site, service, and kids check-in—and then interactively visualize trends over time. It generates charts and summaries such as total and average attendance, peak weeks, and distributions across services/sites. The app uses a placeholder dataset by default, but you can replace it with your own data formatted according to the specified CSV schema.</p>
-      <h3>Highlights</h3>
-      <ul class="project-card__list glow-list">
-        <li>Filter and slice data by year, site, service, and metric to explore specific subsets.</li>
-        <li>Visualisations including weekly trend lines, monthly bar charts, and pie charts of service/site distributions.</li>
-        <li>Tabular “Recent Weeks” view showing raw data entries (up to 50) filtered by selected parameters.</li>
-      </ul>
-      <div class="project-links">
-        <a class="button" href="https://mbaldwinsmith.github.io/churchdatadashboard/" target="_blank" rel="noopener noreferrer">View the live dashboard</a>
-        <a class="button secondary" href="https://github.com/mbaldwinsmith/churchdatadashboard" target="_blank" rel="noopener noreferrer">Browse the code</a>
-      </div>
-    </article>
-
-    <article class="surface project-card">
-      <header class="project-card__header">
-        <div class="accent-divider" aria-hidden="true"></div>
-        <h2>Mark&#39;s Markdown Editor</h2>
-        <p class="subtitle">A contemplative writing environment for the web.</p>
-        <div class="project-card__meta">
-          <span class="floating-badge"><i class="fa-solid fa-keyboard" aria-hidden="true"></i>Writing flow</span>
-          <span class="floating-badge"><i class="fa-solid fa-eye" aria-hidden="true"></i>Live preview</span>
-        </div>
-      </header>
-      <figure class="project-card__media">
-        <Image
-          src={MarkdownEditorImage}
-          width={MarkdownEditorImage.width}
-          height={MarkdownEditorImage.height}
-          alt="Screenshot preview of Mark&#39;s Markdown Editor interface"
-          sizes="(min-width: 64rem) 720px, 100vw"
-          loading="lazy"
-        />
-      </figure>
-      <p>Mark&#39;s Markdown Editor progressive web app is a web-based tool that allows users to write, edit, and preview Markdown content in real time. The interface is minimalist and user-friendly: a single-pane editor updates the rendered Markdown instantly as you type, so you can stay focused on the words. The editor supports basic formatting, links, lists, code blocks, headings, and seamless live previewing, making it convenient for drafting documents, notes, or writing content for web pages.</p>
-      <h3>Highlights</h3>
-      <ul class="project-card__list glow-list">
-          <li>Live inline preview so changes in Markdown are instantly reflected in the rendered version without leaving the editor.</li>
-          <li>Support for standard Markdown syntax elements (headings, lists, links, code blocks, images, etc.).</li>
-          <li>Simple, calm UI designed for distraction-free writing with intuitive controls for applying Markdown formatting.</li>
-      </ul>
-      <div class="project-links">
-        <a class="button" href="https://mbaldwinsmith.github.io/markdownEditor/" target="_blank" rel="noopener noreferrer">Use the editor</a>
-        <a class="button secondary" href="https://github.com/mbaldwinsmith/markdownEditor" target="_blank" rel="noopener noreferrer">Explore the repository</a>
-      </div>
-    </article>
-
-    <article class="surface project-card">
-      <header class="project-card__header">
-        <div class="accent-divider" aria-hidden="true"></div>
-        <h2>Regula</h2>
-        <p class="subtitle">A mindful companion for rhythms of prayer.</p>
-        <div class="project-card__meta">
-          <span class="floating-badge"><i class="fa-solid fa-bezier-curve" aria-hidden="true"></i>Product design</span>
-          <span class="floating-badge"><i class="fa-solid fa-clock" aria-hidden="true"></i>Habit tracking</span>
-        </div>
-      </header>
-      <figure class="project-card__media">
-        <Image
-          src={RegulaImage}
-          width={RegulaImage.width}
-          height={RegulaImage.height}
-          alt="Screenshot preview of the Regula prayer companion interface"
-          sizes="(min-width: 64rem) 720px, 100vw"
-          loading="lazy"
-        />
-      </figure>
-      <p>
-        Regula is a web-based tool focused on helping users integrate mindfulness with Catholic prayer practices. It offers guided prayer experiences, tracks when and how prayers are practiced, and supports reflection on prayer habits over time. The app is structured to help users develop consistency, mindfulness, and deeper awareness in their spiritual life through tangible tracking and gentle prompts.
-      </p>
-      <h3>Highlights</h3>
-      <ul class="project-card__list glow-list">
-        <li>Guided, themed prayer sessions to cultivate an intentional prayer life.</li>
-        <li>A log or tracking system that records prayer sessions so patterns and consistency can be seen at a glance.</li>
-        <li>Reflective feedback and visualisations to help users understand their prayer rhythms and growth.</li>
-      </ul>
-      <div class="project-links">
-        <a class="button" href="https://mbaldwinsmith.github.io/mindfulprayerapp/" target="_blank" rel="noopener noreferrer">Start a session</a>
-        <a class="button secondary" href="https://github.com/mbaldwinsmith/mindfulprayerapp" target="_blank" rel="noopener noreferrer">See how it’s built</a>
-      </div>
-    </article>
-
+      </article>
+    ))}
     <aside class="surface surface--tinted projects__notes">
       <h2>How I approach collaborations</h2>
       <ul class="glow-list">
