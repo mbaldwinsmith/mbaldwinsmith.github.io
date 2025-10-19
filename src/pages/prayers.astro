@@ -34,6 +34,13 @@ const prayers: Prayer[] = await Promise.all(
 
 <BaseLayout title={pageTitle} description={pageDescription}>
   <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/rss+xml"
+    href="/prayers.xml"
+    title="Prayers feed"
+  />
   <section class="page-hero prayers-hero surface surface--tinted">
     <span class="page-hero__halo" aria-hidden="true"></span>
     <span class="page-hero__sparkle" aria-hidden="true"></span>
