@@ -45,6 +45,35 @@ const formattedDate = prayer.data.date
 
 <BaseLayout title={pageTitle} description={pageDescription} ogType="article">
   <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
+  {prayer && (
+    <script type="application/ld+json" is:inline>
+      {JSON.stringify(
+        (() => {
+          const schemaType = prayer.data.date ? 'Article' : 'CreativeWork';
+          const jsonLd: Record<string, unknown> = {
+            '@context': 'https://schema.org',
+            '@type': schemaType,
+            headline: prayer.data.title,
+            name: prayer.data.title,
+            alternativeHeadline: prayer.data.subtitle,
+            url: pageUrl.href,
+          };
+          if (prayer.data.summary) {
+            jsonLd.description = prayer.data.summary;
+          }
+          if (prayer.data.date) {
+            jsonLd.datePublished = prayer.data.date.toISOString().split('T')[0];
+          }
+          if (prayer.data.tags?.length) {
+            jsonLd.keywords = prayer.data.tags.map((tag) => tag.label);
+          }
+          return jsonLd;
+        })(),
+        null,
+        2,
+      )}
+    </script>
+  )}
   <article class="surface prayer-detail">
     <header class="prayer-detail__header">
       <div class="accent-divider" aria-hidden="true"></div>
