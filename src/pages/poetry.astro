@@ -403,7 +403,18 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       }
     };
 
-    mobileQuery.addEventListener('change', handleMediaChange);
+    let detachMediaQueryListener = null;
+    if (typeof mobileQuery.addEventListener === 'function') {
+      mobileQuery.addEventListener('change', handleMediaChange);
+      detachMediaQueryListener = () => {
+        mobileQuery.removeEventListener('change', handleMediaChange);
+      };
+    } else if (typeof mobileQuery.addListener === 'function') {
+      mobileQuery.addListener(handleMediaChange);
+      detachMediaQueryListener = () => {
+        mobileQuery.removeListener(handleMediaChange);
+      };
+    }
 
     if (sectionTargets.length) {
       window.addEventListener('scroll', handleActiveScroll, { passive: true });
@@ -423,7 +434,10 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       'astro:before-swap',
       () => {
         toggle.removeEventListener('click', onToggleClick);
-        mobileQuery.removeEventListener('change', handleMediaChange);
+        if (detachMediaQueryListener) {
+          detachMediaQueryListener();
+          detachMediaQueryListener = null;
+        }
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('scroll', handleActiveScroll);
         window.removeEventListener('resize', handleResize);
