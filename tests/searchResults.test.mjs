@@ -57,6 +57,8 @@ test('buildSearchResults matches mixed-case queries across poetry and prayers', 
   const { query, hasQuery, results } = await buildSearchResults('  morNING  ', {
     poetryEntries,
     prayersEntries,
+    courseEntries: [],
+    projectEntries: [],
   });
 
   assert.equal(query, 'morNING');
@@ -64,7 +66,7 @@ test('buildSearchResults matches mixed-case queries across poetry and prayers', 
   assert.equal(results.length, 2);
   assert.deepEqual(
     results.map((result) => result.type),
-    ['Prayer', 'Poem']
+    ['Poem', 'Prayer']
   );
 });
 
@@ -82,6 +84,8 @@ test('buildSearchResults matches prayer tag labels', async () => {
   const { results } = await buildSearchResults('compassion', {
     poetryEntries: [],
     prayersEntries,
+    courseEntries: [],
+    projectEntries: [],
   });
 
   assert.equal(results.length, 1);
@@ -103,6 +107,8 @@ test('buildSearchResults truncates long excerpts', async () => {
   const { results } = await buildSearchResults('gather', {
     poetryEntries,
     prayersEntries: [],
+    courseEntries: [],
+    projectEntries: [],
   });
 
   assert.equal(results.length, 1);
@@ -138,10 +144,62 @@ test('buildSearchResults sorts results by order, type, then title', async () => 
   const { results } = await buildSearchResults('keyword', {
     poetryEntries,
     prayersEntries,
+    courseEntries: [],
+    projectEntries: [],
   });
 
   assert.deepEqual(
     results.map((result) => result.title),
     ['Gamma Poem', 'Alpha Prayer', 'Beta Prayer']
   );
+});
+
+test('buildSearchResults matches course section titles', async () => {
+  const courseEntries = [
+    { title: 'Christology', url: 'https://example.com/christology', sectionTitle: 'Doctrine' },
+    { title: 'Ecclesiology', url: 'https://example.com/ecclesiology', sectionTitle: 'Ecclesiology (The Church)' },
+  ];
+
+  const { results } = await buildSearchResults('church', {
+    poetryEntries: [],
+    prayersEntries: [],
+    courseEntries,
+    projectEntries: [],
+  });
+
+  assert.equal(results.length, 1);
+  const [result] = results;
+  assert.equal(result.type, 'Course');
+  assert.equal(result.title, 'Ecclesiology');
+  assert.ok(result.excerpt.includes('Ecclesiology'));
+  assert.equal(result.url, 'https://example.com/ecclesiology');
+});
+
+test('buildSearchResults matches project highlights and links to primary URL', async () => {
+  const projectEntries = [
+    {
+      name: 'Prayer App',
+      subtitle: 'Track daily devotions',
+      description: 'A project focused on daily examen prompts.',
+      badges: [],
+      highlights: ['Guided examen reflections', 'Community sharing'],
+      image: {},
+      primaryLink: { href: 'https://example.com/prayer-app', label: 'View project' },
+      secondaryLink: { href: 'https://github.com/example/prayer-app', label: 'Browse source' },
+    },
+  ];
+
+  const { results } = await buildSearchResults('examen', {
+    poetryEntries: [],
+    prayersEntries: [],
+    courseEntries: [],
+    projectEntries,
+  });
+
+  assert.equal(results.length, 1);
+  const [result] = results;
+  assert.equal(result.type, 'Project');
+  assert.equal(result.title, 'Prayer App');
+  assert.equal(result.url, 'https://example.com/prayer-app');
+  assert.ok(result.excerpt.includes('Track daily devotions'));
 });
