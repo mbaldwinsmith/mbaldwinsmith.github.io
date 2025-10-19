@@ -201,7 +201,18 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
   </section>
 
   <script is:inline>
+    let cleanupEnhancements = () => {};
+
+    const registerCleanup = (fn) => {
+      cleanupEnhancements = () => {
+        fn();
+        cleanupEnhancements = () => {};
+      };
+    };
+
     const initContactFormEnhancements = () => {
+      cleanupEnhancements();
+
       const form = document.querySelector('.contact-form');
       if (!form || form.dataset.enhanced === 'true') {
         return;
@@ -217,7 +228,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
         return;
       }
 
-      let clearStatusTimeout;
+      let clearStatusTimeoutId;
 
       const resetStatus = () => {
         statusRegion.dataset.state = 'idle';
@@ -232,12 +243,13 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
           statusRegion.textContent = message;
         }
 
-        if (clearStatusTimeout) {
-          window.clearTimeout(clearStatusTimeout);
+        if (clearStatusTimeoutId !== undefined) {
+          window.clearTimeout(clearStatusTimeoutId);
+          clearStatusTimeoutId = undefined;
         }
 
         if (autoClear && state !== 'pending') {
-          clearStatusTimeout = window.setTimeout(() => {
+          clearStatusTimeoutId = window.setTimeout(() => {
             resetStatus();
           }, 5000);
         }
@@ -246,7 +258,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
       form.dataset.enhanced = 'true';
       statusRegion.dataset.state = 'idle';
 
-      form.addEventListener('submit', async (event) => {
+      const submitHandler = async (event) => {
         event.preventDefault();
 
         const formData = new FormData(form);
@@ -293,11 +305,26 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
             submitButton.disabled = false;
           }
         }
+      };
+
+      form.addEventListener('submit', submitHandler);
+
+      registerCleanup(() => {
+        if (clearStatusTimeoutId !== undefined) {
+          window.clearTimeout(clearStatusTimeoutId);
+          clearStatusTimeoutId = undefined;
+        }
+
+        form.removeEventListener('submit', submitHandler);
+        delete form.dataset.enhanced;
       });
     };
 
     initContactFormEnhancements();
     window.addEventListener('astro:after-swap', initContactFormEnhancements);
+    window.addEventListener('astro:before-swap', () => {
+      cleanupEnhancements();
+    });
   </script>
 </BaseLayout>
 
