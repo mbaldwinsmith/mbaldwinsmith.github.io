@@ -17,6 +17,7 @@ type Prayer = {
   data: PrayerEntry['data'];
   Content: PrayerRender['Content'];
 };
+type PrayerTag = Prayer['data']['tags'][number];
 
 const prayers: Prayer[] = await Promise.all(
   (await getCollection('prayers'))
@@ -30,6 +31,19 @@ const prayers: Prayer[] = await Promise.all(
       };
     }),
 );
+
+const tagMap = new Map<string, PrayerTag>();
+prayers.forEach(({ data }) => {
+  data.tags.forEach((tag) => {
+    const key = tag.label.toLowerCase();
+    if (!tagMap.has(key)) {
+      tagMap.set(key, tag);
+    }
+  });
+});
+
+const prayerTags = Array.from(tagMap.values()).sort((a, b) => a.label.localeCompare(b.label));
+const totalPrayers = prayers.length;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -62,8 +76,55 @@ const prayers: Prayer[] = await Promise.all(
   </section>
 
   <section class="prayer-list page-section">
+    <form
+      class="surface surface--tinted prayer-filters"
+      data-prayer-filters
+      aria-labelledby="prayer-filters-title"
+    >
+      <h2 id="prayer-filters-title" class="sr-only">Filter prayers by tag</h2>
+      {prayerTags.length > 0 && (
+        <fieldset class="filter-field prayer-filters__fieldset">
+          <legend class="filter-label">Filter by tag</legend>
+          <div class="prayer-filters__options">
+            {prayerTags.map((tag) => (
+              <label class="prayer-filters__option">
+                <input
+                  class="prayer-filters__input"
+                  type="checkbox"
+                  name="tags"
+                  value={tag.label}
+                  data-filter-tag
+                />
+                <span class="prayer-filters__badge floating-badge">
+                  <Icon name={tag.icon} aria-hidden="true" />
+                  {tag.label}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
+      {prayerTags.length > 0 && (
+        <div class="prayer-filters__actions">
+          <button type="reset" class="prayer-filters__reset">Clear filters</button>
+        </div>
+      )}
+      <p class="prayer-results" data-prayer-results aria-live="polite">
+        Showing
+        <strong><span data-prayer-visible-count>{totalPrayers}</span></strong>
+        <span data-prayer-results-label>{totalPrayers === 1 ? 'prayer' : 'prayers'}</span>
+      </p>
+    </form>
+
+    <p class="prayer-empty" data-prayer-empty hidden>
+      No prayers match your selected tags. Try choosing a different combination.
+    </p>
+
     {prayers.map(({ slug, data, Content }) => (
-      <article class="surface prayer-card">
+      <article
+        class="surface prayer-card"
+        data-tag-labels={JSON.stringify(data.tags.map((tag) => tag.label.toLowerCase()))}
+      >
         <header class="prayer-card__header">
           <div class="accent-divider" aria-hidden="true"></div>
           <h2>
@@ -128,6 +189,89 @@ const prayers: Prayer[] = await Promise.all(
   .prayer-list {
     display: grid;
     gap: clamp(2.25rem, 4vw, 3.25rem);
+  }
+
+  .prayer-filters {
+    display: grid;
+    gap: clamp(1rem, 3vw, 1.6rem);
+    border: 1px solid rgba(92, 73, 58, 0.16);
+    padding: clamp(1.2rem, 3vw, 1.8rem);
+  }
+
+  .prayer-filters__fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .prayer-filters__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .prayer-filters__option {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .prayer-filters__input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .prayer-filters__badge {
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .prayer-filters__input:checked + .prayer-filters__badge {
+    background: rgba(188, 209, 202, 0.32);
+    border-color: rgba(138, 90, 60, 0.45);
+    color: rgba(36, 28, 21, 0.78);
+  }
+
+  .prayer-filters__input:focus-visible + .prayer-filters__badge {
+    box-shadow: 0 0 0 3px rgba(138, 90, 60, 0.2);
+    border-color: rgba(138, 90, 60, 0.55);
+  }
+
+  .prayer-filters__actions {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .prayer-filters__reset {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.45rem 0.85rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgba(92, 73, 58, 0.22);
+    background: rgba(255, 255, 255, 0.72);
+    color: rgba(36, 28, 21, 0.72);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .prayer-filters__reset:hover,
+  .prayer-filters__reset:focus-visible {
+    border-color: rgba(138, 90, 60, 0.45);
+    background: rgba(188, 209, 202, 0.2);
+    color: rgba(36, 28, 21, 0.82);
+  }
+
+  .prayer-results {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(36, 28, 21, 0.62);
+  }
+
+  .prayer-results strong {
+    color: var(--accent-dark);
+    font-weight: 600;
   }
 
   .prayer-card {
@@ -247,12 +391,24 @@ const prayers: Prayer[] = await Promise.all(
     display: grid;
     gap: 1rem;
   }
+
+  .prayer-empty {
+    margin: 0;
+    padding: 0.85rem 1.1rem;
+    border-radius: 0.75rem;
+    border: 1px dashed rgba(138, 90, 60, 0.45);
+    background: rgba(138, 90, 60, 0.08);
+    color: rgba(36, 28, 21, 0.7);
+    font-weight: 500;
+    text-align: center;
+  }
 </style>
 
 <script is:inline>
-  const INIT_ATTR = 'data-copy-listener';
+  const COPY_INIT_ATTR = 'data-copy-listener';
   const statusTimeouts = new Map();
   const clickHandlers = new WeakMap();
+  let prayerFiltersCleanup = null;
 
   const makeAbsoluteUrl = (path) => {
     if (!path) {
@@ -328,15 +484,166 @@ const prayers: Prayer[] = await Promise.all(
     scheduleStatusReset(statusId);
   };
 
-  const init = () => {
+  const initCopyButtons = () => {
     const buttons = document.querySelectorAll('.prayer-card__permalink');
     buttons.forEach((button) => {
-      if (button.getAttribute(INIT_ATTR) === 'true') return;
+      if (button.getAttribute(COPY_INIT_ATTR) === 'true') return;
       const handler = handleClickFactory(button);
       button.addEventListener('click', handler);
       clickHandlers.set(button, handler);
-      button.setAttribute(INIT_ATTR, 'true');
+      button.setAttribute(COPY_INIT_ATTR, 'true');
     });
+  };
+
+  const cleanupCopyButtons = () => {
+    document
+      .querySelectorAll(`.prayer-card__permalink[${COPY_INIT_ATTR}="true"]`)
+      .forEach((button) => {
+        const handler = clickHandlers.get(button);
+        if (handler) {
+          button.removeEventListener('click', handler);
+          clickHandlers.delete(button);
+        }
+        button.removeAttribute(COPY_INIT_ATTR);
+      });
+
+    statusTimeouts.forEach((timeoutId, statusId) => {
+      window.clearTimeout(timeoutId);
+      clearStatusMessage(statusId);
+    });
+    statusTimeouts.clear();
+  };
+
+  const getCardTags = (card) => {
+    try {
+      const raw = card.dataset.tagLabels;
+      if (!raw) {
+        return [];
+      }
+
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const initPrayerFilters = () => {
+    const form = document.querySelector('[data-prayer-filters]');
+    if (!(form instanceof HTMLFormElement) || form.dataset.enhanced === 'true') {
+      return;
+    }
+
+    const tagInputs = Array.from(form.querySelectorAll('[data-filter-tag]')).flatMap((input) =>
+      input instanceof HTMLInputElement ? [input] : [],
+    );
+    const prayerCards = Array.from(document.querySelectorAll('.prayer-card')).flatMap((card) =>
+      card instanceof HTMLElement ? [card] : [],
+    );
+    const resultsEl = form.querySelector('[data-prayer-results]');
+    const countEl = form.querySelector('[data-prayer-visible-count]');
+    const labelEl = form.querySelector('[data-prayer-results-label]');
+    const emptyEl = document.querySelector('[data-prayer-empty]');
+
+    const updateResultsMessage = (visibleCount) => {
+      if (countEl) {
+        countEl.textContent = `${visibleCount}`;
+      }
+      if (labelEl) {
+        labelEl.textContent = visibleCount === 1 ? 'prayer' : 'prayers';
+      }
+      if (resultsEl) {
+        resultsEl.hidden = false;
+      }
+      if (emptyEl) {
+        emptyEl.hidden = visibleCount !== 0;
+      }
+    };
+
+    const showAllCards = () => {
+      let visibleCount = 0;
+      prayerCards.forEach((card) => {
+        card.hidden = false;
+        visibleCount += 1;
+      });
+      updateResultsMessage(visibleCount);
+    };
+
+    const applyFilters = () => {
+      if (tagInputs.length === 0) {
+        showAllCards();
+        return;
+      }
+
+      const selectedTags = tagInputs
+        .filter((input) => input.checked)
+        .map((input) => input.value.trim().toLowerCase());
+
+      if (selectedTags.length === 0) {
+        showAllCards();
+        return;
+      }
+
+      let visibleCount = 0;
+      prayerCards.forEach((card) => {
+        const cardTags = getCardTags(card);
+        const matches = cardTags.some((tag) => selectedTags.includes(tag));
+        const shouldShow = matches;
+        card.hidden = !shouldShow;
+        if (shouldShow) {
+          visibleCount += 1;
+        }
+      });
+
+      updateResultsMessage(visibleCount);
+    };
+
+    const handleInput = () => {
+      applyFilters();
+    };
+
+    const handleReset = () => {
+      window.setTimeout(() => {
+        applyFilters();
+      }, 0);
+    };
+
+    applyFilters();
+
+    if (tagInputs.length === 0) {
+      form.dataset.enhanced = 'true';
+      prayerFiltersCleanup = () => {
+        delete form.dataset.enhanced;
+        showAllCards();
+      };
+      return;
+    }
+
+    form.addEventListener('input', handleInput);
+    form.addEventListener('reset', handleReset);
+    form.dataset.enhanced = 'true';
+
+    prayerFiltersCleanup = () => {
+      form.removeEventListener('input', handleInput);
+      form.removeEventListener('reset', handleReset);
+      delete form.dataset.enhanced;
+      tagInputs.forEach((input) => {
+        input.checked = false;
+      });
+      showAllCards();
+    };
+  };
+
+  const cleanupPrayerFilters = () => {
+    if (typeof prayerFiltersCleanup === 'function') {
+      prayerFiltersCleanup();
+    }
+    prayerFiltersCleanup = null;
+  };
+
+  const init = () => {
+    initCopyButtons();
+    initPrayerFilters();
   };
 
   const onDomContentLoaded = () => {
@@ -353,23 +660,8 @@ const prayers: Prayer[] = await Promise.all(
   };
 
   const cleanup = () => {
-    document
-      .querySelectorAll(`.prayer-card__permalink[${INIT_ATTR}="true"]`)
-      .forEach((button) => {
-        const handler = clickHandlers.get(button);
-        if (handler) {
-          button.removeEventListener('click', handler);
-          clickHandlers.delete(button);
-        }
-        button.removeAttribute(INIT_ATTR);
-      });
-
-    statusTimeouts.forEach((timeoutId, statusId) => {
-      window.clearTimeout(timeoutId);
-      clearStatusMessage(statusId);
-    });
-    statusTimeouts.clear();
-
+    cleanupCopyButtons();
+    cleanupPrayerFilters();
     removeLifecycleListeners();
   };
 
