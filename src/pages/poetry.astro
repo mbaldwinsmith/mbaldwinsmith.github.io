@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
+import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 
 export const prerender = true;
@@ -90,9 +91,9 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
         meaning. Read them aloud, meditate on the images, and let the cadence steady your breath.
       </p>
       <div class="page-hero__meta">
-        <span class="meta-chip"><i class="fa-solid fa-dove" aria-hidden="true"></i> Prayer</span>
-        <span class="meta-chip"><i class="fa-solid fa-leaf" aria-hidden="true"></i> Creation</span>
-        <span class="meta-chip"><i class="fa-solid fa-fire" aria-hidden="true"></i> Devotion</span>
+        <span class="meta-chip"><Icon name="dove" aria-hidden="true" /> Prayer</span>
+        <span class="meta-chip"><Icon name="leaf" aria-hidden="true" /> Creation</span>
+        <span class="meta-chip"><Icon name="fire" aria-hidden="true" /> Devotion</span>
       </div>
     </div>
   </section>
@@ -111,7 +112,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
             hidden
           >
             <span id="poems-toc-toggle-label" class="poems__toc-toggle-text">Contents</span>
-            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            <Icon name="chevron-down" aria-hidden="true" />
           </button>
         </div>
         <ul class="poems__toc-list" id="poems-toc-list">
@@ -148,7 +149,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
           ></iframe>
           <a class="poems__audio-link" href="https://soundcloud.com/mark-baldwin-smith/sets/the-golden-thread" target="_blank" rel="noopener noreferrer">
             Listen on SoundCloud
-            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            <Icon name="arrow-up-right-from-square" aria-hidden="true" />
           </a>
         </div>
       </div>

@@ -4,9 +4,9 @@ subtitle: For steadfast courage and wholehearted devotion.
 order: 1
 summary: A prayer asking for courage, protection, and deeper love for God.
 tags:
-  - icon: fa-solid fa-flame
+  - icon: flame
     label: Consecration
-  - icon: fa-solid fa-shield-halved
+  - icon: shield-halved
     label: Protection
 ---
 Abba, Father, my eternal rock, thank you for always listening! Lord, I pledge myself, everything I will ever be, to you and Jesus Christ my king.

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
+import Icon from '../components/Icon.astro';
 
 export const prerender = true;
 
@@ -23,9 +24,9 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
         pilgrims. Send a note if you sense a partnership, need a listening ear, or would like me to speak with your community.
       </p>
       <div class="page-hero__meta">
-        <span class="meta-chip"><i class="fa-solid fa-comments" aria-hidden="true"></i> Collaboration</span>
-        <span class="meta-chip"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i> Speaking</span>
-        <span class="meta-chip"><i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i> Prayer support</span>
+        <span class="meta-chip"><Icon name="comments" aria-hidden="true" /> Collaboration</span>
+        <span class="meta-chip"><Icon name="microphone-lines" aria-hidden="true" /> Speaking</span>
+        <span class="meta-chip"><Icon name="hand-holding-heart" aria-hidden="true" /> Prayer support</span>
       </div>
     </div>
   </section>
@@ -40,8 +41,8 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
           note prayerfully and reply as soon as I can.
         </p>
         <div class="contact-card__tags">
-          <span class="floating-badge"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i>Thoughtful dialogue</span>
-          <span class="floating-badge"><i class="fa-solid fa-people-group" aria-hidden="true"></i>Community building</span>
+          <span class="floating-badge"><Icon name="envelope-open-text" aria-hidden="true" />Thoughtful dialogue</span>
+          <span class="floating-badge"><Icon name="people-group" aria-hidden="true" />Community building</span>
         </div>
       </div>
 
@@ -55,7 +56,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
             aria-label="GitHub"
           >
             <span class="icon-box" aria-hidden="true">
-              <i class="social-icon fa-brands fa-github"></i>
+              <Icon name="github" class="social-icon" aria-hidden="true" />
             </span>
             <div>
               <span class="social-title">GitHub</span>
@@ -72,7 +73,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
             aria-label="Instagram"
           >
             <span class="icon-box" aria-hidden="true">
-              <i class="social-icon fa-brands fa-instagram"></i>
+              <Icon name="instagram" class="social-icon" aria-hidden="true" />
             </span>
             <div>
               <span class="social-title">Instagram</span>
@@ -89,7 +90,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
             aria-label="X"
           >
             <span class="icon-box" aria-hidden="true">
-              <i class="social-icon fa-brands fa-x-twitter"></i>
+              <Icon name="x-twitter" class="social-icon" aria-hidden="true" />
             </span>
             <div>
               <span class="social-title">X</span>
@@ -106,7 +107,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
             aria-label="LinkedIn"
           >
             <span class="icon-box" aria-hidden="true">
-              <i class="social-icon fa-brands fa-linkedin"></i>
+              <Icon name="linkedin" class="social-icon" aria-hidden="true" />
             </span>
             <div>
               <span class="social-title">LinkedIn</span>
@@ -123,7 +124,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
             aria-label="Threads"
           >
             <span class="icon-box" aria-hidden="true">
-              <i class="social-icon fa-brands fa-threads"></i>
+              <Icon name="threads" class="social-icon" aria-hidden="true" />
             </span>
             <div>
               <span class="social-title">Threads</span>
@@ -142,7 +143,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
           and respond as promptly as I’m able.
         </p>
         <a class="contact-direct__email" href="mailto:mb110413@gmail.com">
-          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          <Icon name="envelope" aria-hidden="true" />
           mb110413@gmail.com
         </a>
       </div>
@@ -184,7 +185,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
         </p>
         <div class="contact-form__status" role="status" aria-live="polite"></div>
         <button class="button" type="submit">
-          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+          <Icon name="paper-plane" aria-hidden="true" />
           Send message
         </button>
       </form>

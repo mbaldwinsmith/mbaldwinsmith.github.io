@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
+import Icon from '../components/Icon.astro';
 
 export const prerender = true;
 
@@ -26,9 +27,9 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
           seekers.
         </p>
         <div class="page-hero__meta">
-          <span class="meta-chip"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Prayerbook</span>
-          <span class="meta-chip"><i class="fa-solid fa-feather" aria-hidden="true"></i> Poetry</span>
-          <span class="meta-chip"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Reflection</span>
+          <span class="meta-chip"><Icon name="book-open" aria-hidden="true" /> Prayerbook</span>
+          <span class="meta-chip"><Icon name="feather" aria-hidden="true" /> Poetry</span>
+          <span class="meta-chip"><Icon name="lightbulb" aria-hidden="true" /> Reflection</span>
         </div>
       </div>
     </div>

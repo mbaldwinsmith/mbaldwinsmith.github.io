@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
+import Icon from '../components/Icon.astro';
 
 export const prerender = true;
 
@@ -24,14 +25,14 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
         death and renewal, ordinary work suffused with the radiance of grace.
       </p>
       <div class="page-hero__meta">
-        <span class="meta-chip"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i> Writer</span>
-        <span class="meta-chip"><i class="fa-solid fa-cross" aria-hidden="true"></i> Minister</span>
-        <span class="meta-chip"><i class="fa-solid fa-compass-drafting" aria-hidden="true"></i> Designer</span>
+        <span class="meta-chip"><Icon name="feather-pointed" aria-hidden="true" /> Writer</span>
+        <span class="meta-chip"><Icon name="cross" aria-hidden="true" /> Minister</span>
+        <span class="meta-chip"><Icon name="compass-drafting" aria-hidden="true" /> Designer</span>
       </div>
       <div class="profile-hero__details">
-        <span class="floating-badge"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>Cambridge, UK</span>
-        <span class="floating-badge"><i class="fa-solid fa-hands-praying" aria-hidden="true"></i>Formation &amp; discipleship</span>
-        <span class="floating-badge"><i class="fa-solid fa-chart-line" aria-hidden="true"></i>Data storytelling</span>
+        <span class="floating-badge"><Icon name="map-location-dot" aria-hidden="true" />Cambridge, UK</span>
+        <span class="floating-badge"><Icon name="hands-praying" aria-hidden="true" />Formation &amp; discipleship</span>
+        <span class="floating-badge"><Icon name="chart-line" aria-hidden="true" />Data storytelling</span>
       </div>
     </div>
   </section>
@@ -91,7 +92,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
     <article class="surface profile__section profile__section--current">
       <div class="profile__section-heading">
         <h2>Current work</h2>
-        <span class="floating-badge"><i class="fa-solid fa-sun" aria-hidden="true"></i>Season of renewal</span>
+        <span class="floating-badge"><Icon name="sun" aria-hidden="true" />Season of renewal</span>
       </div>
       <p>
         I serve communities in Cambridge and beyond through ministry, discipleship, and digital strategy. I collaborate with churches and

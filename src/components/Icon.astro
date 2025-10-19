@@ -1,0 +1,123 @@
+---
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import {
+  faArrowLeft,
+  faArrowRight,
+  faArrowUpRightFromSquare,
+  faBezierCurve,
+  faBookOpen,
+  faChartColumn,
+  faChartLine,
+  faChevronDown,
+  faChurch,
+  faClock,
+  faComments,
+  faCompassDrafting,
+  faCross,
+  faDatabase,
+  faDove,
+  faEnvelope,
+  faEnvelopeOpenText,
+  faFeather,
+  faFeatherPointed,
+  faFire,
+  faFireFlameCurved,
+  faEye,
+  faHandsHolding,
+  faHandsPraying,
+  faHandHoldingHeart,
+  faKeyboard,
+  faLeaf,
+  faLightbulb,
+  faMapLocationDot,
+  faMicrophoneLines,
+  faPaperPlane,
+  faPenNib,
+  faPeopleCarry,
+  faPeopleGroup,
+  faSeedling,
+  faShieldHalved,
+  faSun,
+} from '@fortawesome/free-solid-svg-icons';
+import { faGithub, faInstagram, faLinkedin, faThreads, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+
+const iconMap: Record<string, IconDefinition> = {
+  'arrow-left': faArrowLeft,
+  'arrow-right': faArrowRight,
+  'arrow-up-right-from-square': faArrowUpRightFromSquare,
+  'bezier-curve': faBezierCurve,
+  'book-open': faBookOpen,
+  'chart-column': faChartColumn,
+  'chart-line': faChartLine,
+  'chevron-down': faChevronDown,
+  church: faChurch,
+  clock: faClock,
+  comments: faComments,
+  'compass-drafting': faCompassDrafting,
+  cross: faCross,
+  database: faDatabase,
+  dove: faDove,
+  envelope: faEnvelope,
+  'envelope-open-text': faEnvelopeOpenText,
+  feather: faFeather,
+  'feather-pointed': faFeatherPointed,
+  fire: faFire,
+  flame: faFireFlameCurved,
+  'hands-holding': faHandsHolding,
+  'hands-praying': faHandsPraying,
+  'hand-holding-heart': faHandHoldingHeart,
+  keyboard: faKeyboard,
+  eye: faEye,
+  leaf: faLeaf,
+  lightbulb: faLightbulb,
+  'map-location-dot': faMapLocationDot,
+  'microphone-lines': faMicrophoneLines,
+  'paper-plane': faPaperPlane,
+  'pen-nib': faPenNib,
+  'people-carry': faPeopleCarry,
+  'people-group': faPeopleGroup,
+  seedling: faSeedling,
+  'shield-halved': faShieldHalved,
+  sun: faSun,
+  github: faGithub,
+  instagram: faInstagram,
+  'x-twitter': faXTwitter,
+  linkedin: faLinkedin,
+  threads: faThreads,
+};
+
+const props = Astro.props as {
+  name: keyof typeof iconMap | string;
+  class?: string;
+  title?: string;
+  [key: string]: any;
+};
+
+const { name, title, class: className, ...rest } = props;
+const icon = iconMap[name];
+
+if (!icon) {
+  throw new Error(`Icon \"${name}\" is not defined in Icon.astro`);
+}
+
+const { ['aria-hidden']: ariaHiddenProp, ...svgRest } = rest;
+const ariaHidden = ariaHiddenProp ?? (title ? undefined : 'true');
+const role = ariaHidden === 'true' || ariaHidden === true ? undefined : 'img';
+const [width, height, , , svgPathData] = icon.icon;
+const paths = Array.isArray(svgPathData) ? svgPathData : [svgPathData];
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`0 0 ${width} ${height}`}
+  class={['icon', className].filter(Boolean).join(' ')}
+  role={role}
+  aria-hidden={ariaHidden}
+  aria-label={ariaHidden ? undefined : title}
+  focusable="false"
+  {...svgRest}
+>
+  {title && !ariaHidden && <title>{title}</title>}
+  {paths.map((d) => (
+    <path d={d} fill="currentColor" />
+  ))}
+</svg>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
+import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -46,9 +47,9 @@ const prayers: Prayer[] = await Promise.all(
         you shepherd.
       </p>
       <div class="page-hero__meta">
-        <span class="meta-chip"><i class="fa-solid fa-seedling" aria-hidden="true"></i> Growth</span>
-        <span class="meta-chip"><i class="fa-solid fa-people-carry" aria-hidden="true"></i> Community</span>
-        <span class="meta-chip"><i class="fa-solid fa-church" aria-hidden="true"></i> Worship</span>
+        <span class="meta-chip"><Icon name="seedling" aria-hidden="true" /> Growth</span>
+        <span class="meta-chip"><Icon name="people-carry" aria-hidden="true" /> Community</span>
+        <span class="meta-chip"><Icon name="church" aria-hidden="true" /> Worship</span>
       </div>
     </div>
   </section>
@@ -83,7 +84,7 @@ const prayers: Prayer[] = await Promise.all(
             <div class="prayer-card__meta">
               {data.tags.map((tag) => (
                 <span class="floating-badge">
-                  <i class={tag.icon} aria-hidden="true"></i>
+                  <Icon name={tag.icon} aria-hidden="true" />
                   {tag.label}
                 </span>
               ))}

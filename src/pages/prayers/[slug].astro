@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SeoHead from '../../components/SeoHead.astro';
+import Icon from '../../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { cleanMarkdownToPlainText } from '../../utils/cleanMarkdown.js';
@@ -79,7 +80,7 @@ const formattedDate = prayer.data.date
             <div class="prayer-detail__tags">
               {prayer.data.tags.map((tag) => (
                 <span class="floating-badge">
-                  <i class={tag.icon} aria-hidden="true"></i>
+                  <Icon name={tag.icon} aria-hidden="true" />
                   {tag.label}
                 </span>
               ))}
@@ -93,7 +94,7 @@ const formattedDate = prayer.data.date
     </div>
     <footer class="prayer-detail__footer">
       <a class="prayer-detail__back" href="/prayers/">
-        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+        <Icon name="arrow-left" aria-hidden="true" />
         Back to all prayers
       </a>
     </footer>

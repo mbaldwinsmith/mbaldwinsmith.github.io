@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
+import Icon from '../components/Icon.astro';
 
 export const prerender = true;
 
@@ -333,9 +334,9 @@ const coursesJsonLd = {
         and pastoral practice. Every selection invites deeper discipleship for seekers, catechists, and ministry leaders.
       </p>
       <div class="page-hero__meta">
-        <span class="meta-chip"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Formation</span>
-        <span class="meta-chip"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Study</span>
-        <span class="meta-chip"><i class="fa-solid fa-people-group" aria-hidden="true"></i> Community</span>
+        <span class="meta-chip"><Icon name="book-open" aria-hidden="true" /> Formation</span>
+        <span class="meta-chip"><Icon name="lightbulb" aria-hidden="true" /> Study</span>
+        <span class="meta-chip"><Icon name="people-group" aria-hidden="true" /> Community</span>
       </div>
     </div>
   </section>
