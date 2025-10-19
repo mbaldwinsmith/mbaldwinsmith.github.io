@@ -1,25 +1,21 @@
+import type { CollectionEntry } from 'astro:content';
+
 import { cleanMarkdownToPlainText } from './cleanMarkdown.js';
 
-/**
- * @typedef {Object} SearchResult
- * @property {string} title
- * @property {string} url
- * @property {'Poem' | 'Prayer'} type
- * @property {string} excerpt
- * @property {number} order
- */
+export type SearchResult = {
+  title: string;
+  url: string;
+  type: 'Poem' | 'Prayer';
+  excerpt: string;
+  order: number;
+};
 
-/**
- * @typedef {Object} BuildSearchResultsOptions
- * @property {Array<import('astro:content').CollectionEntry<'poetry'>>} [poetryEntries]
- * @property {Array<import('astro:content').CollectionEntry<'prayers'>>} [prayersEntries]
- */
+export type BuildSearchResultsOptions = {
+  poetryEntries?: CollectionEntry<'poetry'>[];
+  prayersEntries?: CollectionEntry<'prayers'>[];
+};
 
-/**
- * @param {string} value
- * @returns {string}
- */
-const createExcerpt = (value) => {
+const createExcerpt = (value: string): string => {
   const normalized = value.replace(/\s+/g, ' ').trim();
   if (!normalized) {
     return '';
@@ -27,20 +23,16 @@ const createExcerpt = (value) => {
   return normalized.length > 180 ? `${normalized.slice(0, 177).trimEnd()}…` : normalized;
 };
 
-/**
- * @param {string | undefined | null} value
- * @param {string} normalizedQuery
- * @returns {boolean}
- */
-const includesQuery = (value, normalizedQuery) =>
-  typeof value === 'string' && value.toLowerCase().includes(normalizedQuery);
+const includesQuery = (
+  value: string | undefined | null,
+  normalizedQuery: string,
+): value is string => typeof value === 'string' && value.toLowerCase().includes(normalizedQuery);
 
-let getCollectionCache;
+type GetCollection = typeof import('astro:content')['getCollection'];
 
-/**
- * @returns {Promise<import('astro:content').getCollection>}
- */
-const loadGetCollection = async () => {
+let getCollectionCache: GetCollection | undefined;
+
+const loadGetCollection = async (): Promise<GetCollection> => {
   if (!getCollectionCache) {
     const mod = await import('astro:content');
     getCollectionCache = mod.getCollection;
@@ -48,27 +40,26 @@ const loadGetCollection = async () => {
   return getCollectionCache;
 };
 
-/**
- * @param {string} collection
- * @param {BuildSearchResultsOptions} options
- * @returns {Promise<Array<import('astro:content').CollectionEntry<any>>>}
- */
-const resolveCollectionEntries = async (collection, options) => {
-  const key = collection === 'poetry' ? 'poetryEntries' : 'prayersEntries';
-  if (Object.prototype.hasOwnProperty.call(options, key)) {
-    return options[key] ?? [];
+const resolveCollectionEntries = async <TCollection extends 'poetry' | 'prayers'>(
+  collection: TCollection,
+  options: BuildSearchResultsOptions,
+): Promise<CollectionEntry<TCollection>[]> => {
+  if (collection === 'poetry') {
+    if (Object.prototype.hasOwnProperty.call(options, 'poetryEntries')) {
+      return (options.poetryEntries ?? []) as CollectionEntry<TCollection>[];
+    }
+  } else if (Object.prototype.hasOwnProperty.call(options, 'prayersEntries')) {
+    return (options.prayersEntries ?? []) as CollectionEntry<TCollection>[];
   }
 
   const getCollection = await loadGetCollection();
   return getCollection(collection);
 };
 
-/**
- * @param {string} rawQuery
- * @param {BuildSearchResultsOptions} [options]
- * @returns {Promise<{ query: string; hasQuery: boolean; results: SearchResult[] }>}
- */
-export const buildSearchResults = async (rawQuery, options = {}) => {
+export const buildSearchResults = async (
+  rawQuery: string,
+  options: BuildSearchResultsOptions = {},
+): Promise<{ query: string; hasQuery: boolean; results: SearchResult[] }> => {
   const query = rawQuery.trim();
   const hasQuery = query.length > 0;
 
@@ -82,7 +73,7 @@ export const buildSearchResults = async (rawQuery, options = {}) => {
     resolveCollectionEntries('prayers', options),
   ]);
 
-  const poemResults = poetryEntries.flatMap((entry) => {
+  const poemResults = poetryEntries.flatMap<SearchResult>((entry) => {
     const { title, stanzas, order } = entry.data;
     const lines = stanzas.flat();
     const fields = [title, ...lines];
@@ -102,7 +93,7 @@ export const buildSearchResults = async (rawQuery, options = {}) => {
     ];
   });
 
-  const prayerResults = prayersEntries.flatMap((entry) => {
+  const prayerResults = prayersEntries.flatMap<SearchResult>((entry) => {
     const { title, subtitle, summary, tags, order } = entry.data;
     const tagLabels = tags.map((tag) => tag.label);
     const cleanedBody = cleanMarkdownToPlainText(entry.body);

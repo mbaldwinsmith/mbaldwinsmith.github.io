@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { buildSearchResults } from '../src/utils/searchResults.js';
+import { buildSearchResults } from '../src/utils/searchResults.ts';
 
 const createPoemEntry = ({
   slug = 'poem-slug',
