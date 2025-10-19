@@ -26,8 +26,8 @@ const jsonLd = {
   name: title,
   potentialAction: {
     '@type': 'SearchAction',
-    target: `${siteUrl}contact?subject={search_term_string}`,
-    'query-input': 'required name=search_term_string',
+    target: `${siteUrl}search?q={q}`,
+    'query-input': 'required name=q',
   },
 };
 ---
