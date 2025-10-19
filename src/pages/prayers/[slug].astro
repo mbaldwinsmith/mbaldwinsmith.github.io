@@ -52,6 +52,12 @@ const formattedDate = prayer.data.date
           const schemaType = prayer.data.date ? 'Article' : 'CreativeWork';
           const authorName = 'Mark Baldwin-Smith';
           const publisherName = 'Kerygma Academy';
+          const maxArticleBodyLength = 2000;
+          const trimmedBodyText = cleanedBodyText.trim();
+          const articleBodyContent =
+            trimmedBodyText.length > maxArticleBodyLength
+              ? `${trimmedBodyText.slice(0, maxArticleBodyLength - 1).trimEnd()}…`
+              : trimmedBodyText;
           const jsonLd: Record<string, unknown> = {
             '@context': 'https://schema.org',
             '@type': schemaType,
@@ -76,6 +82,13 @@ const formattedDate = prayer.data.date
           }
           if (prayer.data.tags?.length) {
             jsonLd.keywords = prayer.data.tags.map((tag) => tag.label);
+          }
+          if (articleBodyContent) {
+            if (schemaType === 'Article') {
+              jsonLd.articleBody = articleBodyContent;
+            } else {
+              jsonLd.text = articleBodyContent;
+            }
           }
           return jsonLd;
         })(),
