@@ -1,6 +1,7 @@
 ---
 title: "The Garden"
 order: 3
+summary: A meditation on humanity's fall and redemption through God's enduring plan for communion.
 date: 2024-01-19
 stanzas:
   -

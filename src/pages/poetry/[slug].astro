@@ -16,7 +16,9 @@ export async function getStaticPaths() {
 
 const { poem } = Astro.props as { poem: CollectionEntry<'poetry'> };
 const pageTitle = `${poem.data.title} — Poetry — Kerygma Academy`;
-const pageDescription = `A poem from Kerygma Academy: ${poem.data.title}.`;
+const fallbackDescription = `A poem from Kerygma Academy: ${poem.data.title}.`;
+const excerpt = (poem.data.summary ?? poem.data.stanzas?.[0]?.join(' '))?.trim();
+const pageDescription = excerpt && excerpt.length > 0 ? excerpt : fallbackDescription;
 const pageUrl = Astro.site
   ? new URL(Astro.url.pathname, Astro.site)
   : new URL(`https://kerygma.academy/poetry/${poem.slug}/`);

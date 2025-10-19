@@ -1,6 +1,7 @@
 ---
 title: "All of My Creatures"
 order: 7
+summary: A call to join the divine family and accept God's boundless mercy.
 date: 2024-02-16
 stanzas:
   -

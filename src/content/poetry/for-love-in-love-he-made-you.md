@@ -1,6 +1,7 @@
 ---
 title: "For Love, In Love (He Made You)"
 order: 6
+summary: A poetic invitation to embrace God's steadfast love and the salvation He prepared.
 date: 2024-02-09
 stanzas:
   -

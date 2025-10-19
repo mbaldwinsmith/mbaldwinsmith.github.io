@@ -1,6 +1,7 @@
 ---
 title: "Communion"
 order: 8
+summary: A reflection on the Eucharist as an invitation to abundance, reunion, and awakening.
 date: 2024-02-23
 stanzas:
   -
