@@ -23,3 +23,9 @@ test('cleanMarkdownToPlainText preserves alt text and link text', () => {
   const result = cleanMarkdownToPlainText(input);
   assert.equal(result, 'Sunrise over hills Read more');
 });
+
+test('cleanMarkdownToPlainText removes inline HTML tags but keeps text content', () => {
+  const input = 'Paragraph with <strong>bold</strong> and <em>italic</em> text.';
+  const result = cleanMarkdownToPlainText(input);
+  assert.equal(result, 'Paragraph with bold and italic text.');
+});
