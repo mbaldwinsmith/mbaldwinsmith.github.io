@@ -19,11 +19,13 @@ const ogImageURL = Astro.site
   ? new URL(ogImage, Astro.site).href
   : new URL(ogImage, currentURL).href;
 const siteUrl = Astro.site?.href ?? `${currentURL.origin}/`;
+const siteName = 'Kerygma Academy';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   url: siteUrl,
-  name: title,
+  name: siteName,
+  ...(title && title !== siteName ? { alternateName: title } : {}),
   potentialAction: {
     '@type': 'SearchAction',
     target: `${siteUrl}search?q={q}`,
