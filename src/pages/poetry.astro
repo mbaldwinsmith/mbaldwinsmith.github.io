@@ -177,7 +177,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
 </BaseLayout>
 
 <script is:inline>
-  const initPoemsToc = () => {
+  function initPoemsToc() {
     const toc = document.querySelector('.poems__toc');
     if (!toc || toc.dataset.enhanced === 'true') {
       return;
@@ -442,6 +442,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('scroll', handleActiveScroll);
         window.removeEventListener('resize', handleResize);
+        document.removeEventListener('astro:after-swap', handleAfterSwap);
         if (scrollFrame !== null) {
           window.cancelAnimationFrame(scrollFrame);
           scrollFrame = null;
@@ -453,6 +454,10 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
       },
       { once: true },
     );
+  }
+
+  const handleAfterSwap = () => {
+    initPoemsToc();
   };
 
   if (document.readyState === 'loading') {
@@ -461,7 +466,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     initPoemsToc();
   }
 
-  document.addEventListener('astro:after-swap', initPoemsToc);
+  document.addEventListener('astro:after-swap', handleAfterSwap);
 </script>
 
 <style>
