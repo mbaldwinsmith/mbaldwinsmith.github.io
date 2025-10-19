@@ -6,7 +6,6 @@ export type NavigationLink = {
 export const primaryNavigation: NavigationLink[] = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/prayers', label: 'Prayers' },
   { href: '/poetry', label: 'Poetry' },
   { href: '/courses', label: 'Courses' },
   { href: '/portfolio', label: 'Portfolio' },
@@ -14,9 +13,9 @@ export const primaryNavigation: NavigationLink[] = [
 ];
 
 export const formationNavigation: NavigationLink[] = [
-  { href: '/prayers', label: 'Prayers' },
   { href: '/courses', label: 'Courses' },
   { href: '/poetry', label: 'Poetry' },
+  { href: '/portfolio', label: 'Portfolio' },
 ];
 
 export const quickLinksNavigation: NavigationLink[] = [

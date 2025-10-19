@@ -1,6 +1,6 @@
 # mbaldwinsmith.github.io
 
-This repository contains the source code for my personal [Astro](https://astro.build/) site. It collects prayers, poetry, courses, portfolio work, and contact information in one place and is configured to deploy automatically to GitHub Pages.
+This repository contains the source code for my personal [Astro](https://astro.build/) site. It collects poetry, courses, portfolio work, and contact information in one place and is configured to deploy automatically to GitHub Pages.
 
 ## Prerequisites
 
