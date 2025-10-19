@@ -202,6 +202,7 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
 
   <script is:inline>
     let cleanupEnhancements = () => {};
+    let afterSwapListener;
 
     const registerCleanup = (fn) => {
       cleanupEnhancements = () => {
@@ -320,10 +321,24 @@ const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : new URL('
       });
     };
 
+    const ensureAfterSwapListener = () => {
+      if (!afterSwapListener) {
+        afterSwapListener = () => {
+          initContactFormEnhancements();
+        };
+        window.addEventListener('astro:after-swap', afterSwapListener);
+      }
+    };
+
     initContactFormEnhancements();
-    window.addEventListener('astro:after-swap', initContactFormEnhancements);
+    ensureAfterSwapListener();
     window.addEventListener('astro:before-swap', () => {
       cleanupEnhancements();
+
+      if (afterSwapListener) {
+        window.removeEventListener('astro:after-swap', afterSwapListener);
+        afterSwapListener = undefined;
+      }
     });
   </script>
 </BaseLayout>
