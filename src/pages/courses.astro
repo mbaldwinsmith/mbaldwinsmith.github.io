@@ -406,9 +406,12 @@ const coursesJsonLd = {
 </BaseLayout>
 
 <script is:inline>
+  /** @type {(() => void) | null} */
+  let destroyCourseFilters = null;
+
   const initCourseFilters = () => {
     const filterForm = document.querySelector('[data-course-filters]');
-    if (!(filterForm instanceof HTMLFormElement)) {
+    if (!(filterForm instanceof HTMLFormElement) || filterForm.dataset.enhanced === 'true') {
       return;
     }
 
@@ -514,28 +517,55 @@ const coursesJsonLd = {
       }
     };
 
-    filterForm.addEventListener('submit', (event) => {
+    const handleSubmit = (event) => {
       event.preventDefault();
-    });
+    };
 
-    filterForm.addEventListener('input', (event) => {
+    const handleInput = (event) => {
       if (event.target === searchInput) {
         updateFilters();
       }
-    });
+    };
+
+    const handleCategoryChange = () => {
+      updateFilters();
+    };
+
+    filterForm.addEventListener('submit', handleSubmit);
+    filterForm.addEventListener('input', handleInput);
 
     if (categorySelect instanceof HTMLSelectElement) {
-      categorySelect.addEventListener('change', updateFilters);
+      categorySelect.addEventListener('change', handleCategoryChange);
     }
+
+    filterForm.dataset.enhanced = 'true';
+
+    destroyCourseFilters = () => {
+      filterForm.removeEventListener('submit', handleSubmit);
+      filterForm.removeEventListener('input', handleInput);
+
+      if (categorySelect instanceof HTMLSelectElement) {
+        categorySelect.removeEventListener('change', handleCategoryChange);
+      }
+
+      filterForm.removeAttribute('data-enhanced');
+      destroyCourseFilters = null;
+    };
 
     updateFilters();
   };
+
+  document.addEventListener('astro:before-swap', () => {
+    destroyCourseFilters?.();
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initCourseFilters, { once: true });
   } else {
     initCourseFilters();
   }
+
+  document.addEventListener('astro:after-swap', initCourseFilters);
 </script>
 
 <style>
