@@ -242,7 +242,9 @@ const prayers: Prayer[] = await Promise.all(
 </style>
 
 <script is:inline>
-  const buttons = document.querySelectorAll('.prayer-card__permalink');
+  const INIT_ATTR = 'data-copy-listener';
+  const statusTimeouts = new Map();
+  const clickHandlers = new WeakMap();
 
   const makeAbsoluteUrl = (path) => {
     if (!path) {
@@ -265,45 +267,94 @@ const prayers: Prayer[] = await Promise.all(
     statusEl.textContent = message;
   };
 
-  const resetStatusMessage = (statusId, timeout = 4000) => {
+  const clearStatusMessage = (statusId) => {
     if (!statusId) return;
-    setTimeout(() => {
-      const statusEl = document.getElementById(statusId);
-      if (statusEl) {
-        statusEl.textContent = '';
-      }
-    }, timeout);
+    const statusEl = document.getElementById(statusId);
+    if (statusEl) {
+      statusEl.textContent = '';
+    }
   };
 
-  buttons.forEach((button) => {
-    button.addEventListener('click', async () => {
-      const targetPath = button.dataset.url;
-      const statusId = button.dataset.statusId || null;
+  const scheduleStatusReset = (statusId, timeout = 4000) => {
+    if (!statusId) return;
+    const existingTimeout = statusTimeouts.get(statusId);
+    if (typeof existingTimeout === 'number') {
+      window.clearTimeout(existingTimeout);
+    }
 
-      if (!targetPath) {
-        setStatusMessage(statusId, 'Link unavailable.');
-        resetStatusMessage(statusId);
-        return;
-      }
+    const timeoutId = window.setTimeout(() => {
+      clearStatusMessage(statusId);
+      statusTimeouts.delete(statusId);
+    }, timeout);
 
-      const targetUrl = makeAbsoluteUrl(targetPath);
+    statusTimeouts.set(statusId, timeoutId);
+  };
 
-      if (!navigator.clipboard) {
-        setStatusMessage(statusId, 'Clipboard unavailable. Opening prayer detail page.');
-        window.location.href = targetPath;
-        resetStatusMessage(statusId);
-        return;
-      }
+  const handleClickFactory = (button) => async () => {
+    const targetPath = button.dataset.url;
+    const statusId = button.dataset.statusId || null;
 
-      try {
-        await navigator.clipboard.writeText(targetUrl);
-        setStatusMessage(statusId, 'Link copied to clipboard.');
-      } catch (error) {
-        setStatusMessage(statusId, 'Unable to copy link. Opening prayer detail page for manual copy.');
-        window.location.href = targetPath;
-      }
+    if (!targetPath) {
+      setStatusMessage(statusId, 'Link unavailable.');
+      scheduleStatusReset(statusId);
+      return;
+    }
 
-      resetStatusMessage(statusId);
+    const targetUrl = makeAbsoluteUrl(targetPath);
+
+    if (!navigator.clipboard) {
+      setStatusMessage(statusId, 'Clipboard unavailable. Opening prayer detail page.');
+      window.location.href = targetPath;
+      scheduleStatusReset(statusId);
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(targetUrl);
+      setStatusMessage(statusId, 'Link copied to clipboard.');
+    } catch (error) {
+      setStatusMessage(statusId, 'Unable to copy link. Opening prayer detail page for manual copy.');
+      window.location.href = targetPath;
+    }
+
+    scheduleStatusReset(statusId);
+  };
+
+  const init = () => {
+    const buttons = document.querySelectorAll('.prayer-card__permalink');
+    buttons.forEach((button) => {
+      if (button.getAttribute(INIT_ATTR) === 'true') return;
+      const handler = handleClickFactory(button);
+      button.addEventListener('click', handler);
+      clickHandlers.set(button, handler);
+      button.setAttribute(INIT_ATTR, 'true');
     });
-  });
+  };
+
+  const cleanup = () => {
+    document
+      .querySelectorAll(`.prayer-card__permalink[${INIT_ATTR}="true"]`)
+      .forEach((button) => {
+        const handler = clickHandlers.get(button);
+        if (handler) {
+          button.removeEventListener('click', handler);
+          clickHandlers.delete(button);
+        }
+        button.removeAttribute(INIT_ATTR);
+      });
+
+    statusTimeouts.forEach((timeoutId, statusId) => {
+      window.clearTimeout(timeoutId);
+      clearStatusMessage(statusId);
+    });
+    statusTimeouts.clear();
+  };
+
+  if (document.readyState !== 'loading') {
+    init();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('astro:after-swap', init);
+  document.addEventListener('astro:before-swap', cleanup);
 </script>
