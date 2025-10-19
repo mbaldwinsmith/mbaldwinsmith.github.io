@@ -535,8 +535,9 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     background: rgba(255, 255, 255, 0.95);
   }
 
-  .poems__toc-toggle i {
-    font-size: 0.9rem;
+  .poems__toc-toggle .icon {
+    width: 0.9rem;
+    height: 0.9rem;
     transition: transform 0.2s ease;
   }
 
@@ -592,7 +593,7 @@ const stanzaToHtml = (lines: string[]): string => lines.map(escapeHTML).join('<b
     transform: scale(1.15);
   }
 
-  .poems__toc:not(.poems__toc--open) .poems__toc-toggle i {
+  .poems__toc:not(.poems__toc--open) .poems__toc-toggle .icon {
     transform: rotate(-90deg);
   }
 
