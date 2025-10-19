@@ -2,15 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
 import Icon from '../components/Icon.astro';
-import { getCollection } from 'astro:content';
-import { cleanMarkdownToPlainText } from '../utils/cleanMarkdown.js';
+import { buildSearchResults } from '../utils/searchResults.js';
 
 export const prerender = false;
 
 const searchParams = Astro.url.searchParams;
 const rawQuery = searchParams.get('q') ?? '';
-const query = rawQuery.trim();
-const hasQuery = query.length > 0;
+const { query, hasQuery, results } = await buildSearchResults(rawQuery);
 
 const pageTitle = hasQuery
   ? `Search results for "${query}" — Kerygma Academy`
@@ -22,87 +20,6 @@ const pageUrl = Astro.site
   ? new URL(`${Astro.url.pathname}${Astro.url.search}`, Astro.site)
   : Astro.url;
 
-type SearchResult = {
-  title: string;
-  url: string;
-  type: 'Poem' | 'Prayer';
-  excerpt: string;
-  order: number;
-};
-
-const createExcerpt = (value: string): string => {
-  const normalized = value.replace(/\s+/g, ' ').trim();
-  if (!normalized) {
-    return '';
-  }
-  return normalized.length > 180 ? `${normalized.slice(0, 177).trimEnd()}…` : normalized;
-};
-
-let results: SearchResult[] = [];
-
-if (hasQuery) {
-  const normalizedQuery = query.toLowerCase();
-  const matchesQuery = (value: string | undefined | null) =>
-    typeof value === 'string' && value.toLowerCase().includes(normalizedQuery);
-
-  const [poetryEntries, prayersEntries] = await Promise.all([
-    getCollection('poetry'),
-    getCollection('prayers'),
-  ]);
-
-  const poemResults = poetryEntries.flatMap((entry) => {
-    const { title, stanzas, order } = entry.data;
-    const lines = stanzas.flat();
-    const fields = [title, ...lines];
-    if (!fields.some((field) => field.toLowerCase().includes(normalizedQuery))) {
-      return [];
-    }
-
-    const excerptSource = lines.join(' ');
-    return [
-      {
-        title,
-        url: `/poetry/${entry.slug}/`,
-        type: 'Poem' as const,
-        excerpt: createExcerpt(excerptSource || title),
-        order,
-      },
-    ];
-  });
-
-  const prayerResults = prayersEntries.flatMap((entry) => {
-    const { title, subtitle, summary, tags, order } = entry.data;
-    const tagLabels = tags.map((tag) => tag.label);
-    const cleanedBody = cleanMarkdownToPlainText(entry.body);
-    const fields = [title, subtitle, summary, ...tagLabels, cleanedBody];
-    if (!fields.some((field) => matchesQuery(field))) {
-      return [];
-    }
-
-    const excerptSource = summary ?? subtitle ?? cleanedBody;
-    return [
-      {
-        title,
-        url: `/prayers/${entry.slug}/`,
-        type: 'Prayer' as const,
-        excerpt: createExcerpt(excerptSource || title),
-        order,
-      },
-    ];
-  });
-
-  results = [...poemResults, ...prayerResults].sort((a, b) => {
-    if (a.order !== b.order) {
-      return a.order - b.order;
-    }
-
-    if (a.type !== b.type) {
-      return a.type.localeCompare(b.type);
-    }
-
-    return a.title.localeCompare(b.title);
-  });
-}
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
