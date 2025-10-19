@@ -1,11 +1,15 @@
 import type { CollectionEntry } from 'astro:content';
 
 import { cleanMarkdownToPlainText } from './cleanMarkdown.js';
+import type { Course } from '../data/courses.ts';
+import type { Project } from '../data/projects.ts';
+
+export type SearchResultType = 'Poem' | 'Prayer' | 'Course' | 'Project';
 
 export type SearchResult = {
   title: string;
   url: string;
-  type: 'Poem' | 'Prayer';
+  type: SearchResultType;
   excerpt: string;
   order: number;
 };
@@ -13,6 +17,8 @@ export type SearchResult = {
 export type BuildSearchResultsOptions = {
   poetryEntries?: CollectionEntry<'poetry'>[];
   prayersEntries?: CollectionEntry<'prayers'>[];
+  courseEntries?: Course[];
+  projectEntries?: Project[];
 };
 
 const createExcerpt = (value: string): string => {
@@ -38,6 +44,40 @@ const loadGetCollection = async (): Promise<GetCollection> => {
     getCollectionCache = mod.getCollection;
   }
   return getCollectionCache;
+};
+
+let courseEntriesCache: Course[] | undefined;
+
+const resolveCourseEntries = async (
+  options: BuildSearchResultsOptions,
+): Promise<Course[]> => {
+  if (Object.prototype.hasOwnProperty.call(options, 'courseEntries')) {
+    return options.courseEntries ?? [];
+  }
+
+  if (!courseEntriesCache) {
+    const mod = await import('../data/courses.ts');
+    courseEntriesCache = mod.allCourses;
+  }
+
+  return courseEntriesCache;
+};
+
+let projectEntriesCache: Project[] | undefined;
+
+const resolveProjectEntries = async (
+  options: BuildSearchResultsOptions,
+): Promise<Project[]> => {
+  if (Object.prototype.hasOwnProperty.call(options, 'projectEntries')) {
+    return options.projectEntries ?? [];
+  }
+
+  if (!projectEntriesCache) {
+    const mod = await import('../data/projects.ts');
+    projectEntriesCache = mod.projects;
+  }
+
+  return projectEntriesCache;
 };
 
 const resolveCollectionEntries = async <TCollection extends 'poetry' | 'prayers'>(
@@ -68,9 +108,11 @@ export const buildSearchResults = async (
   }
 
   const normalizedQuery = query.toLowerCase();
-  const [poetryEntries, prayersEntries] = await Promise.all([
+  const [poetryEntries, prayersEntries, courseEntries, projectEntries] = await Promise.all([
     resolveCollectionEntries('poetry', options),
     resolveCollectionEntries('prayers', options),
+    resolveCourseEntries(options),
+    resolveProjectEntries(options),
   ]);
 
   const poemResults = poetryEntries.flatMap<SearchResult>((entry) => {
@@ -114,13 +156,64 @@ export const buildSearchResults = async (
     ];
   });
 
-  const results = [...poemResults, ...prayerResults].sort((a, b) => {
-    if (a.order !== b.order) {
-      return a.order - b.order;
+  const courseResults = courseEntries.flatMap<SearchResult>((course, index) => {
+    const fields = [course.title, course.sectionTitle];
+    if (!fields.some((field) => includesQuery(field, normalizedQuery))) {
+      return [];
     }
 
+    return [
+      {
+        title: course.title,
+        url: course.url,
+        type: 'Course',
+        excerpt: createExcerpt(`Part of the ${course.sectionTitle} learning path.`),
+        order: index,
+      },
+    ];
+  });
+
+  const projectResults = projectEntries.flatMap<SearchResult>((project, index) => {
+    const { name, subtitle, description, highlights, primaryLink, secondaryLink } = project;
+    const fields = [
+      name,
+      subtitle,
+      description,
+      primaryLink?.label,
+      secondaryLink?.label,
+      ...(highlights ?? []),
+    ];
+    if (!fields.some((field) => includesQuery(field, normalizedQuery))) {
+      return [];
+    }
+
+    const excerptSource = subtitle || description;
+    const href = primaryLink?.href ?? '#';
+    return [
+      {
+        title: name,
+        url: href,
+        type: 'Project',
+        excerpt: createExcerpt(excerptSource || description),
+        order: index,
+      },
+    ];
+  });
+
+  const typePriority: Record<SearchResultType, number> = {
+    Poem: 0,
+    Prayer: 1,
+    Course: 2,
+    Project: 3,
+  };
+
+  const results = [...poemResults, ...prayerResults, ...courseResults, ...projectResults].sort((a, b) => {
     if (a.type !== b.type) {
-      return a.type.localeCompare(b.type);
+      return typePriority[a.type] - typePriority[b.type];
+    }
+
+    if (a.order !== b.order) {
+      return a.order - b.order;
     }
 
     return a.title.localeCompare(b.title);

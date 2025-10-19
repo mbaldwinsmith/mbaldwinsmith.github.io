@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
 import Icon from '../components/Icon.astro';
 import { buildSearchResults } from '../utils/searchResults.ts';
+import type { SearchResult } from '../utils/searchResults.ts';
 
 export const prerender = false;
 
@@ -14,11 +15,37 @@ const pageTitle = hasQuery
   ? `Search results for "${query}" — Kerygma Academy`
   : 'Search — Kerygma Academy';
 const pageDescription = hasQuery
-  ? `Discover poetry and prayers from Kerygma Academy that mention "${query}".`
-  : 'Search through the poetry and prayers published by Kerygma Academy.';
+  ? `Discover poems, prayers, courses, and projects from Kerygma Academy that mention "${query}".`
+  : 'Search through the poems, prayers, courses, and projects shared by Kerygma Academy.';
 const pageUrl = Astro.site
   ? new URL(`${Astro.url.pathname}${Astro.url.search}`, Astro.site)
   : Astro.url;
+
+const resultTypeMeta: Record<
+  SearchResult['type'],
+  { label: string; cta: string; tone: 'poem' | 'prayer' | 'course' | 'project' }
+> = {
+  Poem: {
+    label: 'Poem',
+    cta: 'Read this poem',
+    tone: 'poem',
+  },
+  Prayer: {
+    label: 'Prayer',
+    cta: 'Pray with this prayer',
+    tone: 'prayer',
+  },
+  Course: {
+    label: 'Course',
+    cta: 'Visit this course',
+    tone: 'course',
+  },
+  Project: {
+    label: 'Project',
+    cta: 'Explore this project',
+    tone: 'project',
+  },
+};
 
 ---
 
@@ -32,7 +59,7 @@ const pageUrl = Astro.site
       <p class="kicker">Search</p>
       <h1>Find words for the journey</h1>
       <p class="lead">
-        Enter a phrase or theme to explore poems and prayers from Kerygma Academy.
+        Enter a phrase or theme to explore poems, prayers, courses, and projects from Kerygma Academy.
       </p>
     </div>
   </section>
@@ -60,30 +87,49 @@ const pageUrl = Astro.site
             {results.length} {results.length === 1 ? 'result' : 'results'} for “{query}”
           </h2>
           <ol class="search-results__list">
-            {results.map((result) => (
-              <li class="search-result">
-                <article class="surface surface--frosted search-result__card">
-                  <p class="search-result__type">{result.type}</p>
-                  <h3 class="search-result__title">
-                    <a href={result.url}>{result.title}</a>
-                  </h3>
-                  {result.excerpt && <p class="search-result__excerpt">{result.excerpt}</p>}
-                  <a class="search-result__cta" href={result.url}>
-                    Read this {result.type.toLowerCase()}
-                    <Icon name="arrow-right" aria-hidden="true" />
-                  </a>
-                </article>
-              </li>
-            ))}
+            {results.map((result) => {
+              const typeMeta = resultTypeMeta[result.type];
+              const isExternal = /^https?:/i.test(result.url);
+              return (
+                <li class="search-result">
+                  <article class="surface surface--frosted search-result__card">
+                    <p class={`search-result__type search-result__type--${typeMeta.tone}`}>
+                      {typeMeta.label}
+                    </p>
+                    <h3 class="search-result__title">
+                      <a
+                        href={result.url}
+                        target={isExternal ? '_blank' : undefined}
+                        rel={isExternal ? 'noopener noreferrer' : undefined}
+                      >
+                        {result.title}
+                      </a>
+                    </h3>
+                    {result.excerpt && <p class="search-result__excerpt">{result.excerpt}</p>}
+                    <a
+                      class="search-result__cta"
+                      href={result.url}
+                      target={isExternal ? '_blank' : undefined}
+                      rel={isExternal ? 'noopener noreferrer' : undefined}
+                    >
+                      {typeMeta.cta}
+                      <Icon name="arrow-right" aria-hidden="true" />
+                    </a>
+                  </article>
+                </li>
+              );
+            })}
           </ol>
         </section>
       ) : (
         <p class="search__empty" role="status">
-          We couldn&rsquo;t find any poems or prayers that match “{query}”. Try a different keyword.
+          We couldn&rsquo;t find any poems, prayers, courses, or projects that match “{query}”. Try a different keyword.
         </p>
       )
     ) : (
-      <p class="search__hint">Start by entering a word or phrase above to discover relevant pieces.</p>
+      <p class="search__hint">
+        Start by entering a word or phrase above to discover relevant reflections, resources, and creative work.
+      </p>
     )}
   </section>
 </BaseLayout>
@@ -180,11 +226,38 @@ const pageUrl = Astro.site
 
   .search-result__type {
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(36, 28, 21, 0.6);
     font-family: 'Libre Franklin', 'Source Serif 4', serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(36, 28, 21, 0.08);
+    color: rgba(36, 28, 21, 0.75);
+    font-weight: 600;
+  }
+
+  .search-result__type--poem {
+    background: rgba(126, 104, 217, 0.16);
+    color: #43307f;
+  }
+
+  .search-result__type--prayer {
+    background: rgba(74, 153, 133, 0.18);
+    color: #1f5f53;
+  }
+
+  .search-result__type--course {
+    background: rgba(218, 161, 66, 0.2);
+    color: #7a3f00;
+  }
+
+  .search-result__type--project {
+    background: rgba(72, 118, 196, 0.18);
+    color: #274580;
   }
 
   .search-result__title {
@@ -213,9 +286,10 @@ const pageUrl = Astro.site
     align-items: center;
     gap: 0.5rem;
     font-family: 'Libre Franklin', 'Source Serif 4', serif;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: var(--accent-dark);
     text-decoration: none;
   }
