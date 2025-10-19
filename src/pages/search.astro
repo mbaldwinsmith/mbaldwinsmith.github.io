@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
+import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 
 export const prerender = false;
@@ -150,7 +151,7 @@ if (hasQuery) {
                   {result.excerpt && <p class="search-result__excerpt">{result.excerpt}</p>}
                   <a class="search-result__cta" href={result.url}>
                     Read this {result.type.toLowerCase()}
-                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    <Icon name="arrow-right" aria-hidden="true" />
                   </a>
                 </article>
               </li>

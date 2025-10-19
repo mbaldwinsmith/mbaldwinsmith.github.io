@@ -3,6 +3,7 @@ import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SeoHead from '../components/SeoHead.astro';
+import Icon from '../components/Icon.astro';
 import ChurchDashboardImage from '../assets/portfolio/ChurchDashboard.png';
 import MarkdownEditorImage from '../assets/portfolio/MarkdownEditor.png';
 import RegulaImage from '../assets/portfolio/Regula.png';
@@ -20,8 +21,8 @@ const projects = [
     description:
       'Church Attendance Dashboard is a web tool that lets you upload a CSV of church attendance data—broken down by week, site, service, and kids check-in—and then interactively visualize trends over time. It generates charts and summaries such as total and average attendance, peak weeks, and distributions across services/sites. The app uses a placeholder dataset by default, but you can replace it with your own data formatted according to the specified CSV schema.',
     badges: [
-      { icon: 'fa-solid fa-database', label: 'Data craft' },
-      { icon: 'fa-solid fa-chart-line', label: 'Trend analysis' },
+      { icon: 'database', label: 'Data craft' },
+      { icon: 'chart-line', label: 'Trend analysis' },
     ],
     highlights: [
       'Filter and slice data by year, site, service, and metric to explore specific subsets.',
@@ -48,8 +49,8 @@ const projects = [
     description:
       "Mark's Markdown Editor progressive web app is a web-based tool that allows users to write, edit, and preview Markdown content in real time. The interface is minimalist and user-friendly: a single-pane editor updates the rendered Markdown instantly as you type, so you can stay focused on the words. The editor supports basic formatting, links, lists, code blocks, headings, and seamless live previewing, making it convenient for drafting documents, notes, or writing content for web pages.",
     badges: [
-      { icon: 'fa-solid fa-keyboard', label: 'Writing flow' },
-      { icon: 'fa-solid fa-eye', label: 'Live preview' },
+      { icon: 'keyboard', label: 'Writing flow' },
+      { icon: 'eye', label: 'Live preview' },
     ],
     highlights: [
       'Live inline preview so changes in Markdown are instantly reflected in the rendered version without leaving the editor.',
@@ -76,8 +77,8 @@ const projects = [
     description:
       'Regula is a web-based tool focused on helping users integrate mindfulness with Catholic prayer practices. It offers guided prayer experiences, tracks when and how prayers are practiced, and supports reflection on prayer habits over time. The app is structured to help users develop consistency, mindfulness, and deeper awareness in their spiritual life through tangible tracking and gentle prompts.',
     badges: [
-      { icon: 'fa-solid fa-bezier-curve', label: 'Product design' },
-      { icon: 'fa-solid fa-clock', label: 'Habit tracking' },
+      { icon: 'bezier-curve', label: 'Product design' },
+      { icon: 'clock', label: 'Habit tracking' },
     ],
     highlights: [
       'Guided, themed prayer sessions to cultivate an intentional prayer life.',
@@ -137,9 +138,9 @@ const itemListJsonLd = {
         commitment to prayerful discernment, thoughtful design, and hospitable user experience.
       </p>
       <div class="page-hero__meta">
-        <span class="meta-chip"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Analytics</span>
-        <span class="meta-chip"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i> Design</span>
-        <span class="meta-chip"><i class="fa-solid fa-hands-holding" aria-hidden="true"></i> Ministry</span>
+        <span class="meta-chip"><Icon name="chart-column" aria-hidden="true" /> Analytics</span>
+        <span class="meta-chip"><Icon name="pen-nib" aria-hidden="true" /> Design</span>
+        <span class="meta-chip"><Icon name="hands-holding" aria-hidden="true" /> Ministry</span>
       </div>
     </div>
   </section>
@@ -154,7 +155,7 @@ const itemListJsonLd = {
           <div class="project-card__meta">
             {project.badges.map((badge) => (
               <span class="floating-badge">
-                <i class={badge.icon} aria-hidden="true"></i>
+                <Icon name={badge.icon} aria-hidden="true" />
                 {badge.label}
               </span>
             ))}
