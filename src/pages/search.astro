@@ -1,0 +1,322 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SeoHead from '../components/SeoHead.astro';
+import { getCollection } from 'astro:content';
+
+export const prerender = false;
+
+const searchParams = Astro.url.searchParams;
+const rawQuery = searchParams.get('q') ?? '';
+const query = rawQuery.trim();
+const hasQuery = query.length > 0;
+
+const pageTitle = hasQuery
+  ? `Search results for "${query}" — Kerygma Academy`
+  : 'Search — Kerygma Academy';
+const pageDescription = hasQuery
+  ? `Discover poetry and prayers from Kerygma Academy that mention "${query}".`
+  : 'Search through the poetry and prayers published by Kerygma Academy.';
+const pageUrl = Astro.site
+  ? new URL(`${Astro.url.pathname}${Astro.url.search}`, Astro.site)
+  : Astro.url;
+
+type SearchResult = {
+  title: string;
+  url: string;
+  type: 'Poem' | 'Prayer';
+  excerpt: string;
+  order: number;
+};
+
+const createExcerpt = (value: string): string => {
+  const normalized = value.replace(/\s+/g, ' ').trim();
+  if (!normalized) {
+    return '';
+  }
+  return normalized.length > 180 ? `${normalized.slice(0, 177).trimEnd()}…` : normalized;
+};
+
+let results: SearchResult[] = [];
+
+if (hasQuery) {
+  const normalizedQuery = query.toLowerCase();
+  const matchesQuery = (value: string | undefined | null) =>
+    typeof value === 'string' && value.toLowerCase().includes(normalizedQuery);
+
+  const [poetryEntries, prayersEntries] = await Promise.all([
+    getCollection('poetry'),
+    getCollection('prayers'),
+  ]);
+
+  const poemResults = poetryEntries.flatMap((entry) => {
+    const { title, stanzas, order } = entry.data;
+    const lines = stanzas.flat();
+    const fields = [title, ...lines];
+    if (!fields.some((field) => field.toLowerCase().includes(normalizedQuery))) {
+      return [];
+    }
+
+    const excerptSource = lines.join(' ');
+    return [
+      {
+        title,
+        url: `/poetry/${entry.slug}/`,
+        type: 'Poem' as const,
+        excerpt: createExcerpt(excerptSource || title),
+        order,
+      },
+    ];
+  });
+
+  const prayerResults = prayersEntries.flatMap((entry) => {
+    const { title, subtitle, summary, tags, order } = entry.data;
+    const tagLabels = tags.map((tag) => tag.label);
+    const fields = [title, subtitle, summary, ...tagLabels];
+    if (!fields.some((field) => matchesQuery(field))) {
+      return [];
+    }
+
+    const excerptSource = summary ?? subtitle ?? title;
+    return [
+      {
+        title,
+        url: `/prayers/${entry.slug}/`,
+        type: 'Prayer' as const,
+        excerpt: createExcerpt(excerptSource),
+        order,
+      },
+    ];
+  });
+
+  results = [...poemResults, ...prayerResults].sort((a, b) => {
+    if (a.order !== b.order) {
+      return a.order - b.order;
+    }
+
+    if (a.type !== b.type) {
+      return a.type.localeCompare(b.type);
+    }
+
+    return a.title.localeCompare(b.title);
+  });
+}
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <SeoHead slot="head" title={pageTitle} description={pageDescription} url={pageUrl.href} />
+  <section class="page-hero surface surface--tinted search-hero">
+    <span class="page-hero__halo" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <span class="page-hero__sparkle" aria-hidden="true"></span>
+    <div class="page-hero__content">
+      <p class="kicker">Search</p>
+      <h1>Find words for the journey</h1>
+      <p class="lead">
+        Enter a phrase or theme to explore poems and prayers from Kerygma Academy.
+      </p>
+    </div>
+  </section>
+
+  <section class="search page-section">
+    <form class="surface search__form" method="get" action="/search/" role="search">
+      <label class="search__label" for="search-query">Search the site</label>
+      <div class="search__controls">
+        <input
+          id="search-query"
+          name="q"
+          type="search"
+          value={query}
+          placeholder="Try ‘gratitude’, ‘Pentecost’, or ‘lament’"
+          autocomplete="off"
+        />
+        <button type="submit">Search</button>
+      </div>
+    </form>
+
+    {hasQuery ? (
+      results.length > 0 ? (
+        <section aria-live="polite" class="search-results">
+          <h2 class="search-results__heading">
+            {results.length} {results.length === 1 ? 'result' : 'results'} for “{query}”
+          </h2>
+          <ol class="search-results__list">
+            {results.map((result) => (
+              <li class="search-result">
+                <article class="surface surface--frosted search-result__card">
+                  <p class="search-result__type">{result.type}</p>
+                  <h3 class="search-result__title">
+                    <a href={result.url}>{result.title}</a>
+                  </h3>
+                  {result.excerpt && <p class="search-result__excerpt">{result.excerpt}</p>}
+                  <a class="search-result__cta" href={result.url}>
+                    Read this {result.type.toLowerCase()}
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                  </a>
+                </article>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ) : (
+        <p class="search__empty" role="status">
+          We couldn&rsquo;t find any poems or prayers that match “{query}”. Try a different keyword.
+        </p>
+      )
+    ) : (
+      <p class="search__hint">Start by entering a word or phrase above to discover relevant pieces.</p>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  .search-hero {
+    overflow: hidden;
+  }
+
+  .search__form {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .search__label {
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-family: 'Libre Franklin', 'Source Serif 4', serif;
+    color: rgba(36, 28, 21, 0.72);
+  }
+
+  .search__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .search__controls input[type='search'] {
+    flex: 1 1 16rem;
+    min-width: 0;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(36, 28, 21, 0.22);
+    background: rgba(255, 255, 255, 0.85);
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  }
+
+  .search__controls button {
+    flex: 0 0 auto;
+    font-family: 'Libre Franklin', 'Source Serif 4', serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .search__controls button:hover,
+  .search__controls button:focus-visible {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+  }
+
+  .search__hint,
+  .search__empty {
+    margin: 0;
+    font-size: 1.05rem;
+    color: rgba(36, 28, 21, 0.78);
+    text-align: center;
+  }
+
+  .search-results {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .search-results__heading {
+    margin: 0;
+    font-size: clamp(1.6rem, 3vw, 2rem);
+  }
+
+  .search-results__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  .search-result__card {
+    display: grid;
+    gap: 0.75rem;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    position: relative;
+  }
+
+  .search-result__type {
+    margin: 0;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(36, 28, 21, 0.6);
+    font-family: 'Libre Franklin', 'Source Serif 4', serif;
+  }
+
+  .search-result__title {
+    margin: 0;
+    font-size: clamp(1.35rem, 2.8vw, 1.75rem);
+  }
+
+  .search-result__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .search-result__title a:hover,
+  .search-result__title a:focus-visible {
+    text-decoration: underline;
+  }
+
+  .search-result__excerpt {
+    margin: 0;
+    color: rgba(36, 28, 21, 0.78);
+    line-height: 1.6;
+  }
+
+  .search-result__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Libre Franklin', 'Source Serif 4', serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: var(--accent-dark);
+    text-decoration: none;
+  }
+
+  .search-result__cta:hover,
+  .search-result__cta:focus-visible {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    .search-results__list {
+      gap: 1.25rem;
+    }
+
+    .search__controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .search__controls button {
+      width: 100%;
+    }
+  }
+</style>
