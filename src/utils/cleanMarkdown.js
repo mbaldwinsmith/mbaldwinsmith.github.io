@@ -15,6 +15,7 @@ export const cleanMarkdownToPlainText = (value) => {
     .replace(/^\s*>+\s?/gm, '')
     .replace(/^#+\s*/gm, '')
     .replace(/[*_`~]/g, '')
+    .replace(/<[^>]+>/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 };
