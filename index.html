@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- [MARK — CONTENT] Replace with your 1–2 sentence site description -->
+  <meta name="description" content="Mark Baldwin-Smith — poet, theologian, songwriter, and contemplative. Music, writing, and devotional life rooted in the Anglo-Catholic tradition.">
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Mark Baldwin-Smith">
+  <meta property="og:description" content="Poet, theologian, songwriter, and contemplative. Music, writing, and devotional life rooted in the Anglo-Catholic tradition.">
+  <meta property="og:image"       content="images/hero/pilgrim-tree.png">
+  <meta property="og:type"        content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Mark Baldwin-Smith">
+  <meta name="twitter:description" content="Poet, theologian, songwriter, and contemplative.">
+  <meta name="twitter:image"       content="images/hero/pilgrim-tree.png">
+
+  <title>Mark Baldwin-Smith</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+DW+Pica:ital@0;1&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Preload hero image -->
+  <link rel="preload" href="images/hero/pilgrim-tree.png" as="image">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/navigation.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/biography.css">
+  <link rel="stylesheet" href="css/project-cards.css">
+  <link rel="stylesheet" href="css/contact.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/utilities.css">
+</head>
+<body>
+
+  <!-- Hidden SVG noise filter — referenced by hero background -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
+    <defs>
+      <filter id="vellum-noise-filter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ══ HERO ══ -->
+  <header class="site-hero" id="home">
+
+    <img class="site-hero__background-image"
+         src="images/hero/vellum-texture-bg.png"
+         alt=""
+         aria-hidden="true"
+         width="1920" height="1080">
+
+    <!-- Corner ornaments -->
+    <img class="site-hero__corner-ornament site-hero__corner-ornament--top-left"
+         src="images/decorative/manuscript-portrait.png"
+         alt="" aria-hidden="true" width="80" height="80">
+    <img class="site-hero__corner-ornament site-hero__corner-ornament--top-right"
+         src="images/decorative/manuscript-portrait.png"
+         alt="" aria-hidden="true" width="80" height="80">
+    <img class="site-hero__corner-ornament site-hero__corner-ornament--bottom-left"
+         src="images/decorative/manuscript-portrait.png"
+         alt="" aria-hidden="true" width="80" height="80">
+    <img class="site-hero__corner-ornament site-hero__corner-ornament--bottom-right"
+         src="images/decorative/manuscript-portrait.png"
+         alt="" aria-hidden="true" width="80" height="80">
+
+    <!-- Central woodcut illustration -->
+    <figure class="site-hero__illustration-figure" aria-hidden="true">
+      <img class="site-hero__central-illustration"
+           src="images/hero/pilgrim-tree.png"
+           alt=""
+           width="640" height="427">
+    </figure>
+
+    <!-- Text content -->
+    <div class="site-hero__content">
+      <h1 class="site-hero__name">
+        Mark <span class="site-hero__name--accent">Baldwin</span>-Smith
+      </h1>
+      <div class="site-hero__decorative-rule" aria-hidden="true">
+        <span class="site-hero__decorative-rule-ornament">❧</span>
+      </div>
+      <p class="site-hero__epithet">Poet · Theologian · Songwriter · Contemplative</p>
+      <!-- [MARK — CONTENT] Replace motto with your preferred Latin or English phrase -->
+      <p class="site-hero__motto"><em>per ardua ad lucem</em></p>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="site-hero__scroll-hint" aria-hidden="true">
+      <span class="site-hero__scroll-hint-text">descend</span>
+      <span class="site-hero__scroll-hint-line"></span>
+    </div>
+
+  </header>
+
+  <!-- ══ NAVIGATION ══ -->
+  <nav class="site-navigation" aria-label="Main navigation">
+    <a href="#about"   class="site-navigation__link">About</a>
+    <a href="#works"   class="site-navigation__link">Works</a>
+    <a href="#contact" class="site-navigation__link">Contact</a>
+  </nav>
+
+  <div class="full-width-rule" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- ══ BIOGRAPHY ══ -->
+    <section class="biography-section page-section section-vertical-padding reveal-on-scroll" id="about">
+      <div class="section-content-wrapper">
+
+        <div class="section-header-row reveal-on-scroll">
+          <div class="section-dividing-rule" aria-hidden="true"></div>
+          <h2>Concerning the Author</h2>
+          <div class="section-dividing-rule" aria-hidden="true"></div>
+        </div>
+
+        <div class="biography-two-column-grid">
+
+          <!-- Main text -->
+          <div class="biography-section__text-column">
+            <!-- [MARK — CONTENT] Replace with your first bio paragraph. It will receive the drop cap. -->
+            <p class="biography-section__paragraph biography-section__paragraph--with-drop-cap">
+              Placeholder first paragraph. Replace this with your own words — who you are, your faith tradition, and what draws you to the work you do. This paragraph receives the large crimson drop cap.
+            </p>
+            <!-- [MARK — CONTENT] Replace with your second bio paragraph -->
+            <p class="biography-section__paragraph">
+              Placeholder second paragraph. Describe your creative work here — the Golden Thread album, the poetry chapbook, the Kerygma Codex, your Substack. What does each piece of work mean to you?
+            </p>
+            <!-- [MARK — CONTENT] Replace with your third bio paragraph (optional) -->
+            <p class="biography-section__paragraph">
+              Placeholder third paragraph. Your location, your way of life — Cambridge, boxing, Tai Chi, the rhythms of prayer. An invitation to the reader: what does this site offer them?
+            </p>
+          </div>
+
+          <!-- Aside -->
+          <aside class="biography-section__aside reveal-on-scroll">
+            <img class="biography-section__wax-seal-image animation-wax-seal-breathe"
+                 src="images/decorative/wax-seal.png"
+                 alt="Wax seal monogram M.B.S."
+                 width="120" height="120">
+            <!-- [MARK — CONTENT] Replace with quotes more personally significant to you -->
+            <blockquote class="biography-section__pull-quote">
+              "Beauty will save the world."
+              <cite>— Dostoevsky</cite>
+            </blockquote>
+            <div class="ornament-divider" aria-hidden="true">✦ ✦ ✦</div>
+            <blockquote class="biography-section__pull-quote">
+              "The soul is that which can be touched by Being."
+              <cite>— Rowan Williams</cite>
+            </blockquote>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ FOLIO ORNAMENT ══ -->
+    <div class="full-width-rule" aria-hidden="true"></div>
+    <figure class="folio-ornament-figure" aria-hidden="true">
+      <img src="images/decorative/folio-ornament-works.png"
+           alt=""
+           class="folio-ornament-image"
+           loading="lazy"
+           width="900" height="300">
+    </figure>
+
+    <!-- ══ WORKS ══ -->
+    <section class="works-section page-section section-vertical-padding" id="works">
+      <div class="section-content-wrapper">
+
+        <div class="section-header-row reveal-on-scroll">
+          <div class="section-dividing-rule" aria-hidden="true"></div>
+          <h2>Works &amp; Writings</h2>
+          <div class="section-dividing-rule" aria-hidden="true"></div>
+        </div>
+
+        <div class="works-section__grid">
+
+          <!-- Card 1 -->
+          <article class="project-card reveal-on-scroll card-stagger-delay-1">
+            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
+              <!-- [MARK — CONTENT] Replace href with your Bandcamp or streaming link -->
+              <figure class="project-card__image-figure">
+                <img class="project-card__image"
+                     src="images/works/golden-thread-card.png"
+                     alt="The Golden Thread — sacred music album"
+                     loading="lazy"
+                     width="800" height="500">
+              </figure>
+              <span class="project-card__symbol" aria-hidden="true">❧</span>
+              <h3 class="project-card__title">The Golden Thread</h3>
+              <p class="project-card__description">A sacred music album. Songs woven from scripture, silence, and the long tradition of Christian song.</p>
+              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
+            </a>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="project-card reveal-on-scroll card-stagger-delay-2">
+            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
+              <!-- [MARK — CONTENT] Replace href with your chapbook link or Substack -->
+              <figure class="project-card__image-figure">
+                <img class="project-card__image"
+                     src="images/works/poetry-chapbook-card.png"
+                     alt="Poetry Chapbook — collected poems"
+                     loading="lazy"
+                     width="800" height="500">
+              </figure>
+              <span class="project-card__symbol" aria-hidden="true">✦</span>
+              <h3 class="project-card__title">Poetry Chapbook</h3>
+              <p class="project-card__description">Collected poems. Verse in the contemplative tradition — attentive to beauty, silence, and the presence of God in ordinary things.</p>
+              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
+            </a>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="project-card reveal-on-scroll card-stagger-delay-3">
+            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
+              <!-- [MARK — CONTENT] Replace href with your Kerygma Codex link -->
+              <figure class="project-card__image-figure">
+                <img class="project-card__image"
+                     src="images/works/kerygma-codex-card.png"
+                     alt="The Kerygma Codex — theological writing"
+                     loading="lazy"
+                     width="800" height="500">
+              </figure>
+              <span class="project-card__symbol" aria-hidden="true">⸿</span>
+              <h3 class="project-card__title">The Kerygma Codex</h3>
+              <p class="project-card__description">A theological codex. Essays on proclamation, tradition, and the living Word — rooted in the Fathers and spoken to the present age.</p>
+              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
+            </a>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="project-card reveal-on-scroll card-stagger-delay-4">
+            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
+              <!-- [MARK — CONTENT] Replace href with your Substack or essays page -->
+              <figure class="project-card__image-figure">
+                <img class="project-card__image"
+                     src="images/works/essays-theology-card.png"
+                     alt="Essays and Theology — Substack writings"
+                     loading="lazy"
+                     width="800" height="500">
+              </figure>
+              <span class="project-card__symbol" aria-hidden="true">❧</span>
+              <h3 class="project-card__title">Essays &amp; Theology</h3>
+              <p class="project-card__description">Theological essays published on Substack. On scripture, liturgy, mysticism, and the life of prayer in the Anglican Catholic tradition.</p>
+              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
+            </a>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="project-card reveal-on-scroll card-stagger-delay-5">
+            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
+              <!-- [MARK — CONTENT] Replace href with the specific poem page or Substack post -->
+              <figure class="project-card__image-figure">
+                <img class="project-card__image"
+                     src="images/works/sweet-sophia-card.png"
+                     alt="Sweet Sophia, Holy Hokhmah — poem"
+                     loading="lazy"
+                     width="800" height="500">
+              </figure>
+              <span class="project-card__symbol" aria-hidden="true">✦</span>
+              <h3 class="project-card__title">Sweet Sophia, Holy Hokhmah</h3>
+              <p class="project-card__description">A poem in the sophiological tradition. An invocation of divine Wisdom — she who was beside God at the foundation of the world.</p>
+              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
+            </a>
+          </article>
+
+          <!-- Card 6 -->
+          <article class="project-card reveal-on-scroll card-stagger-delay-6">
+            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
+              <!-- [MARK — CONTENT] Replace href with your community vision document or Walsingham page -->
+              <figure class="project-card__image-figure">
+                <img class="project-card__image"
+                     src="images/works/community-vision-card.png"
+                     alt="Community Vision — Walsingham and the contemplative life"
+                     loading="lazy"
+                     width="800" height="500">
+              </figure>
+              <span class="project-card__symbol" aria-hidden="true">⸿</span>
+              <h3 class="project-card__title">Community Vision</h3>
+              <p class="project-card__description">A vision for contemplative community rooted in the Walsingham tradition — a place of pilgrimage, prayer, and the common life.</p>
+              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CONTACT ══ -->
+    <div class="full-width-rule" aria-hidden="true"></div>
+    <section class="contact-section page-section section-vertical-padding reveal-on-scroll" id="contact">
+      <div class="section-content-wrapper">
+
+        <div class="section-header-row reveal-on-scroll">
+          <div class="section-dividing-rule" aria-hidden="true"></div>
+          <h2>Correspondence</h2>
+          <div class="section-dividing-rule" aria-hidden="true"></div>
+        </div>
+
+        <!-- [MARK — CONTENT] Replace with your own warm, personal invitation to connect -->
+        <p class="contact-section__intro-text reveal-on-scroll">
+          Letters, commissions, and theological conversation are welcome.<br>
+          I am found in the usual places.
+        </p>
+
+        <nav class="contact-section__links-row reveal-on-scroll" aria-label="Contact and social links">
+          <!-- [MARK — CONTENT] Replace all placeholder hrefs with your real URLs -->
+          <a href="mailto:your@email.com" class="contact-link">Post a Letter</a>
+          <a href="#" class="contact-link" target="_blank" rel="noopener noreferrer">Substack</a>
+          <a href="#" class="contact-link" target="_blank" rel="noopener noreferrer">Bandcamp</a>
+          <a href="https://github.com/mbaldwinsmith" class="contact-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+
+        <figure class="colophon-ornament-figure reveal-on-scroll" aria-hidden="true">
+          <img src="images/decorative/colophon-ornament.png"
+               alt=""
+               class="colophon-ornament-image"
+               loading="lazy"
+               width="600" height="200">
+        </figure>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="site-footer__content">
+      <p class="site-footer__name-line">Mark Baldwin-Smith</p>
+      <!-- [MARK — CONTENT] Replace motto if changed in hero above -->
+      <p class="site-footer__motto"><em>per ardua ad lucem</em></p>
+      <p class="site-footer__made-line">Made with ink &amp; intention · England</p>
+      <p class="site-footer__copyright">
+        <small>&copy; <span id="footer-current-year"></span> Mark Baldwin-Smith. All rights reserved.</small>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Inline: set footer year without a network round-trip -->
+  <script>
+    document.getElementById('footer-current-year').textContent = new Date().getFullYear();
+  </script>
+
+  <script src="js/scroll-reveal.js" defer></script>
+  <script src="js/navigation-behaviour.js" defer></script>
+  <script src="js/hero-animation.js" defer></script>
+
+</body>
+</html>
