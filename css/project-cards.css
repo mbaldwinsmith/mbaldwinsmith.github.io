@@ -1,0 +1,114 @@
+/* ═══ PROJECT-CARDS.CSS — Works grid and individual project cards ═══ */
+
+/* ── Works section ── */
+.works-section {
+  background-color: var(--colour-vellum);
+}
+
+/* ── Card grid ── */
+.works-section__grid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap:                   var(--space-lg);
+}
+
+/* ── Base card ── */
+.project-card {
+  position:         relative;
+  display:          block;
+  text-decoration:  none;
+  color:            inherit;
+  background-color: rgba(242, 232, 208, 0.6);
+  border:           1px solid var(--colour-ink);
+  padding:          var(--space-lg) var(--space-md);
+  transform:        rotate(var(--project-card-tilt, 0deg));
+  transition:       transform var(--transition-hover),
+                    box-shadow var(--transition-hover);
+}
+
+/* Subtle alternating tilt for a slightly imperfect manuscript feel */
+.project-card:nth-child(odd)  { --project-card-tilt:  0.4deg; }
+.project-card:nth-child(even) { --project-card-tilt: -0.4deg; }
+
+/* Inner border pseudo-element — becomes crimson on hover */
+.project-card::before {
+  content:       '';
+  position:      absolute;
+  inset:         var(--space-xs);
+  border:        1px solid transparent;
+  pointer-events: none;
+  transition:    border-color var(--transition-hover);
+}
+
+/* ── Card hover state ── */
+.project-card:hover {
+  transform:  rotate(0deg) translateY(-4px);
+  box-shadow: 4px 8px 24px var(--colour-shadow-warm-deep);
+}
+
+.project-card:hover::before {
+  border-color: var(--colour-crimson);
+}
+
+.project-card:focus-visible {
+  outline:        2px solid var(--colour-crimson);
+  outline-offset: 3px;
+}
+
+/* ── Card elements ── */
+.project-card__image-figure {
+  margin-bottom: var(--space-md);
+  overflow:      hidden;
+}
+
+.project-card__image {
+  width:        100%;
+  aspect-ratio: 16 / 9;
+  object-fit:   cover;
+  display:      block;
+  border-bottom: 1px solid var(--colour-vellum-crease);
+}
+
+.project-card__symbol {
+  display:       block;
+  font-size:     1.6rem;
+  color:         var(--colour-crimson);
+  margin-bottom: var(--space-xs);
+  line-height:   1;
+}
+
+.project-card__title {
+  font-family:   var(--font-family-fell-pica);
+  font-size:     1.15rem;
+  color:         var(--colour-ink);
+  margin-bottom: var(--space-xs);
+  line-height:   var(--line-height-heading);
+}
+
+.project-card__description {
+  font-family:   var(--font-family-fell-english);
+  font-style:    italic;
+  font-size:     var(--font-size-small);
+  color:         var(--colour-sepia);
+  line-height:   var(--line-height-body);
+  margin-bottom: var(--space-sm);
+}
+
+/* "Visit →" hint — slides in on card hover */
+.project-card__link-hint {
+  display:        block;
+  font-family:    var(--font-family-fell-pica);
+  font-size:      var(--font-size-caption);
+  font-style:     italic;
+  color:          var(--colour-crimson);
+  letter-spacing: var(--letter-spacing-wide);
+  opacity:        0;
+  transform:      translateX(-6px);
+  transition:     opacity var(--transition-hover),
+                  transform var(--transition-hover);
+}
+
+.project-card:hover .project-card__link-hint {
+  opacity:   1;
+  transform: translateX(0);
+}

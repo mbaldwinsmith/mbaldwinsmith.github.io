@@ -1,0 +1,109 @@
+/* ═══ BIOGRAPHY.CSS — About / biography section ═══ */
+
+/* ── Section ── */
+.biography-section {
+  background-color: var(--colour-vellum);
+}
+
+/* ── Main text column ── */
+.biography-section__text-column {
+  min-width: 0; /* prevents grid blowout */
+}
+
+/* ── Body paragraphs ── */
+.biography-section__paragraph {
+  font-family:   var(--font-family-fell-english);
+  font-size:     var(--font-size-base);
+  line-height:   var(--line-height-body);
+  color:         var(--colour-ink);
+  text-align:    justify;
+  hyphens:       auto;
+  margin-bottom: var(--space-md);
+}
+
+/* Drop cap on first paragraph */
+.biography-section__paragraph--with-drop-cap::first-letter {
+  font-family:  var(--font-family-cinzel);
+  font-size:    4rem;
+  line-height:  0.75;
+  color:        var(--colour-crimson);
+  float:        left;
+  margin-right: var(--space-xs);
+  margin-top:   var(--space-xs);
+}
+
+/* ── Marginal notes (hover annotations) ── */
+.biography-section__marginal-note-trigger {
+  position:    relative;
+  color:       var(--colour-crimson);
+  cursor:      help;
+  border-bottom: 1px dotted var(--colour-crimson);
+}
+
+.biography-section__marginal-note-text {
+  display:          none;
+  position:         absolute;
+  right:            calc(-1 * var(--space-xxl) - var(--space-lg));
+  top:              0;
+  width:            200px;
+  font-family:      var(--font-family-fell-pica);
+  font-style:       italic;
+  font-size:        var(--font-size-caption);
+  color:            var(--colour-crimson);
+  border-right:     2px solid var(--colour-crimson);
+  padding-right:    var(--space-sm);
+  text-align:       right;
+  line-height:      var(--line-height-body);
+}
+
+.biography-section__marginal-note-trigger:hover .biography-section__marginal-note-text,
+.biography-section__marginal-note-trigger:focus .biography-section__marginal-note-text,
+.biography-section__marginal-note-trigger.is-focused .biography-section__marginal-note-text {
+  display: block;
+}
+
+/* ── Aside panel ── */
+.biography-section__aside {
+  position:         relative;
+  border:           1px solid var(--colour-vellum-crease);
+  background-color: var(--colour-vellum-shadow);
+  padding:          var(--space-lg) var(--space-md);
+  text-align:       center;
+}
+
+/* Inner dashed border via pseudo-element */
+.biography-section__aside::before {
+  content:  '';
+  position: absolute;
+  inset:    var(--space-xs);
+  border:   1px dashed var(--colour-vellum-crease);
+  pointer-events: none;
+}
+
+/* ── Wax seal image ── */
+.biography-section__wax-seal-image {
+  width:     120px;
+  height:    120px;
+  margin:    0 auto var(--space-md);
+  object-fit: contain;
+}
+
+/* ── Pull quotes inside aside ── */
+.biography-section__pull-quote {
+  font-family:  var(--font-family-fell-english);
+  font-style:   italic;
+  font-size:    var(--font-size-small);
+  color:        var(--colour-ink-medium);
+  line-height:  var(--line-height-body);
+  margin-bottom: var(--space-md);
+}
+
+.biography-section__pull-quote cite {
+  display:     block;
+  margin-top:  var(--space-xs);
+  font-family: var(--font-family-fell-pica);
+  font-style:  normal;
+  font-size:   var(--font-size-caption);
+  color:       var(--colour-ink-faded);
+  letter-spacing: var(--letter-spacing-wide);
+}

@@ -1,0 +1,66 @@
+/* ═══ NAVIGATION.CSS — Sticky site navigation bar ═══ */
+
+/* ── Nav bar ── */
+nav.site-navigation {
+  position:        sticky;
+  top:             0;
+  z-index:         100;
+  display:         flex;
+  justify-content: center;
+  align-items:     center;
+  gap:             var(--space-lg);
+  height:          var(--nav-height);
+  background-color: var(--colour-vellum-shadow);
+  border-top:      2px solid var(--colour-ink);
+  border-bottom:   2px solid var(--colour-ink);
+  box-shadow:      0 2px 8px var(--colour-shadow-warm);
+}
+
+/* ── Nav links ── */
+.site-navigation__link {
+  position:       relative;
+  color:          var(--colour-ink);
+  font-family:    var(--font-family-fell-pica);
+  font-size:      var(--font-size-small);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-caps);
+  text-decoration: none;
+  padding-bottom: 2px;
+  transition:     color var(--transition-hover);
+}
+
+/* Underline pseudo-element — scales in from left on hover */
+.site-navigation__link::after {
+  content:          '';
+  position:         absolute;
+  bottom:           -2px;
+  left:             0;
+  width:            100%;
+  height:           1px;
+  background-color: var(--colour-crimson);
+  transform:        scaleX(0);
+  transform-origin: left center;
+  transition:       transform var(--transition-hover);
+}
+
+.site-navigation__link:hover {
+  color: var(--colour-crimson);
+}
+
+.site-navigation__link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Active state — current section highlighted */
+.site-navigation__link.is-active {
+  color: var(--colour-crimson);
+}
+
+.site-navigation__link.is-active::after {
+  transform: scaleX(1);
+}
+
+.site-navigation__link:focus-visible {
+  outline:        2px solid var(--colour-crimson);
+  outline-offset: 3px;
+}

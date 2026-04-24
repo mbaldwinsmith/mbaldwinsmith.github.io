@@ -1,0 +1,70 @@
+/* ═══ ANIMATIONS.CSS — All @keyframes and animation utility classes ═══ */
+
+/* ── Keyframes ── */
+
+@keyframes hero-illustration-emerge {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes hero-text-rise {
+  from {
+    opacity:   0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wax-seal-breathe {
+  0%, 100% {
+    transform:   scale(1);
+    filter:      drop-shadow(0 2px 4px var(--colour-shadow-warm));
+  }
+  50% {
+    transform:   scale(1.03);
+    filter:      drop-shadow(0 4px 8px var(--colour-shadow-warm-deep));
+  }
+}
+
+@keyframes scroll-hint-pulse {
+  0%, 100% { opacity: 0.6; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.15); }
+}
+
+/* ── Animation utility classes ── */
+
+.animation-hero-emerge {
+  animation: hero-illustration-emerge 3s ease-out 0.5s both;
+}
+
+.animation-hero-text-rise {
+  animation: hero-text-rise 1.5s ease-out 2.8s both;
+}
+
+.animation-wax-seal-breathe {
+  animation: wax-seal-breathe 4s ease-in-out infinite;
+}
+
+.animation-scroll-hint-pulse .site-hero__scroll-hint-line {
+  animation: scroll-hint-pulse 2s ease-in-out infinite;
+}
+
+/* ── Reduced motion — respect user preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1     !important;
+    transition-duration:      0.01ms !important;
+  }
+
+  /* Immediately show hero elements that would otherwise fade in */
+  .animation-hero-emerge,
+  .animation-hero-text-rise {
+    opacity: 1;
+  }
+}

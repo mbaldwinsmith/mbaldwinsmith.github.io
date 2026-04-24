@@ -1,0 +1,154 @@
+/* ═══ HERO.CSS — Full-viewport hero section ═══ */
+
+/* ── Hero container ── */
+header.site-hero {
+  position:        relative;
+  min-height:      100vh;
+  display:         flex;
+  flex-direction:  column;
+  justify-content: center;
+  align-items:     center;
+  overflow:        hidden;
+  background-color: var(--colour-vellum);
+}
+
+/* ── Background vellum texture image (low opacity overlay) ── */
+.site-hero__background-image {
+  position:   absolute;
+  inset:      0;
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  opacity:    0.18;
+  z-index:    0;
+}
+
+/* ── Central woodcut illustration ── */
+.site-hero__illustration-figure {
+  position:  absolute;
+  top:       50%;
+  left:      50%;
+  transform: translate(-50%, -50%);
+  z-index:   1;
+  margin:    0;
+}
+
+.site-hero__central-illustration {
+  max-width:   min(640px, 88vw);
+  width:       100%;
+  height:      auto;
+  opacity:     0; /* animated in by hero-animation.js */
+}
+
+/* ── Text content above illustration ── */
+.site-hero__content {
+  position:   relative;
+  z-index:    10;
+  text-align: center;
+  padding:    var(--space-xl) var(--space-lg);
+}
+
+/* ── Site name heading ── */
+.site-hero__name {
+  font-family:     var(--font-family-cinzel);
+  font-size:       var(--font-size-h1);
+  color:           var(--colour-ink);
+  letter-spacing:  var(--letter-spacing-wide);
+  margin-bottom:   var(--space-sm);
+}
+
+.site-hero__name--accent {
+  color: var(--colour-crimson);
+}
+
+/* ── Decorative crimson rule with central ornament ── */
+.site-hero__decorative-rule {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--space-sm);
+  margin:          var(--space-sm) auto;
+  max-width:       360px;
+}
+
+.site-hero__decorative-rule::before,
+.site-hero__decorative-rule::after {
+  content:    '';
+  flex:       1;
+  height:     1px;
+  background: linear-gradient(
+    to var(--_dir, right),
+    transparent,
+    var(--colour-crimson)
+  );
+}
+
+.site-hero__decorative-rule::before { --_dir: right; }
+.site-hero__decorative-rule::after  { --_dir: left;  }
+
+.site-hero__decorative-rule-ornament {
+  color:     var(--colour-crimson);
+  font-size: 1.2rem;
+}
+
+/* ── Epithet subtitle ── */
+.site-hero__epithet {
+  font-family:    var(--font-family-fell-pica);
+  font-style:     italic;
+  color:          var(--colour-sepia);
+  letter-spacing: var(--letter-spacing-wide);
+  font-size:      var(--font-size-base);
+  margin-bottom:  var(--space-xs);
+}
+
+/* ── Personal motto ── */
+.site-hero__motto {
+  font-family: var(--font-family-fell-english);
+  font-style:  italic;
+  color:       var(--colour-ink-faded);
+  font-size:   var(--font-size-small);
+}
+
+/* ── Corner ornaments ── */
+.site-hero__corner-ornament {
+  position: absolute;
+  width:    80px;
+  height:   auto;
+  opacity:  0.5;
+  z-index:  2;
+}
+
+.site-hero__corner-ornament--top-left     { top: var(--space-lg); left:  var(--space-lg); }
+.site-hero__corner-ornament--top-right    { top: var(--space-lg); right: var(--space-lg); transform: scaleX(-1); }
+.site-hero__corner-ornament--bottom-left  { bottom: var(--space-lg); left:  var(--space-lg); transform: scaleY(-1); }
+.site-hero__corner-ornament--bottom-right { bottom: var(--space-lg); right: var(--space-lg); transform: scale(-1); }
+
+/* ── Scroll hint at bottom of hero ── */
+.site-hero__scroll-hint {
+  position:        absolute;
+  bottom:          var(--space-lg);
+  left:            50%;
+  transform:       translateX(-50%);
+  z-index:         10;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             var(--space-xs);
+}
+
+.site-hero__scroll-hint-text {
+  font-family:    var(--font-family-fell-pica);
+  font-size:      var(--font-size-caption);
+  font-style:     italic;
+  color:          var(--colour-ink-faded);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: lowercase;
+}
+
+.site-hero__scroll-hint-line {
+  display:          block;
+  width:            1px;
+  height:           40px;
+  background-color: var(--colour-crimson);
+  opacity:          0.6;
+}
