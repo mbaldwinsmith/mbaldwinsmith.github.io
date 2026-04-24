@@ -1,0 +1,48 @@
+/* ═══ UTILITIES.CSS — Helper and modifier classes ═══ */
+
+/* ── Screen-reader only (defined also in base.css for early availability) ── */
+.visually-hidden {
+  position:    absolute !important;
+  width:       1px      !important;
+  height:      1px      !important;
+  padding:     0        !important;
+  margin:      -1px     !important;
+  overflow:    hidden   !important;
+  clip:        rect(0, 0, 0, 0) !important;
+  white-space: nowrap   !important;
+  border:      0        !important;
+}
+
+/* ── Colour overrides ── */
+.text-crimson { color: var(--colour-crimson); }
+
+/* ── Text style overrides ── */
+.text-italic   { font-style:  italic; }
+.text-centered { text-align:  center; }
+
+/* ── Inline ornament characters ── */
+.ornament-character {
+  font-size:      1.1em;
+  color:          var(--colour-crimson);
+  letter-spacing: var(--letter-spacing-wide);
+  line-height:    1;
+}
+
+/* ── Drop cap utility (standalone, outside biography context) ── */
+.section-drop-cap {
+  font-family:  var(--font-family-cinzel);
+  font-size:    3.8rem;
+  line-height:  0.75;
+  color:        var(--colour-crimson);
+  float:        left;
+  margin-right: var(--space-xs);
+  margin-top:   var(--space-xs);
+}
+
+/* ── Card stagger delays — applied to project cards for sequential reveal ── */
+.card-stagger-delay-1 { transition-delay: 0s;    }
+.card-stagger-delay-2 { transition-delay: 0.08s; }
+.card-stagger-delay-3 { transition-delay: 0.16s; }
+.card-stagger-delay-4 { transition-delay: 0.24s; }
+.card-stagger-delay-5 { transition-delay: 0.32s; }
+.card-stagger-delay-6 { transition-delay: 0.40s; }

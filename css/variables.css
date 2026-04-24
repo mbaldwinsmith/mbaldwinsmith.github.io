@@ -1,0 +1,60 @@
+/* ═══ VARIABLES.CSS — All CSS custom properties for the site ═══ */
+
+:root {
+
+  /* ── Colours ── */
+  --colour-vellum:            #F2E8D0;
+  --colour-vellum-shadow:     #E8D9B5;
+  --colour-vellum-crease:     #D4C49A;
+  --colour-ink:               #1A1008;
+  --colour-ink-medium:        #2D1F0E;
+  --colour-ink-faded:         #5C3D1E;
+  --colour-sepia:             #7A5230;
+  --colour-crimson:           #8B1A1A;
+  --colour-crimson-bright:    #A83232;
+  --colour-crimson-ghost:     rgba(201, 98, 66, 0.15);
+  --colour-gold:              #C8A84B;
+  --colour-white-vellum:      #FAF5EA;
+  --colour-shadow-warm:       rgba(26, 16, 8, 0.15);
+  --colour-shadow-warm-deep:  rgba(26, 16, 8, 0.28);
+
+  /* ── Typography ── */
+  --font-family-fell-english: 'IM Fell English', Georgia, serif;
+  --font-family-fell-pica:    'IM Fell DW Pica', Georgia, serif;
+  --font-family-cinzel:       'Cinzel Decorative', Georgia, serif;
+
+  --font-size-base:    18px;
+  --font-size-small:   14px;
+  --font-size-caption: 13px;
+  --font-size-h1:      clamp(2rem, 5vw, 3.8rem);
+  --font-size-h2:      clamp(1.4rem, 3vw, 2.2rem);
+  --font-size-h3:      clamp(1.1rem, 2vw, 1.5rem);
+
+  --line-height-body:    1.75;
+  --line-height-heading: 1.15;
+
+  --letter-spacing-wide: 0.12em;
+  --letter-spacing-caps: 0.18em;
+
+  /* ── Spacing ── */
+  --space-xs:  8px;
+  --space-sm:  16px;
+  --space-md:  24px;
+  --space-lg:  40px;
+  --space-xl:  64px;
+  --space-xxl: 96px;
+
+  /* ── Layout ── */
+  --max-content-width: 900px;
+  --nav-height:        56px;
+
+  /* ── Breakpoints (reference only — used in media queries) ── */
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+
+  /* ── Transitions ── */
+  --transition-hover:  0.3s ease-out;
+  --transition-reveal: 0.8s ease-out;
+  --transition-slow:   2s ease-in-out;
+}

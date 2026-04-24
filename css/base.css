@@ -1,0 +1,101 @@
+/* ═══ BASE.CSS — Reset, body, global typography ═══ */
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin:     0;
+  padding:    0;
+  box-sizing: border-box;
+}
+
+/* ── Root ── */
+html {
+  scroll-behavior: smooth;
+  font-size:       var(--font-size-base);
+}
+
+/* ── Body ── */
+body {
+  background-color: var(--colour-vellum);
+  font-family:      var(--font-family-fell-english);
+  font-size:        var(--font-size-base);
+  line-height:      var(--line-height-body);
+  color:            var(--colour-ink);
+  overflow-x:       hidden;
+}
+
+/* Vellum horizontal grain overlay — purely decorative texture, no pointer events */
+body::before {
+  content:        '';
+  position:       fixed;
+  inset:          0;
+  pointer-events: none;
+  z-index:        9999;
+  background:     repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(26, 16, 8, 0.018) 3px,
+    rgba(26, 16, 8, 0.018) 4px
+  );
+}
+
+/* ── Headings ── */
+h1, h2, h3, h4 {
+  font-family:  var(--font-family-fell-english);
+  font-weight:  400;
+  line-height:  var(--line-height-heading);
+  color:        var(--colour-ink);
+}
+
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
+h3 { font-size: var(--font-size-h3); }
+
+/* ── Links ── */
+a {
+  color:           var(--colour-crimson);
+  text-decoration: none;
+  transition:      color var(--transition-hover);
+}
+
+a:hover {
+  color: var(--colour-crimson-bright);
+}
+
+a:focus-visible {
+  outline:        2px solid var(--colour-crimson);
+  outline-offset: 3px;
+}
+
+/* ── Images ── */
+img {
+  max-width:  100%;
+  display:    block;
+  height:     auto;
+}
+
+/* ── Figures ── */
+figure {
+  margin: 0;
+}
+
+figcaption {
+  font-family: var(--font-family-fell-pica);
+  font-size:   var(--font-size-caption);
+  font-style:  italic;
+  color:       var(--colour-ink-faded);
+  margin-top:  var(--space-xs);
+}
+
+/* ── Screen-reader utility ── */
+.visually-hidden {
+  position:   absolute !important;
+  width:      1px !important;
+  height:     1px !important;
+  padding:    0 !important;
+  margin:     -1px !important;
+  overflow:   hidden !important;
+  clip:       rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border:     0 !important;
+}

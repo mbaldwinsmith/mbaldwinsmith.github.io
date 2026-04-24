@@ -1,0 +1,52 @@
+/* ═══ CONTACT.CSS — Contact / correspondence section ═══ */
+
+/* ── Section ── */
+.contact-section {
+  background-color: var(--colour-vellum);
+  text-align:       center;
+}
+
+/* ── Intro text ── */
+.contact-section__intro-text {
+  font-family:   var(--font-family-fell-english);
+  font-style:    italic;
+  color:         var(--colour-sepia);
+  font-size:     var(--font-size-base);
+  line-height:   var(--line-height-body);
+  max-width:     480px;
+  margin:        0 auto var(--space-xl);
+}
+
+/* ── Links row ── */
+.contact-section__links-row {
+  display:         flex;
+  justify-content: center;
+  flex-wrap:       wrap;
+  gap:             var(--space-lg);
+  list-style:      none;
+  margin-bottom:   var(--space-xl);
+}
+
+/* ── Individual contact links ── */
+.contact-link {
+  font-family:     var(--font-family-fell-pica);
+  font-size:       var(--font-size-small);
+  text-transform:  uppercase;
+  letter-spacing:  var(--letter-spacing-caps);
+  color:           var(--colour-ink);
+  text-decoration: none;
+  border-bottom:   1px solid var(--colour-vellum-crease);
+  padding-bottom:  2px;
+  transition:      color var(--transition-hover),
+                   border-color var(--transition-hover);
+}
+
+.contact-link:hover {
+  color:         var(--colour-crimson);
+  border-color:  var(--colour-crimson);
+}
+
+.contact-link:focus-visible {
+  outline:        2px solid var(--colour-crimson);
+  outline-offset: 3px;
+}
