@@ -5,6 +5,7 @@ vellum parchment background, black ink and crimson red typography, woodcut-style
 and contemplative animation. Built with vanilla HTML, CSS, and JavaScript — no build step,
 no frameworks, no dependencies beyond Google Fonts.
 
+
 ---
 
 ## Quick Start
