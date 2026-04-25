@@ -77,6 +77,11 @@
   height:        auto;
   display:       block;
   border-bottom: 1px solid var(--colour-vellum-crease);
+  transition:    transform 0.5s ease;
+}
+
+.project-card:hover .project-card__image {
+  transform: scale(1.04);
 }
 
 .project-card__symbol {
