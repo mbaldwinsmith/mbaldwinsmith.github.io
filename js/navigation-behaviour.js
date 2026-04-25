@@ -35,8 +35,27 @@ function applyActiveLinkHighlight() {
   }
 }
 
+// Marginal notes are shown on :hover in CSS; this extends that to keyboard focus
+// so screen-reader and keyboard users can also trigger them.
+function applyMarginalNoteKeyboardAccess() {
+  const noteTriggers = document.querySelectorAll('.biography-section__marginal-note-trigger');
+
+  noteTriggers.forEach(trigger => {
+    trigger.setAttribute('tabindex', '0');
+
+    trigger.addEventListener('focus', () => {
+      trigger.classList.add('is-focused');
+    });
+
+    trigger.addEventListener('blur', () => {
+      trigger.classList.remove('is-focused');
+    });
+  });
+}
+
 function initialiseNavigationBehaviour() {
   applyActiveLinkHighlight();
+  applyMarginalNoteKeyboardAccess();
 }
 
 document.addEventListener('DOMContentLoaded', initialiseNavigationBehaviour);

@@ -1,0 +1,106 @@
+/* ═══ PRINT.CSS — Print stylesheet for a clean, ink-on-white rendering ═══ */
+
+@media print {
+
+  /* ── Reset to black ink on white ── */
+  *,
+  *::before,
+  *::after {
+    background:          white !important;
+    color:               #1A1008 !important;
+    box-shadow:          none !important;
+    text-shadow:         none !important;
+    animation:           none !important;
+    transition:          none !important;
+    opacity:             1    !important;
+    transform:           none !important;
+  }
+
+  /* ── Hide chrome that has no meaning on paper ── */
+  nav.site-navigation,
+  .site-hero__scroll-hint,
+  .site-hero__background-image,
+  .site-hero__corner-ornament,
+  .site-hero__illustration-figure,
+  .folio-ornament-figure,
+  .colophon-ornament-figure,
+  .site-footer,
+  .full-width-rule,
+  .project-card__link-hint,
+  body::before {
+    display: none !important;
+  }
+
+  /* ── Hero: just the name and epithet, centred ── */
+  header.site-hero {
+    min-height:      auto !important;
+    padding:         2cm 0 1cm !important;
+    justify-content: flex-start !important;
+    text-align:      center;
+    border-bottom:   1pt solid #1A1008;
+    margin-bottom:   1cm;
+  }
+
+  .site-hero__content--name,
+  .site-hero__content--epithet {
+    opacity: 1 !important;
+  }
+
+  /* ── Biography: single column ── */
+  .biography-two-column-grid {
+    display: block !important;
+  }
+
+  .biography-section__aside {
+    margin-top:  1cm;
+    border-top:  1pt solid #1A1008;
+    padding-top: 0.5cm;
+    border:      none !important;
+    background:  none !important;
+  }
+
+  /* ── Works grid: single column ── */
+  .works-section__grid {
+    display:     block !important;
+  }
+
+  .project-card {
+    break-inside:  avoid;
+    margin-bottom: 0.75cm;
+    border:        1pt solid #1A1008 !important;
+    padding:       0.5cm !important;
+    transform:     none !important;
+  }
+
+  /* Show the full URL after each card title */
+  .project-card__link-wrapper::after {
+    content:     " — " attr(href);
+    display:     block;
+    font-size:   9pt;
+    color:       #5C3D1E !important;
+    font-style:  italic;
+    margin-top:  2pt;
+    word-break:  break-all;
+  }
+
+  /* Hide card images on print — they add no information and waste ink */
+  .project-card__image-figure {
+    display: none !important;
+  }
+
+  /* ── Page settings ── */
+  @page {
+    margin: 2cm;
+  }
+
+  h1, h2, h3 {
+    page-break-after:  avoid;
+    break-after:       avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows:  3;
+  }
+
+}
