@@ -61,19 +61,18 @@
          aria-hidden="true"
          width="1920" height="1080">
 
-    <!-- Corner ornaments -->
-    <img class="site-hero__corner-ornament site-hero__corner-ornament--top-left"
-         src="images/decorative/manuscript-portrait.png"
-         alt="" aria-hidden="true" width="80" height="80">
-    <img class="site-hero__corner-ornament site-hero__corner-ornament--top-right"
-         src="images/decorative/manuscript-portrait.png"
-         alt="" aria-hidden="true" width="80" height="80">
-    <img class="site-hero__corner-ornament site-hero__corner-ornament--bottom-left"
-         src="images/decorative/manuscript-portrait.png"
-         alt="" aria-hidden="true" width="80" height="80">
-    <img class="site-hero__corner-ornament site-hero__corner-ornament--bottom-right"
-         src="images/decorative/manuscript-portrait.png"
-         alt="" aria-hidden="true" width="80" height="80">
+    <!-- Corner ornaments — IM Fell typographic symbols in crimson -->
+    <span class="site-hero__corner-ornament site-hero__corner-ornament--top-left"     aria-hidden="true">✦</span>
+    <span class="site-hero__corner-ornament site-hero__corner-ornament--top-right"    aria-hidden="true">✦</span>
+    <span class="site-hero__corner-ornament site-hero__corner-ornament--bottom-left"  aria-hidden="true">❧</span>
+    <span class="site-hero__corner-ornament site-hero__corner-ornament--bottom-right" aria-hidden="true">❧</span>
+
+    <!-- Name — sits above the illustration -->
+    <div class="site-hero__content site-hero__content--name">
+      <h1 class="site-hero__name">
+        Mark <span class="site-hero__name--accent">Baldwin</span>-Smith
+      </h1>
+    </div>
 
     <!-- Central woodcut illustration -->
     <figure class="site-hero__illustration-figure" aria-hidden="true">
@@ -83,14 +82,8 @@
            width="640" height="427">
     </figure>
 
-    <!-- Text content -->
-    <div class="site-hero__content">
-      <h1 class="site-hero__name">
-        Mark <span class="site-hero__name--accent">Baldwin</span>-Smith
-      </h1>
-      <div class="site-hero__decorative-rule" aria-hidden="true">
-        <span class="site-hero__decorative-rule-ornament">❧</span>
-      </div>
+    <!-- Epithet and motto — sits below the illustration -->
+    <div class="site-hero__content site-hero__content--epithet">
       <p class="site-hero__epithet">Poet · Theologian · Songwriter · Contemplative</p>
       <!-- [MARK — CONTENT] Replace motto with your preferred Latin or English phrase -->
       <p class="site-hero__motto"><em>per ardua ad lucem</em></p>
@@ -187,46 +180,41 @@
 
         <div class="works-section__grid">
 
-          <!-- Card 1 -->
+          <!-- Card 1 — About Me -->
           <article class="project-card reveal-on-scroll card-stagger-delay-1">
-            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
-              <!-- [MARK — CONTENT] Replace href with your Bandcamp or streaming link -->
+            <a href="https://markbaldwin-smith.com" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
+              <figure class="project-card__image-figure">
+                <img class="project-card__image"
+                     src="images/decorative/manuscript-portrait.png"
+                     alt="Portrait of Mark Baldwin-Smith"
+                     loading="lazy"
+                     width="800" height="500">
+              </figure>
+              <h3 class="project-card__title">About Me</h3>
+              <p class="project-card__description">Professional profile and creative practice — theologian, poet, and contemplative practitioner.</p>
+              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
+            </a>
+          </article>
+
+          <!-- Card 2 — The Golden Thread -->
+          <article class="project-card reveal-on-scroll card-stagger-delay-2">
+            <a href="https://mbaldwinsmith.github.io/the_golden_thread/" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
               <figure class="project-card__image-figure">
                 <img class="project-card__image"
                      src="images/works/golden-thread-card.png"
-                     alt="The Golden Thread — sacred music album"
+                     alt="The Golden Thread — thirteen poems"
                      loading="lazy"
                      width="800" height="500">
               </figure>
-              <span class="project-card__symbol" aria-hidden="true">❧</span>
               <h3 class="project-card__title">The Golden Thread</h3>
-              <p class="project-card__description">A sacred music album. Songs woven from scripture, silence, and the long tradition of Christian song.</p>
+              <p class="project-card__description">Thirteen poems. One journey. Follow the thread.</p>
               <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
             </a>
           </article>
 
-          <!-- Card 2 -->
-          <article class="project-card reveal-on-scroll card-stagger-delay-2">
-            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
-              <!-- [MARK — CONTENT] Replace href with your chapbook link or Substack -->
-              <figure class="project-card__image-figure">
-                <img class="project-card__image"
-                     src="images/works/poetry-chapbook-card.png"
-                     alt="Poetry Chapbook — collected poems"
-                     loading="lazy"
-                     width="800" height="500">
-              </figure>
-              <span class="project-card__symbol" aria-hidden="true">✦</span>
-              <h3 class="project-card__title">Poetry Chapbook</h3>
-              <p class="project-card__description">Collected poems. Verse in the contemplative tradition — attentive to beauty, silence, and the presence of God in ordinary things.</p>
-              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-
-          <!-- Card 3 -->
+          <!-- Card 3 — The Kerygma Codex -->
           <article class="project-card reveal-on-scroll card-stagger-delay-3">
-            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
-              <!-- [MARK — CONTENT] Replace href with your Kerygma Codex link -->
+            <a href="https://substack.com/@markbaldwinsmith" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
               <figure class="project-card__image-figure">
                 <img class="project-card__image"
                      src="images/works/kerygma-codex-card.png"
@@ -234,17 +222,31 @@
                      loading="lazy"
                      width="800" height="500">
               </figure>
-              <span class="project-card__symbol" aria-hidden="true">⸿</span>
               <h3 class="project-card__title">The Kerygma Codex</h3>
-              <p class="project-card__description">A theological codex. Essays on proclamation, tradition, and the living Word — rooted in the Fathers and spoken to the present age.</p>
+              <p class="project-card__description">A gentle, trauma-aware Christian grammar for spiritual healing, formation, and coherence repair.</p>
               <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
             </a>
           </article>
 
-          <!-- Card 4 -->
+          <!-- Card 4 — Aurum Cordis -->
           <article class="project-card reveal-on-scroll card-stagger-delay-4">
+            <a href="https://mbaldwinsmith.github.io/aurum-cordis/" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
+              <figure class="project-card__image-figure">
+                <img class="project-card__image"
+                     src="images/works/poetry-chapbook-card.png"
+                     alt="Aurum Cordis — the Opus Magnum as Christian Way"
+                     loading="lazy"
+                     width="800" height="500">
+              </figure>
+              <h3 class="project-card__title">Aurum Cordis</h3>
+              <p class="project-card__description">The Opus Magnum as Christian Way: Alchemy, Theology, and the Soul's Transformation.</p>
+              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
+            </a>
+          </article>
+
+          <!-- Card 5 — Essays & Theology -->
+          <article class="project-card reveal-on-scroll card-stagger-delay-5">
             <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
-              <!-- [MARK — CONTENT] Replace href with your Substack or essays page -->
               <figure class="project-card__image-figure">
                 <img class="project-card__image"
                      src="images/works/essays-theology-card.png"
@@ -252,44 +254,23 @@
                      loading="lazy"
                      width="800" height="500">
               </figure>
-              <span class="project-card__symbol" aria-hidden="true">❧</span>
               <h3 class="project-card__title">Essays &amp; Theology</h3>
               <p class="project-card__description">Theological essays published on Substack. On scripture, liturgy, mysticism, and the life of prayer in the Anglican Catholic tradition.</p>
               <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
             </a>
           </article>
 
-          <!-- Card 5 -->
-          <article class="project-card reveal-on-scroll card-stagger-delay-5">
-            <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
-              <!-- [MARK — CONTENT] Replace href with the specific poem page or Substack post -->
-              <figure class="project-card__image-figure">
-                <img class="project-card__image"
-                     src="images/works/sweet-sophia-card.png"
-                     alt="Sweet Sophia, Holy Hokhmah — poem"
-                     loading="lazy"
-                     width="800" height="500">
-              </figure>
-              <span class="project-card__symbol" aria-hidden="true">✦</span>
-              <h3 class="project-card__title">Sweet Sophia, Holy Hokhmah</h3>
-              <p class="project-card__description">A poem in the sophiological tradition. An invocation of divine Wisdom — she who was beside God at the foundation of the world.</p>
-              <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-
-          <!-- Card 6 -->
+          <!-- Card 6 — Lifelong Pilgrimage -->
           <article class="project-card reveal-on-scroll card-stagger-delay-6">
             <a href="#" class="project-card__link-wrapper" target="_blank" rel="noopener noreferrer">
-              <!-- [MARK — CONTENT] Replace href with your community vision document or Walsingham page -->
               <figure class="project-card__image-figure">
                 <img class="project-card__image"
                      src="images/works/community-vision-card.png"
-                     alt="Community Vision — Walsingham and the contemplative life"
+                     alt="Lifelong Pilgrimage — contemplative community and the Walsingham tradition"
                      loading="lazy"
                      width="800" height="500">
               </figure>
-              <span class="project-card__symbol" aria-hidden="true">⸿</span>
-              <h3 class="project-card__title">Community Vision</h3>
+              <h3 class="project-card__title">Lifelong Pilgrimage</h3>
               <p class="project-card__description">A vision for contemplative community rooted in the Walsingham tradition — a place of pilgrimage, prayer, and the common life.</p>
               <span class="project-card__link-hint">Visit <span aria-hidden="true">→</span></span>
             </a>
