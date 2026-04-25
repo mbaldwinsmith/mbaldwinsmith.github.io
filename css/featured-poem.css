@@ -64,6 +64,33 @@
   padding-top:     var(--space-md);
 }
 
+/* ── Collection link ── */
+.featured-poem__collection-link {
+  text-align:  right;
+  margin-top:  var(--space-sm);
+}
+
+.featured-poem__collection-link a {
+  font-family:     var(--font-family-fell-pica);
+  font-style:      italic;
+  font-size:       var(--font-size-small);
+  color:           var(--colour-crimson);
+  text-decoration: none;
+  letter-spacing:  var(--letter-spacing-wide);
+  border-bottom:   1px solid transparent;
+  transition:      color var(--transition-hover), border-color var(--transition-hover);
+}
+
+.featured-poem__collection-link a:hover {
+  color:        var(--colour-crimson-bright);
+  border-color: var(--colour-crimson-bright);
+}
+
+.featured-poem__collection-link a:focus-visible {
+  outline:        2px solid var(--colour-crimson);
+  outline-offset: 3px;
+}
+
 /* ── Responsive: single column on small screens ── */
 @media (max-width: 768px) {
   .featured-poem__layout {
