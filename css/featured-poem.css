@@ -1,0 +1,77 @@
+/* ═══ FEATURED-POEM.CSS — Featured poem section ═══ */
+
+/* ── Section ── */
+.featured-poem-section {
+  background-color: var(--colour-vellum);
+}
+
+/* ── Two-column layout: illustration left, verse right ── */
+.featured-poem__layout {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   var(--space-xl);
+  align-items:           start;
+}
+
+/* ── Illustration ── */
+.featured-poem__image-figure {
+  margin: 0;
+}
+
+.featured-poem__image {
+  width:        100%;
+  height:       auto;
+  display:      block;
+  border:       1px solid var(--colour-vellum-crease);
+  box-shadow:   2px 4px 12px var(--colour-shadow-warm);
+}
+
+/* ── Verse column ── */
+.featured-poem__verse {
+  font-family: var(--font-family-fell-english);
+  font-size:   var(--font-size-base);
+  line-height: var(--line-height-body);
+  color:       var(--colour-ink);
+}
+
+/* ── Individual stanzas ── */
+.featured-poem__stanza {
+  margin-bottom: var(--space-md);
+  text-align:    left;
+}
+
+/* Drop cap on opening stanza */
+.featured-poem__stanza--first::first-letter {
+  font-family:  var(--font-family-cinzel);
+  font-size:    4rem;
+  line-height:  0.75;
+  color:        var(--colour-crimson);
+  float:        left;
+  margin-right: var(--space-xs);
+  margin-top:   var(--space-xs);
+}
+
+/* ── Attribution ── */
+.featured-poem__attribution {
+  font-family:     var(--font-family-fell-pica);
+  font-style:      italic;
+  font-size:       var(--font-size-small);
+  color:           var(--colour-ink-faded);
+  text-align:      right;
+  margin-top:      var(--space-lg);
+  letter-spacing:  var(--letter-spacing-wide);
+  border-top:      1px solid var(--colour-vellum-crease);
+  padding-top:     var(--space-md);
+}
+
+/* ── Responsive: single column on small screens ── */
+@media (max-width: 768px) {
+  .featured-poem__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-poem__image-figure {
+    max-width: 420px;
+    margin:    0 auto;
+  }
+}
