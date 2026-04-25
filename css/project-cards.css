@@ -64,8 +64,12 @@
 
 /* ── Card elements ── */
 .project-card__image-figure {
-  margin-bottom: var(--space-md);
-  overflow:      hidden;
+  margin-bottom:    var(--space-md);
+  overflow:         hidden;
+  background-color: var(--colour-vellum-crease);
+  background-image: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+  background-size:  200% 100%;
+  animation:        skeleton-shimmer 1.8s ease-in-out infinite;
 }
 
 .project-card__image {
@@ -73,6 +77,11 @@
   height:        auto;
   display:       block;
   border-bottom: 1px solid var(--colour-vellum-crease);
+  transition:    transform 0.5s ease;
+}
+
+.project-card:hover .project-card__image {
+  transform: scale(1.04);
 }
 
 .project-card__symbol {
