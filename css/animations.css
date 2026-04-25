@@ -41,7 +41,7 @@
 }
 
 .animation-hero-text-rise {
-  animation: hero-text-rise 1.5s ease-out 2.8s both;
+  animation: hero-text-rise 1.5s ease-out both; /* timing controlled by hero-animation.js */
 }
 
 .animation-wax-seal-breathe {

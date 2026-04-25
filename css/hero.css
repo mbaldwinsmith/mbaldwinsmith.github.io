@@ -51,11 +51,13 @@ header.site-hero {
 /* Name block — top of hero, above the illustration */
 .site-hero__content--name {
   padding-bottom: var(--space-sm);
+  opacity:        0; /* animated in by hero-animation.js */
 }
 
 /* Epithet block — bottom of hero, below the illustration */
 .site-hero__content--epithet {
   padding-top: var(--space-sm);
+  opacity:     0; /* animated in by hero-animation.js */
 }
 
 /* ── Site name heading ── */
@@ -133,7 +135,7 @@ header.site-hero {
 
 .site-hero__corner-ornament--top-left     { top: var(--space-lg);    left:  var(--space-lg);  }
 .site-hero__corner-ornament--top-right    { top: var(--space-lg);    right: var(--space-lg);  }
-.site-hero__corner-ornament--bottom-left  { bottom: var(--space-lg); left:  var(--space-lg);  }
+.site-hero__corner-ornament--bottom-left  { bottom: var(--space-lg); left:  var(--space-lg);  transform: scaleX(-1); }
 .site-hero__corner-ornament--bottom-right { bottom: var(--space-lg); right: var(--space-lg);  }
 
 /* ── Scroll hint at bottom of hero ── */
