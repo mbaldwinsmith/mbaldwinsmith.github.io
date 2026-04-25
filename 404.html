@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Page not found — Mark Baldwin-Smith</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+DW+Pica:ital@0;1&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/utilities.css">
+
+  <style>
+    .error-page {
+      min-height:      100vh;
+      display:         flex;
+      flex-direction:  column;
+      align-items:     center;
+      justify-content: center;
+      text-align:      center;
+      padding:         var(--space-xl) var(--space-lg);
+    }
+
+    .error-page__ornament {
+      max-width: 320px;
+      width:     100%;
+      height:    auto;
+      opacity:   0.75;
+      margin:    0 auto var(--space-xl);
+    }
+
+    .error-page__heading {
+      font-family:   var(--font-family-cinzel);
+      font-size:     var(--font-size-h2);
+      color:         var(--colour-ink);
+      letter-spacing: var(--letter-spacing-wide);
+      margin-bottom: var(--space-md);
+    }
+
+    .error-page__subtext {
+      font-family:   var(--font-family-fell-english);
+      font-style:    italic;
+      color:         var(--colour-sepia);
+      font-size:     var(--font-size-base);
+      margin-bottom: var(--space-xl);
+    }
+
+    .error-page__return {
+      font-family:     var(--font-family-fell-pica);
+      font-size:       var(--font-size-small);
+      text-transform:  uppercase;
+      letter-spacing:  var(--letter-spacing-caps);
+      color:           var(--colour-crimson);
+      text-decoration: none;
+      border-bottom:   1px solid var(--colour-vellum-crease);
+      padding-bottom:  2px;
+      transition:      color var(--transition-hover), border-color var(--transition-hover);
+    }
+
+    .error-page__return:hover {
+      color:        var(--colour-crimson-bright);
+      border-color: var(--colour-crimson-bright);
+    }
+
+    .error-page__return:focus-visible {
+      outline:        2px solid var(--colour-crimson);
+      outline-offset: 3px;
+    }
+
+    .error-page__divider {
+      margin: var(--space-xl) auto var(--space-md);
+      color:  var(--colour-crimson);
+      font-size: 1.2rem;
+      letter-spacing: var(--letter-spacing-wide);
+    }
+  </style>
+</head>
+<body>
+
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
+    <defs>
+      <filter id="vellum-noise-filter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <main class="error-page">
+
+    <figure aria-hidden="true">
+      <img class="error-page__ornament"
+           src="images/decorative/colophon-ornament.png"
+           alt=""
+           width="600" height="200">
+    </figure>
+
+    <p class="error-page__divider" aria-hidden="true">✦ ✦ ✦</p>
+
+    <h1 class="error-page__heading">This page has wandered off the path.</h1>
+
+    <p class="error-page__subtext">
+      It may have been moved, renamed, or lost in the margins of some forgotten folio.
+    </p>
+
+    <a href="index.html" class="error-page__return">Return to the beginning</a>
+
+  </main>
+
+</body>
+</html>
