@@ -69,10 +69,9 @@
 }
 
 .project-card__image {
-  width:        100%;
-  aspect-ratio: 16 / 9;
-  object-fit:   cover;
-  display:      block;
+  width:         100%;
+  height:        auto;
+  display:       block;
   border-bottom: 1px solid var(--colour-vellum-crease);
 }
 
