@@ -13,6 +13,17 @@ header.site-hero {
   padding:         var(--space-xl) var(--space-lg) calc(var(--space-xl) + 56px); /* bottom clears scroll hint */
 }
 
+/* Organic grain overlay using the SVG noise filter defined in index.html */
+header.site-hero::after {
+  content:        '';
+  position:       absolute;
+  inset:          0;
+  pointer-events: none;
+  z-index:        4;
+  opacity:        0.035;
+  filter:         url(#vellum-noise-filter);
+}
+
 /* ── Background vellum texture image (low opacity overlay) ── */
 .site-hero__background-image {
   position:   absolute;
