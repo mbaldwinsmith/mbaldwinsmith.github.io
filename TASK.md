@@ -710,6 +710,17 @@ Once all `images/works/` images are placed:
 
 ---
 
+## Task 4.4 — Adjust cards
+
+- On Hero, move name text above the image and move subtitle below the image. Remove the typographic symbol.
+- Replace the manuscript-portrait.png images with odd positioning, with red typographic symbols of your choice from IM Fell.
+- Replace Sweet Sophia, Holy Hokhmah card with About ME, linking to markbaldwin-smith.com, with a short description of my professional work. For the image, us manuscript-portrait.png and move the card to be first in the order.
+- Change the text for The Golden Thread to "Thirteen poems. One journey. Follow the thread." link to https://mbaldwinsmith.github.io/the_golden_thread/
+- Change Poetry Chapbook to Aurum Cordis, with the blurb: The Opus Magnum as Christian Way:
+Alchemy, Theology, and the Soul’s Transformation. Link to https://mbaldwinsmith.github.io/aurum-cordis/
+- Move The Kerygma Codex above Aurum Cordis. Blurb: A gentle, trauma-aware Christian grammar for spiritual healing, formation, and coherence repair. Link to: https://substack.com/@markbaldwinsmith
+- Chage Community Vison to Lifelong Pilgrimage
+
 ## PHASE 5 — REVIEW & REFINEMENT
 
 ### Task 5.1 — Cross-browser and responsive review checklist
