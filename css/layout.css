@@ -75,6 +75,16 @@
   }
 }
 
+.mobile-break {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-break {
+    display: block;
+  }
+}
+
 /* ── Folio ornament between biography and works ── */
 .folio-ornament-figure {
   max-width: var(--max-content-width);
