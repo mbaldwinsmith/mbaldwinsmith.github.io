@@ -91,4 +91,4 @@ Open `http://localhost:8080` in your browser.
 
 ---
 
-*per ardua ad lucem*
+*Via Crucis, Via Lucis*
